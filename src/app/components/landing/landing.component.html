@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutWrap style="min-height: 90vh">
+    <mat-toolbar class="banner mat-elevation-z10" fxLayoutAlign="stretch" color="primary">
+        <div fxFlex fxLayoutAlign="center center">
+            <h1 class="banner_font">Material App</h1>
+        </div>
+    </mat-toolbar>
+    <div fxLayout="row" fxLayoutWrap style="min-height: 60vh" fxLayoutAlign="center center">
+        <app-login></app-login>
+        <div class = "force-divider-height" fxFlex="10" fxLayoutAlign="center">
+            <mat-divider [vertical]="true"></mat-divider>
+        </div>
+        <app-sign-up></app-sign-up>
+    </div>
+</div>

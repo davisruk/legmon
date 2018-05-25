@@ -1,0 +1,24 @@
+<div class="themePicker">
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile *ngFor="let tile of tiles"
+                    [ngClass]="tile.class"
+                    [colspan] = 1
+                    [rowspan] = 1>
+      <button mat-mini-fab 
+                    [ngClass]="tile.secondary"
+                    color="accent"
+                    value="tile.text"
+                    (click)="changeTheme(tile)">
+                    <mat-icon *ngIf="themeChecked(tile.value)">check</mat-icon>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile [style.background]="sliderBackground"
+        [colspan] = 2
+        [rowspan] = 1>
+      <mat-slide-toggle
+        (change)="toggleDark()"
+        [checked]="useDark">Dark</mat-slide-toggle>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+

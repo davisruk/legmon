@@ -1,0 +1,20 @@
+<div fxFlex fxLayoutAlign="end">
+    <mat-card fxLayout="column">
+      <mat-card-title>Signup</mat-card-title>
+      <mat-card-content fxLayoutWrap fxLayoutGap="5px">
+        <mat-form-field fxLayoutAlign="center stretch">
+          <input matInput required name="firstName" placeholder="First Name" [(ngModel)]="user.firstName">
+        </mat-form-field>
+        <mat-form-field fxLayoutAlign="center stretch">
+          <input matInput required name="lastName" placeholder="Last Name" [(ngModel)]="user.lastName">
+        </mat-form-field>
+        <mat-form-field fxLayoutAlign="center stretch">
+          <input matInput required type="email" name="email" placeholder="Email" [(ngModel)]="user.email">
+        </mat-form-field>
+        <mat-form-field fxLayoutAlign="center stretch">
+          <input matInput required type="password" name="password" placeholder="Password" [(ngModel)]="user.password">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+      </mat-card-content>  
+    </mat-card>
+</div>

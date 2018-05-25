@@ -1,0 +1,17 @@
+<div fxFlex fxLayoutAlign="start" style="min-height: 90vh">
+  <mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content fxLayoutWrap fxLayoutGap="5px">
+      <mat-form-field fxLayoutAlign="center stretch">
+        <input matInput required type="email" name="email" placeholder="Email" [(ngModel)]="user.email">
+      </mat-form-field>
+      <mat-form-field fxLayoutAlign="center stretch">
+        <input matInput required type="password" name="password" placeholder="Password" [(ngModel)]="user.password">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+      <div *ngIf="errorMessage$">
+        <span class="warnText">{{errorMessage$ | async}}</span>
+      </div>    
+      </mat-card-content>
+  </mat-card>
+</div>

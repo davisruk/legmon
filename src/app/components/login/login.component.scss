@@ -1,0 +1,5 @@
+@import '../../../styles/material-theme';
+
+.warnText {
+    color: mat-color($warn);
+}
