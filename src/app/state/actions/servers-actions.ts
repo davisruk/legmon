@@ -5,7 +5,8 @@ export enum ServersActionTypes {
   LOAD_SERVERS_SUCCESS = '[Servers] Load Servers Success',
   LOAD_SERVERS_FAILURE = '[Servers] Load Servers Failure',
   CHANGE_PAGE = '[Servers] Change Page',
-  CHANGE_PAGE_SIZE = '[Servers] Change Page Size'
+  CHANGE_PAGE_SIZE = '[Servers] Change Page Size',
+  SET_FILTER = '[Servers] Set Filter'
 }
 
 export class LoadServers implements Action {
@@ -42,4 +43,18 @@ export class ChangePageSize implements Action {
   constructor(public payload: any) {}
 }
 
-export type All = LoadServers | LoadServersSuccess | LoadServersFailure;
+export class SetFilterPayload {
+  readonly filter: string;
+}
+export class SetFilter implements Action {
+  readonly type: string = ServersActionTypes.SET_FILTER;
+  constructor(public payload: any) {}
+}
+
+export type All =
+  | LoadServers
+  | LoadServersSuccess
+  | LoadServersFailure
+  | ChangePage
+  | ChangePageSize
+  | SetFilter;

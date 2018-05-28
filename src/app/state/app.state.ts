@@ -1,4 +1,4 @@
-import { ServersState, getServerList } from './servers.state';
+import { ServersState, getServerList, getServerFilter } from './servers.state';
 import { UIState } from '../state/ui.state';
 import { AuthenticationState } from './authentication-state';
 import * as auth from './reducers/auth-reducer';
@@ -98,4 +98,14 @@ export const selectServerArray = createSelector(
 export const selectServerArrayLength = createSelector(
   selectServerArray,
   fromServersState.getServerArrayLength
+);
+
+export const selectServerFilter = createSelector(
+  selectServerPage,
+  fromServersState.getServerFilter
+);
+
+export const selectServerFilteredDataSetLength = createSelector(
+  selectServerFilter,
+  fromServersState.getServerFilterDataSetLength
 );

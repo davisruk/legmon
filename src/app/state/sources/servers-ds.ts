@@ -3,7 +3,9 @@ import {
   ChangePage,
   ChangePagePayload,
   ChangePageSizePayload,
-  ChangePageSize
+  ChangePageSize,
+  SetFilterPayload,
+  SetFilter
 } from './../actions/servers-actions';
 import { Server } from './../../model/server.model';
 import { Observable } from 'rxjs';
@@ -27,5 +29,10 @@ export class ServersDataSource implements DataSource<Server> {
   changePageSize(pageSize: number) {
     const payload: ChangePageSizePayload = { pageSize: pageSize };
     this.store.dispatch(new ChangePageSize(payload));
+  }
+
+  applyFilter(value: string) {
+    const payload: SetFilterPayload = { filter: value };
+    this.store.dispatch(new SetFilter(payload));
   }
 }

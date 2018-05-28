@@ -7,6 +7,13 @@ export class ServersState {
 export class ServerPage {
   pageData: Server[];
   pageSize: number;
+  filter: ServerFilter;
+}
+
+export class ServerFilter {
+  filter: string;
+  filterSet: string[];
+  filteredDataSet: Server[];
 }
 
 export const getServerList = (state: ServersState): ServerList =>
@@ -21,3 +28,9 @@ export const getServerPage = (state: ServersState): ServerPage =>
 
 export const getServerPageData = (state: ServerPage): Server[] =>
   state.pageData;
+
+export const getServerFilter = (state: ServerPage): ServerFilter =>
+  state.filter;
+
+export const getServerFilterDataSetLength = (state: ServerFilter): number =>
+  state.filteredDataSet.length;
