@@ -1,0 +1,39 @@
+{
+  "servers": [
+    {
+      "name": "FT1 UIS 1",
+      "hostname": "10.141.129.48",
+      "port": "8280",
+      "url":
+        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
+    },
+    {
+      "name": "FT1 EAS 1",
+      "hostname": "10.141.129.49",
+      "port": "8180",
+      "url":
+        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
+    },
+    {
+      "name": "FT1 BRG STP",
+      "hostname": "10.141.129.132",
+      "port": "8380",
+      "url":
+        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
+    },
+    {
+      "name": "FT1 BRG OPT",
+      "hostname": "10.141.129.152",
+      "port": "8380",
+      "url":
+        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
+    },
+    {
+      "name": "FT2 BRG OPT",
+      "hostname": "10.141.129.172",
+      "port": "8480",
+      "url":
+        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
+    }
+  ]
+}

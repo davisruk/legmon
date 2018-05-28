@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,18 +24,22 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatDividerModule,
-  MatInputModule
+  MatInputModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppNavComponent } from 'src/app/components/app-nav/app-nav.component';
 import { ThemePickerComponent } from 'src/app/components/theme-picker/theme-picker.component';
-import { ContentComponent } from 'src/app/components/content/content.component';
 import { LoginComponent } from '../components/login/login.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { LandingComponent } from '../components/landing/landing.component';
 import { MainContentComponent } from '../components/main-content/main-content.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthEffects } from '../state/effects/auth-effects';
+import { ServerListComponent } from '../components/server-list/server-list.component';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from '../state/app.state';
 import { AuthGuardService } from '../services/auth-guard.service';
@@ -45,10 +50,12 @@ import {
 } from '@ngrx/router-store';
 import { RouterCustomSerializer } from '../state/router.state';
 import { RouterEffects } from '../state/effects/nav-effects';
+import { ServersEffects } from '../state/effects/servers-effects';
 
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     FormsModule,
     LayoutModule,
     MatToolbarModule,
@@ -62,20 +69,24 @@ import { RouterEffects } from '../state/effects/nav-effects';
     MatGridListModule,
     MatMenuModule,
     MatCardModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
     MatDividerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([AuthEffects, RouterEffects]),
+    EffectsModule.forRoot([AuthEffects, RouterEffects, ServersEffects]),
     RouterModule.forRoot([
       { path: 'log-in', component: LoginComponent },
       { path: 'sign-up', component: SignUpComponent },
@@ -96,6 +107,7 @@ import { RouterEffects } from '../state/effects/nav-effects';
   ],
   exports: [
     CommonModule,
+    HttpClientModule,
     FormsModule,
     RouterModule,
     LayoutModule,
@@ -111,23 +123,27 @@ import { RouterEffects } from '../state/effects/nav-effects';
     MatGridListModule,
     MatMenuModule,
     MatCardModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppNavComponent,
     LandingComponent,
     ThemePickerComponent,
     MainContentComponent,
-    FlexLayoutModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    ContentComponent
+    ServerListComponent,
+    FlexLayoutModule
   ],
   declarations: [
     AppNavComponent,
     ThemePickerComponent,
-    ContentComponent,
+    ServerListComponent,
     LandingComponent,
     LoginComponent,
     SignUpComponent,

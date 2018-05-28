@@ -1,0 +1,26 @@
+<div flexLayout="column" style="min-height: 50vh" fxLayoutAlign="center">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let server"> {{server.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="hostname">
+      <mat-header-cell *matHeaderCellDef> Host Name </mat-header-cell>
+      <mat-cell *matCellDef="let server"> {{server.hostname}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="port">
+      <mat-header-cell *matHeaderCellDef> Port </mat-header-cell>
+      <mat-cell *matCellDef="let server"> {{server.port}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="url">
+      <mat-header-cell *matHeaderCellDef> URL </mat-header-cell>
+      <mat-cell *matCellDef="let server"> {{server.url}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+<div flexLayout="column" fxLayoutAlign="center">
+  <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers$ | async" showFirstLastButtons
+    (page)=onPageEvent($event)></mat-paginator>
+</div>

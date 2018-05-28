@@ -42,7 +42,7 @@ export class AppNavComponent implements OnInit {
     { title: 'Prescriptions' },
     { title: 'Stores' }
   ];
-  appTitle = 'Material App';
+  appTitle = 'LegMon';
   overlayRef: ThemePickerOverlayRef;
   themeCloseState: boolean;
 
