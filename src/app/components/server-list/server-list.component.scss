@@ -1,7 +1,3 @@
-@import '../../../styles/material-theme';
-
-$primary: map-get($theme, primary);
-
 .highlight {
-  background: mat-color($primary);
+  background: lightblue;
 }
