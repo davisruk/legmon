@@ -16,7 +16,8 @@ const initialState: ServersState = {
   serverPage: {
     pageData: [],
     pageSize: 5,
-    filter: { filter: '', filterSet: [], filteredDataSet: [] }
+    filter: { filter: '', filterSet: [], filteredDataSet: [] },
+    currentPage: 0
   }
 };
 
@@ -32,6 +33,7 @@ export function serverStateReducer(
         serverPage: {
           pageData: servers.slice(0, state.serverPage.pageSize),
           pageSize: state.serverPage.pageSize,
+          currentPage: 0,
           filter: {
             filter: '',
             filterSet: computeFilterSet(servers),
@@ -56,7 +58,7 @@ export function serverStateReducer(
       return getPageWithFilter(
         state,
         state.serverPage.filter.filter,
-        0,
+        state.serverPage.currentPage,
         payload.pageSize
       );
     }
@@ -77,25 +79,27 @@ export function serverStateReducer(
 
 function sortDataSet(state: ServersState, sort: Sort): ServersState {
   // sort the filtered data
-  const sortedData: Server[] = state.serverList.servers.sort((a, b) => {
-    const isAsc = sort.direction === 'asc';
-    switch (sort.active) {
-      case 'name':
-        return compare(a.name, b.name, isAsc);
-      case 'hostname':
-        return compare(a.hostname, b.hostname, isAsc);
-      case 'port':
-        return compare(a.port, b.port, isAsc);
-      default:
-        return 0;
+  const sortedData: Server[] = state.serverPage.filter.filteredDataSet.sort(
+    (a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return compare(a.name, b.name, isAsc);
+        case 'hostname':
+          return compare(a.hostname, b.hostname, isAsc);
+        case 'port':
+          return compare(a.port, b.port, isAsc);
+        default:
+          return 0;
+      }
     }
-  });
+  );
   const newState: ServersState = Object.assign({}, state);
-  newState.serverList.servers = sortedData;
+  newState.serverPage.filter.filteredDataSet = sortedData;
   return getPageWithFilter(
     newState,
     state.serverPage.filter.filter,
-    0,
+    state.serverPage.currentPage,
     state.serverPage.pageSize
   );
 }
@@ -133,6 +137,7 @@ function getPageWithFilter(
       serverPage: {
         pageData: getPage(state.serverList.servers, _page, _pageSize),
         pageSize: _pageSize,
+        currentPage: _page,
         filter: {
           filter: '',
           filterSet: computeFilterSet(state.serverList.servers),
@@ -160,6 +165,7 @@ function getPageWithFilter(
         _pageSize
       ),
       pageSize: _pageSize,
+      currentPage: _page,
       filter: {
         filter: filter,
         filterSet: computeFilterSet(state.serverList.servers),

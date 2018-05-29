@@ -8,6 +8,7 @@ export class ServerPage {
   pageData: Server[];
   pageSize: number;
   filter: ServerFilter;
+  currentPage: number;
 }
 
 export class ServerFilter {
@@ -34,3 +35,6 @@ export const getServerFilter = (state: ServerPage): ServerFilter =>
 
 export const getServerFilterDataSetLength = (state: ServerFilter): number =>
   state.filteredDataSet.length;
+
+export const getServerCurrentPage = (state: ServerPage): number =>
+  state.currentPage;

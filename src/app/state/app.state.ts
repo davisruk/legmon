@@ -109,3 +109,8 @@ export const selectServerFilteredDataSetLength = createSelector(
   selectServerFilter,
   fromServersState.getServerFilterDataSetLength
 );
+
+export const selectServerCurrentPage = createSelector(
+  selectServerPage,
+  fromServersState.getServerCurrentPage
+);
