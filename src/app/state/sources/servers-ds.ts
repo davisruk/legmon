@@ -5,13 +5,16 @@ import {
   ChangePageSizePayload,
   ChangePageSize,
   SetFilterPayload,
-  SetFilter
+  SetFilter,
+  SortDataSetPayload,
+  SortDataSet
 } from './../actions/servers-actions';
 import { Server } from './../../model/server.model';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
 import { AppState, selectServerPage } from '../app.state';
 import { Store } from '@ngrx/store';
+import { Sort } from '@angular/material';
 
 export class ServersDataSource implements DataSource<Server> {
   constructor(private store: Store<AppState>) {}
@@ -34,5 +37,10 @@ export class ServersDataSource implements DataSource<Server> {
   applyFilter(value: string) {
     const payload: SetFilterPayload = { filter: value };
     this.store.dispatch(new SetFilter(payload));
+  }
+
+  sort(sort: Sort) {
+    const payload: SortDataSetPayload = { sort: sort };
+    this.store.dispatch(new SortDataSet(payload));
   }
 }

@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Sort } from '@angular/material';
 
 export enum ServersActionTypes {
   LOAD_SERVERS = '[Servers] Load Servers',
@@ -6,7 +7,8 @@ export enum ServersActionTypes {
   LOAD_SERVERS_FAILURE = '[Servers] Load Servers Failure',
   CHANGE_PAGE = '[Servers] Change Page',
   CHANGE_PAGE_SIZE = '[Servers] Change Page Size',
-  SET_FILTER = '[Servers] Set Filter'
+  SET_FILTER = '[Servers] Set Filter',
+  SORT_DATA_SET = '[Servers] Sort Data Set'
 }
 
 export class LoadServers implements Action {
@@ -51,10 +53,19 @@ export class SetFilter implements Action {
   constructor(public payload: any) {}
 }
 
+export class SortDataSetPayload {
+  readonly sort: Sort;
+}
+export class SortDataSet implements Action {
+  readonly type: string = ServersActionTypes.SORT_DATA_SET;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LoadServers
   | LoadServersSuccess
   | LoadServersFailure
   | ChangePage
   | ChangePageSize
-  | SetFilter;
+  | SetFilter
+  | SortDataSet;

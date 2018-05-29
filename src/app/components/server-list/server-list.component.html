@@ -6,7 +6,7 @@
   </div>
   <div fxLayoutAlign="center">
     <div style="min-width: 60vw">
-      <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
         <ng-container cdkColumnDef="name">
           <mat-header-cell mat-sort-header *cdkHeaderCellDef> Name </mat-header-cell>
           <mat-cell *cdkCellDef="let server"> {{server.name}} </mat-cell>

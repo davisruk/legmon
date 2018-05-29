@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 import { ServerList } from '../../model/server.model';
 import { combineLatest, map } from 'rxjs/operators';
 import { ServersDataSource } from '../../state/sources/servers-ds';
-import { PageEvent } from '@angular/material';
+import { PageEvent, Sort } from '@angular/material';
 
 @Component({
   selector: 'app-server-list',
@@ -52,5 +52,12 @@ export class ServerListComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.applyFilter(filterValue);
+  }
+
+  sortData(sort: Sort) {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    this.dataSource.sort(sort);
   }
 }

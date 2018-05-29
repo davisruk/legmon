@@ -1,12 +1,15 @@
 import {
   ChangePagePayload,
   ChangePageSizePayload,
-  SetFilterPayload
+  SetFilterPayload,
+  SortDataSetPayload,
+  SortDataSet
 } from './../actions/servers-actions';
 import { Server } from './../../model/server.model';
 import { ServersState } from '../servers.state';
 import { Action } from '@ngrx/store';
 import { ServersActionTypes, All } from '../actions/servers-actions';
+import { Sort } from '@angular/material';
 
 const initialState: ServersState = {
   serverList: { servers: [] },
@@ -63,9 +66,42 @@ export function serverStateReducer(
       return getPageWithFilter(state, payload.filter);
     }
 
+    case ServersActionTypes.SORT_DATA_SET: {
+      const payload: SortDataSetPayload = action.payload as SortDataSetPayload;
+      return sortDataSet(state, payload.sort);
+    }
     default:
       return state;
   }
+}
+
+function sortDataSet(state: ServersState, sort: Sort): ServersState {
+  // sort the filtered data
+  const sortedData: Server[] = state.serverList.servers.sort((a, b) => {
+    const isAsc = sort.direction === 'asc';
+    switch (sort.active) {
+      case 'name':
+        return compare(a.name, b.name, isAsc);
+      case 'hostname':
+        return compare(a.hostname, b.hostname, isAsc);
+      case 'port':
+        return compare(a.port, b.port, isAsc);
+      default:
+        return 0;
+    }
+  });
+  const newState: ServersState = Object.assign({}, state);
+  newState.serverList.servers = sortedData;
+  return getPageWithFilter(
+    newState,
+    state.serverPage.filter.filter,
+    0,
+    state.serverPage.pageSize
+  );
+}
+
+function compare(a, b, isAsc) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
 function getPage(servers: Server[], page: number, pageSize: number): Server[] {
