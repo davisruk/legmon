@@ -1,12 +1,12 @@
 <div style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
   <div fxLayoutAlign="center">
     <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      <input id="filterInput" matInput placeholder="Filter">
     </mat-form-field>
   </div>
   <div fxLayoutAlign="center">
     <div style="min-width: 60vw">
-      <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+      <mat-table [dataSource]="servers" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
         <ng-container cdkColumnDef="name">
           <mat-header-cell mat-sort-header *cdkHeaderCellDef> Name </mat-header-cell>
           <mat-cell *cdkCellDef="let server"> {{server.name}} </mat-cell>
@@ -26,7 +26,7 @@
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
-      <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers$ | async"
+      <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers"
         showFirstLastButtons (page)=onPageEvent($event)></mat-paginator>
     </div>
   </div>

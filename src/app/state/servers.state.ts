@@ -1,4 +1,5 @@
 import { ServerList, Server } from './../model/server.model';
+import { Sort } from '@angular/material';
 export class ServersState {
   serverList: ServerList;
   serverPage: ServerPage;
@@ -9,6 +10,7 @@ export class ServerPage {
   pageSize: number;
   filter: ServerFilter;
   currentPage: number;
+  currentSort: Sort;
 }
 
 export class ServerFilter {

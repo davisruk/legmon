@@ -17,7 +17,8 @@ const initialState: ServersState = {
     pageData: [],
     pageSize: 5,
     filter: { filter: '', filterSet: [], filteredDataSet: [] },
-    currentPage: 0
+    currentPage: 0,
+    currentSort: { active: null, direction: '' }
   }
 };
 
@@ -34,6 +35,7 @@ export function serverStateReducer(
           pageData: servers.slice(0, state.serverPage.pageSize),
           pageSize: state.serverPage.pageSize,
           currentPage: 0,
+          currentSort: state.serverPage.currentSort,
           filter: {
             filter: '',
             filterSet: computeFilterSet(servers),
@@ -79,8 +81,11 @@ export function serverStateReducer(
 
 function sortDataSet(state: ServersState, sort: Sort): ServersState {
   // sort the filtered data
-  const sortedData: Server[] = state.serverPage.filter.filteredDataSet.sort(
-    (a, b) => {
+  let sortedData: Server[];
+  if (!sort.active || sort.direction === '') {
+    sortedData = state.serverPage.filter.filteredDataSet;
+  } else {
+    sortedData = state.serverPage.filter.filteredDataSet.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'name':
@@ -92,16 +97,26 @@ function sortDataSet(state: ServersState, sort: Sort): ServersState {
         default:
           return 0;
       }
+    });
+  }
+  return {
+    serverList: state.serverList,
+    serverPage: {
+      pageData: getPage(
+        sortedData,
+        state.serverPage.currentPage,
+        state.serverPage.pageSize
+      ),
+      pageSize: state.serverPage.pageSize,
+      currentPage: state.serverPage.currentPage,
+      currentSort: sort,
+      filter: {
+        filter: state.serverPage.filter.filter,
+        filterSet: computeFilterSet(state.serverList.servers),
+        filteredDataSet: sortedData
+      }
     }
-  );
-  const newState: ServersState = Object.assign({}, state);
-  newState.serverPage.filter.filteredDataSet = sortedData;
-  return getPageWithFilter(
-    newState,
-    state.serverPage.filter.filter,
-    state.serverPage.currentPage,
-    state.serverPage.pageSize
-  );
+  };
 }
 
 function compare(a, b, isAsc) {
@@ -127,7 +142,7 @@ function getPageWithFilter(
   filter: string,
   page?: number,
   pageSize?: number
-) {
+): ServersState {
   // if filter reset then return the base set
   const _pageSize = pageSize ? pageSize : state.serverPage.pageSize;
   const _page = page ? page : 0;
@@ -138,6 +153,7 @@ function getPageWithFilter(
         pageData: getPage(state.serverList.servers, _page, _pageSize),
         pageSize: _pageSize,
         currentPage: _page,
+        currentSort: state.serverPage.currentSort,
         filter: {
           filter: '',
           filterSet: computeFilterSet(state.serverList.servers),
@@ -156,16 +172,13 @@ function getPageWithFilter(
     }
   }
 
-  return {
+  const newState: ServersState = {
     serverList: state.serverList,
     serverPage: {
-      pageData: getPage(
-        state.serverPage.filter.filteredDataSet,
-        _page,
-        _pageSize
-      ),
+      pageData: getPage(filteredDataSet, _page, _pageSize),
       pageSize: _pageSize,
       currentPage: _page,
+      currentSort: state.serverPage.currentSort,
       filter: {
         filter: filter,
         filterSet: computeFilterSet(state.serverList.servers),
@@ -173,4 +186,9 @@ function getPageWithFilter(
       }
     }
   };
+
+  if (state.serverPage.currentSort.active) {
+    return sortDataSet(newState, state.serverPage.currentSort);
+  }
+  return newState;
 }

@@ -52,6 +52,8 @@ import { RouterCustomSerializer } from '../state/router.state';
 import { RouterEffects } from '../state/effects/nav-effects';
 import { ServersEffects } from '../state/effects/servers-effects';
 import { CdkTableModule } from '@angular/cdk/table';
+import { ServersStatusPageComponent } from '../components/servers-status-page/servers-status-page.component';
+import { ServerDetailComponent } from '../components/server-detail/server-detail.component';
 
 @NgModule({
   imports: [
@@ -140,6 +142,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     ThemePickerComponent,
     MainContentComponent,
     ServerListComponent,
+    ServersStatusPageComponent,
     FlexLayoutModule
   ],
   declarations: [
@@ -149,7 +152,9 @@ import { CdkTableModule } from '@angular/cdk/table';
     LandingComponent,
     LoginComponent,
     SignUpComponent,
-    MainContentComponent
+    MainContentComponent,
+    ServersStatusPageComponent,
+    ServerDetailComponent
   ],
   providers: [
     { provide: RouterStateSerializer, useClass: RouterCustomSerializer }

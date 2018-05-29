@@ -5,14 +5,19 @@ import {
   selectServerArrayLength,
   selectServerFilteredDataSetLength
 } from './../../state/app.state';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state/app.state';
 import { LoadServers } from '../../state/actions/servers-actions';
-import { Observable } from 'rxjs';
+import { Observable, of, fromEvent } from 'rxjs';
 import { ServerList } from '../../model/server.model';
-import { combineLatest, map } from 'rxjs/operators';
-import { ServersDataSource } from '../../state/sources/servers-ds';
+import {
+  combineLatest,
+  map,
+  debounceTime,
+  distinctUntilChanged,
+  filter
+} from 'rxjs/operators';
 import { PageEvent, Sort } from '@angular/material';
 
 @Component({
@@ -21,43 +26,40 @@ import { PageEvent, Sort } from '@angular/material';
   styleUrls: ['./server-list.component.scss']
 })
 export class ServerListComponent implements OnInit {
-  displayedColumns = ['name', 'hostname', 'port', 'url'];
-  pageSizeOptions = [2, 3, 5];
-  pageSize = 5;
-  pageNumber = 0;
-  numberOfServers$: Observable<number>;
-  dataSource: ServersDataSource;
+  @Input() displayedColumns: string[];
+  @Input() pageSizeOptions: number[];
+  @Input() pageSize: number;
+  @Input() pageNumber: number;
+  @Input() numberOfServers: number;
+  @Input() servers: Server[];
+  @Output('pageEvent') pageEvent = new EventEmitter<PageEvent>();
+  @Output('filterEvent') filterEvent = new EventEmitter<string>();
+  @Output('sortEvent') sortEvent = new EventEmitter<Sort>();
 
-  constructor(private store: Store<AppState>) {
-    this.store.dispatch(new LoadServers({}));
-    this.dataSource = new ServersDataSource(this.store);
-    this.numberOfServers$ = this.store.select(
-      selectServerFilteredDataSetLength
-    );
-  }
+  constructor() {}
 
   ngOnInit() {
-    this.dataSource.changePage(0, this.pageSize);
+    const inputBox = document.getElementById('filterInput');
+    const typeahead = fromEvent(inputBox, 'input').pipe(
+      map((e: KeyboardEvent) => (<HTMLTextAreaElement>e.target).value),
+      debounceTime(300),
+      distinctUntilChanged()
+    );
+
+    typeahead.subscribe(data => {
+      this.applyFilter(data);
+    });
   }
 
   onPageEvent(event: PageEvent) {
-    if (this.pageSize !== event.pageSize) {
-      this.pageSize = event.pageSize;
-      this.dataSource.changePageSize(event.pageSize);
-    }
-    this.dataSource.changePage(event.pageIndex, event.pageSize);
+    this.pageEvent.emit(event);
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.applyFilter(filterValue);
+    this.filterEvent.emit(filterValue);
   }
 
   sortData(sort: Sort) {
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-    this.dataSource.sort(sort);
+    this.sortEvent.emit(sort);
   }
 }
