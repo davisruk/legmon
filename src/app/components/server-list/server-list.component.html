@@ -1,31 +1,33 @@
-<div flexLayout="column" fxLayoutAlign="center">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
-<div flexLayout="column" style="min-height: 50vh" fxLayoutAlign="center">
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let server"> {{server.name}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="hostname">
-      <mat-header-cell *matHeaderCellDef> Host Name </mat-header-cell>
-      <mat-cell *matCellDef="let server"> {{server.hostname}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="port">
-      <mat-header-cell *matHeaderCellDef> Port </mat-header-cell>
-      <mat-cell *matCellDef="let server"> {{server.port}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="url">
-      <mat-header-cell *matHeaderCellDef> URL </mat-header-cell>
-      <mat-cell *matCellDef="let server"> {{server.url}} </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>
-<div flexLayout="column" fxLayoutAlign="center">
-  <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers$ | async" showFirstLastButtons
-    (page)=onPageEvent($event)></mat-paginator>
+<div style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayoutAlign="center">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div fxLayoutAlign="center">
+    <div style="min-width: 60vw">
+      <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container cdkColumnDef="name">
+          <mat-header-cell mat-sort-header *cdkHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *cdkCellDef="let server"> {{server.name}} </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="hostname">
+          <mat-header-cell mat-sort-header *cdkHeaderCellDef> Host Name </mat-header-cell>
+          <mat-cell *cdkCellDef="let server"> {{server.hostname}} </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="port">
+          <mat-header-cell mat-sort-header *cdkHeaderCellDef> Port </mat-header-cell>
+          <mat-cell *cdkCellDef="let server"> {{server.port}} </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="url">
+          <mat-header-cell *cdkHeaderCellDef> URL </mat-header-cell>
+          <mat-cell *cdkCellDef="let server"> {{server.url}} </mat-cell>
+        </ng-container>
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers$ | async"
+        showFirstLastButtons (page)=onPageEvent($event)></mat-paginator>
+    </div>
+  </div>
 </div>

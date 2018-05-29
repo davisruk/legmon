@@ -51,6 +51,7 @@ import {
 import { RouterCustomSerializer } from '../state/router.state';
 import { RouterEffects } from '../state/effects/nav-effects';
 import { ServersEffects } from '../state/effects/servers-effects';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { ServersEffects } from '../state/effects/servers-effects';
     HttpClientModule,
     FormsModule,
     LayoutModule,
+    CdkTableModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
