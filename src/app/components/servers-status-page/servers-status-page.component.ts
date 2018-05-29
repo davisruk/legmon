@@ -57,18 +57,13 @@ export class ServersStatusPageComponent implements OnInit {
   }
 
   handleFilterEvent(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     const payload: SetFilterPayload = { filter: filterValue };
     this.store.dispatch(new SetFilter(payload));
   }
 
   handleSortEvent(sort: Sort) {
-    /*
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-*/
     const payload: SortDataSetPayload = { sort: sort };
     this.store.dispatch(new SortDataSet(payload));
   }

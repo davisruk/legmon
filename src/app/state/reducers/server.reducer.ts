@@ -67,25 +67,30 @@ export function serverStateReducer(
 
     case ServersActionTypes.SET_FILTER: {
       const payload: SetFilterPayload = action.payload as SetFilterPayload;
-      return getPageWithFilter(state, payload.filter);
+      return getPageWithFilter(
+        state,
+        payload.filter,
+        state.serverPage.currentPage,
+        state.serverPage.pageSize
+      );
     }
 
     case ServersActionTypes.SORT_DATA_SET: {
       const payload: SortDataSetPayload = action.payload as SortDataSetPayload;
-      return sortDataSet(state, payload.sort);
+      return getStateWithSort(state, payload.sort);
     }
     default:
       return state;
   }
 }
 
-function sortDataSet(state: ServersState, sort: Sort): ServersState {
+function sortServers(servers: Server[], sort: Sort): Server[] {
   // sort the filtered data
   let sortedData: Server[];
   if (!sort.active || sort.direction === '') {
-    sortedData = state.serverPage.filter.filteredDataSet;
+    sortedData = servers;
   } else {
-    sortedData = state.serverPage.filter.filteredDataSet.sort((a, b) => {
+    sortedData = servers.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'name':
@@ -99,6 +104,15 @@ function sortDataSet(state: ServersState, sort: Sort): ServersState {
       }
     });
   }
+  return sortedData;
+}
+
+function getStateWithSort(state: ServersState, sort: Sort): ServersState {
+  // sort the filtered data
+  const sortedData: Server[] = sortServers(
+    state.serverPage.filter.filteredDataSet,
+    sort
+  );
   return {
     serverList: state.serverList,
     serverPage: {
@@ -147,17 +161,21 @@ function getPageWithFilter(
   const _pageSize = pageSize ? pageSize : state.serverPage.pageSize;
   const _page = page ? page : 0;
   if (filter == null || filter === undefined || filter.length === 0) {
+    const sortedData: Server[] = sortServers(
+      state.serverList.servers,
+      state.serverPage.currentSort
+    );
     return {
       serverList: state.serverList,
       serverPage: {
-        pageData: getPage(state.serverList.servers, _page, _pageSize),
+        pageData: getPage(sortedData, _page, _pageSize),
         pageSize: _pageSize,
         currentPage: _page,
         currentSort: state.serverPage.currentSort,
         filter: {
           filter: '',
-          filterSet: computeFilterSet(state.serverList.servers),
-          filteredDataSet: state.serverList.servers
+          filterSet: computeFilterSet(sortedData),
+          filteredDataSet: sortedData
         }
       }
     };
@@ -188,7 +206,7 @@ function getPageWithFilter(
   };
 
   if (state.serverPage.currentSort.active) {
-    return sortDataSet(newState, state.serverPage.currentSort);
+    return getStateWithSort(newState, state.serverPage.currentSort);
   }
   return newState;
 }
