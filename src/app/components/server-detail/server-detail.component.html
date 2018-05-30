@@ -1,7 +1,7 @@
-<div *ngIf="server.status" style="min-height: 30vh" fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="server.hostname" style="min-height: 30vh" fxLayout="column" fxLayoutAlign="center center">
   <mat-card>
-    <mat-card-title>Server Details</mat-card-title>
-    <mat-card-content>
+    <mat-card-title>Server Details - {{server.hostname}} </mat-card-title>
+    <mat-card-content *ngIf="server.status">
       <input mat-input value="{{server.hostname}}" readonly="true">
       <input mat-input value="{{server.status.status.available}}" readonly="true">
       <input mat-input value="{{server.status.status.currentStatus}}" readonly="true">

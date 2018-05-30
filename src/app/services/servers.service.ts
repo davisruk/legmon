@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
 import { map, catchError } from 'rxjs/operators';
 
@@ -33,6 +33,23 @@ export class ServersService {
     port: string,
     url: string
   ): Observable<ServerStatus> {
+    /*
+    const status: ServerStatus = {
+      status: {
+        message: {
+          code: 'A1',
+          level: 'One',
+          messageDefault: 'default',
+          parameters: { test1: 'test', test2: 'test' }
+        },
+        available: true,
+        currentStatus: 'Online',
+        deployments: [{ deploymentName: 'Deployment 1', deployed: 'true' }],
+        label: 'X-Leg'
+      }
+    };
+    return of(status);
+  */
     return this.http
       .get<ServerStatus>('http://' + server + ':' + port + url)
       .pipe(catchError(this.handleError));

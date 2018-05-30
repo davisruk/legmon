@@ -11,7 +11,7 @@ export class ServerPage {
   filter: ServerFilter;
   currentPage: number;
   currentSort: Sort;
-  currentServer?: Server;
+  currentServer: Server;
 }
 
 export class ServerFilter {

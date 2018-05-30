@@ -3,4 +3,4 @@
   (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)">
 </app-server-list>
 
-<app-server-detail [server]="(serverPage$ | async).currentServer"></app-server-detail>
+<app-server-detail [server]="(currentServer$ | async)"></app-server-detail>

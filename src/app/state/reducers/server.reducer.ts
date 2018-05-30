@@ -47,6 +47,7 @@ export function serverStateReducer(
         }
       };
     }
+
     case ServersActionTypes.REQUEST_SERVER_STATUS_SUCCESS: {
       const serverStatus: ServerStatus = action.payload.serverStatus;
       const originalRequest: RequestServerStatusPayload =
@@ -58,17 +59,30 @@ export function serverStateReducer(
         return s.hostname === originalRequest.serverName;
       });
       server.status = serverStatus;
-      return state;
+      return newState;
     }
 
     case ServersActionTypes.SET_CURRENT_SERVER: {
       const currentServer: Server = action.payload.server;
-      const newState: ServersState = Object.assign({}, state);
-      const server: Server = newState.serverList.servers.find(s => {
+      const server: Server = state.serverList.servers.find(s => {
         return s.hostname === currentServer.hostname;
       });
-      newState.serverPage.currentServer = server;
-      return newState;
+
+      return {
+        serverList: state.serverList,
+        serverPage: {
+          pageData: state.serverPage.pageData,
+          pageSize: state.serverPage.pageSize,
+          currentPage: state.serverPage.currentPage,
+          currentSort: state.serverPage.currentSort,
+          currentServer: Object.assign({}, server),
+          filter: {
+            filter: state.serverPage.filter.filter,
+            filterSet: computeFilterSet(state.serverList.servers),
+            filteredDataSet: state.serverPage.filter.filteredDataSet
+          }
+        }
+      };
     }
 
     case ServersActionTypes.CHANGE_PAGE: {
@@ -225,6 +239,7 @@ function getPageWithFilter(
       pageSize: _pageSize,
       currentPage: _page,
       currentSort: state.serverPage.currentSort,
+      currentServer: state.serverPage.currentServer,
       filter: {
         filter: filter,
         filterSet: computeFilterSet(state.serverList.servers),

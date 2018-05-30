@@ -45,12 +45,14 @@ export class ServersStatusPageComponent implements OnInit {
   numberOfServers$: Observable<number>;
   servers$: Observable<Server[]>;
   serverPage$: Observable<ServerPage>;
+  currentServer$: Observable<Server>;
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
     this.numberOfServers$ = this.store.select(
       selectServerFilteredDataSetLength
     );
+    this.currentServer$ = this.store.select(selectCurrentServer);
     this.servers$ = this.store.select(selectServerPageData);
     this.serverPage$ = this.store.select(selectServerPage);
   }
@@ -94,8 +96,9 @@ export class ServersStatusPageComponent implements OnInit {
       serverName: server.hostname,
       serverPort: server.port
     };
-    const currentServerPayload: SetCurrentServerPayload = { server: server };
+
     this.store.dispatch(new RequestServerStatus(payload));
+    const currentServerPayload: SetCurrentServerPayload = { server: server };
     this.store.dispatch(new SetCurrentServer(currentServerPayload));
   }
 }
