@@ -2,13 +2,17 @@ import {
   LoadServers,
   LoadServersSuccess,
   ServersActionTypes,
-  LoadServersFailure
+  LoadServersFailure,
+  RequestServerStatus,
+  RequestServerStatusSuccess,
+  RequestServerStatusFailure,
+  RequestServerStatusSuccessPayload
 } from './../actions/servers-actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { ServersService } from '../../services/servers.service';
 import { map, switchMap, catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 @Injectable()
 export class ServersEffects {
@@ -38,6 +42,35 @@ export class ServersEffects {
             return of(new LoadServersFailure({ error: error }));
           })
         );
+      })
+    );
+
+  @Effect()
+  requestServerStatus$: Observable<any> = this.actions
+    .ofType(ServersActionTypes.REQUEST_SERVER_STATUS)
+    .pipe(
+      map((action: RequestServerStatus) => action.payload),
+      switchMap(payload => {
+        return this.serversService
+          .requestServerStatus(
+            payload.serverName,
+            payload.serverPort,
+            payload.url
+          )
+          .pipe(
+            map(serverStatus => {
+              console.log(serverStatus);
+              const successPayload: RequestServerStatusSuccessPayload = {
+                originalRequest: payload,
+                serverStatus: serverStatus
+              };
+              return new RequestServerStatusSuccess(successPayload);
+            }),
+            catchError(error => {
+              console.log(error);
+              return of(new RequestServerStatusFailure({ error: error }));
+            })
+          );
       })
     );
 }

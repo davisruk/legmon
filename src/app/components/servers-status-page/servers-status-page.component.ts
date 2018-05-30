@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 import {
   AppState,
   selectServerFilteredDataSetLength,
-  selectServerPageData
+  selectServerPageData,
+  selectCurrentServer,
+  selectServerPage
 } from '../../state/app.state';
 import {
   LoadServers,
@@ -18,12 +20,17 @@ import {
   SetFilterPayload,
   SetFilter,
   ChangePageSizePayload,
-  ChangePageSize
+  ChangePageSize,
+  RequestServerStatus,
+  RequestServerStatusPayload,
+  SetCurrentServer,
+  SetCurrentServerPayload
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
-import { Server } from 'src/app/model/server.model';
+import { Server, ServerStatus } from 'src/app/model/server.model';
+import { ServerPage } from '../../state/servers.state';
 
 @Component({
   selector: 'app-servers-status-page',
@@ -32,11 +39,12 @@ import { Server } from 'src/app/model/server.model';
 })
 export class ServersStatusPageComponent implements OnInit {
   displayedColumns = ['name', 'hostname', 'port', 'url'];
-  pageSizeOptions = [2, 3, 5];
-  pageSize = 5;
+  pageSizeOptions = [5, 10, 50];
+  pageSize = 10;
   pageNumber = 0;
   numberOfServers$: Observable<number>;
   servers$: Observable<Server[]>;
+  serverPage$: Observable<ServerPage>;
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
@@ -44,6 +52,7 @@ export class ServersStatusPageComponent implements OnInit {
       selectServerFilteredDataSetLength
     );
     this.servers$ = this.store.select(selectServerPageData);
+    this.serverPage$ = this.store.select(selectServerPage);
   }
 
   ngOnInit() {}
@@ -76,5 +85,17 @@ export class ServersStatusPageComponent implements OnInit {
   changePageSize(pageSize: number) {
     const payload: ChangePageSizePayload = { pageSize: pageSize };
     this.store.dispatch(new ChangePageSize(payload));
+  }
+
+  handleRowClick(server: Server) {
+    console.log(server);
+    const payload: RequestServerStatusPayload = {
+      url: server.url,
+      serverName: server.hostname,
+      serverPort: server.port
+    };
+    const currentServerPayload: SetCurrentServerPayload = { server: server };
+    this.store.dispatch(new RequestServerStatus(payload));
+    this.store.dispatch(new SetCurrentServer(currentServerPayload));
   }
 }

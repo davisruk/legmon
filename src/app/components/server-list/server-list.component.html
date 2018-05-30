@@ -24,7 +24,7 @@
           <mat-cell *cdkCellDef="let server"> {{server.url}} </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row [ngClass]="{'highlight': highlightRow(row)}" (click)="highlight(row)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row [ngClass]="{'highlight': useHighlightClass(row)}" (click)="highlight(row)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
       <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers"
         showFirstLastButtons (page)=onPageEvent($event)></mat-paginator>

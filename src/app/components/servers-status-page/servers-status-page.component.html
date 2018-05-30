@@ -1,5 +1,6 @@
 <app-server-list [pageSize]="pageSize" [pageNumber]="pageNumber" [displayedColumns]="displayedColumns" [pageSizeOptions]="pageSizeOptions"
   [numberOfServers]="numberOfServers$ | async" [servers]="servers$ | async" (filterEvent)="handleFilterEvent($event)" (pageEvent)="handlePageEvent($event)"
-  (sortEvent)="handleSortEvent($event)">
+  (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)">
 </app-server-list>
-<app-server-detail></app-server-detail>
+
+<app-server-detail [server]="(serverPage$ | async).currentServer"></app-server-detail>

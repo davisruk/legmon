@@ -3,9 +3,10 @@ import {
   ChangePageSizePayload,
   SetFilterPayload,
   SortDataSetPayload,
-  SortDataSet
+  SortDataSet,
+  RequestServerStatusPayload
 } from './../actions/servers-actions';
-import { Server } from './../../model/server.model';
+import { Server, ServerStatus } from './../../model/server.model';
 import { ServersState } from '../servers.state';
 import { Action } from '@ngrx/store';
 import { ServersActionTypes, All } from '../actions/servers-actions';
@@ -15,10 +16,11 @@ const initialState: ServersState = {
   serverList: { servers: [] },
   serverPage: {
     pageData: [],
-    pageSize: 5,
+    pageSize: 10,
     filter: { filter: '', filterSet: [], filteredDataSet: [] },
     currentPage: 0,
-    currentSort: { active: null, direction: '' }
+    currentSort: { active: null, direction: '' },
+    currentServer: { name: '', hostname: '', port: '', url: '' }
   }
 };
 
@@ -36,6 +38,7 @@ export function serverStateReducer(
           pageSize: state.serverPage.pageSize,
           currentPage: 0,
           currentSort: state.serverPage.currentSort,
+          currentServer: state.serverPage.currentServer,
           filter: {
             filter: '',
             filterSet: computeFilterSet(servers),
@@ -43,6 +46,29 @@ export function serverStateReducer(
           }
         }
       };
+    }
+    case ServersActionTypes.REQUEST_SERVER_STATUS_SUCCESS: {
+      const serverStatus: ServerStatus = action.payload.serverStatus;
+      const originalRequest: RequestServerStatusPayload =
+        action.payload.originalRequest;
+      console.log('Get Status Success');
+      console.log(serverStatus);
+      const newState: ServersState = Object.assign({}, state);
+      const server: Server = newState.serverList.servers.find(s => {
+        return s.hostname === originalRequest.serverName;
+      });
+      server.status = serverStatus;
+      return state;
+    }
+
+    case ServersActionTypes.SET_CURRENT_SERVER: {
+      const currentServer: Server = action.payload.server;
+      const newState: ServersState = Object.assign({}, state);
+      const server: Server = newState.serverList.servers.find(s => {
+        return s.hostname === currentServer.hostname;
+      });
+      newState.serverPage.currentServer = server;
+      return newState;
     }
 
     case ServersActionTypes.CHANGE_PAGE: {
@@ -124,6 +150,7 @@ function getStateWithSort(state: ServersState, sort: Sort): ServersState {
       pageSize: state.serverPage.pageSize,
       currentPage: state.serverPage.currentPage,
       currentSort: sort,
+      currentServer: state.serverPage.currentServer,
       filter: {
         filter: state.serverPage.filter.filter,
         filterSet: computeFilterSet(state.serverList.servers),
@@ -172,6 +199,7 @@ function getPageWithFilter(
         pageSize: _pageSize,
         currentPage: _page,
         currentSort: state.serverPage.currentSort,
+        currentServer: state.serverPage.currentServer,
         filter: {
           filter: '',
           filterSet: computeFilterSet(sortedData),

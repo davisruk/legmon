@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Sort } from '@angular/material';
+import { ServerStatus, Server } from '../../model/server.model';
 
 export enum ServersActionTypes {
   LOAD_SERVERS = '[Servers] Load Servers',
@@ -8,7 +9,11 @@ export enum ServersActionTypes {
   CHANGE_PAGE = '[Servers] Change Page',
   CHANGE_PAGE_SIZE = '[Servers] Change Page Size',
   SET_FILTER = '[Servers] Set Filter',
-  SORT_DATA_SET = '[Servers] Sort Data Set'
+  SORT_DATA_SET = '[Servers] Sort Data Set',
+  REQUEST_SERVER_STATUS = '[Servers] Request Server Status',
+  REQUEST_SERVER_STATUS_SUCCESS = '[Servers] Request Server Status Success',
+  REQUEST_SERVER_STATUS_FAILURE = '[Servers] Request Server Status Failure',
+  SET_CURRENT_SERVER = '[Servers] Set Current Server'
 }
 
 export class LoadServers implements Action {
@@ -61,6 +66,41 @@ export class SortDataSet implements Action {
   constructor(public payload: any) {}
 }
 
+export class RequestServerStatusPayload {
+  readonly url: string;
+  readonly serverName: string;
+  readonly serverPort: string;
+}
+
+export class RequestServerStatus implements Action {
+  readonly type: string = ServersActionTypes.REQUEST_SERVER_STATUS;
+  constructor(public payload: any) {}
+}
+
+export class RequestServerStatusSuccessPayload {
+  readonly originalRequest: RequestServerStatusPayload;
+  readonly serverStatus: ServerStatus;
+}
+
+export class RequestServerStatusSuccess implements Action {
+  readonly type: string = ServersActionTypes.REQUEST_SERVER_STATUS_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class RequestServerStatusFailure implements Action {
+  readonly type: string = ServersActionTypes.REQUEST_SERVER_STATUS_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class SetCurrentServerPayload {
+  readonly server: Server;
+}
+
+export class SetCurrentServer implements Action {
+  readonly type: string = ServersActionTypes.SET_CURRENT_SERVER;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LoadServers
   | LoadServersSuccess
@@ -68,4 +108,8 @@ export type All =
   | ChangePage
   | ChangePageSize
   | SetFilter
-  | SortDataSet;
+  | SortDataSet
+  | RequestServerStatus
+  | RequestServerStatusSuccess
+  | RequestServerStatusFailure
+  | SetCurrentServer;

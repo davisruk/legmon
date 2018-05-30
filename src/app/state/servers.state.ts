@@ -11,6 +11,7 @@ export class ServerPage {
   filter: ServerFilter;
   currentPage: number;
   currentSort: Sort;
+  currentServer?: Server;
 }
 
 export class ServerFilter {
@@ -40,3 +41,6 @@ export const getServerFilterDataSetLength = (state: ServerFilter): number =>
 
 export const getServerCurrentPage = (state: ServerPage): number =>
   state.currentPage;
+
+export const getCurrentServer = (state: ServerPage): Server =>
+  state.currentServer;

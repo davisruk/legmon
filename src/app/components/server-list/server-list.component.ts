@@ -35,6 +35,7 @@ export class ServerListComponent implements OnInit {
   @Output('pageEvent') pageEvent = new EventEmitter<PageEvent>();
   @Output('filterEvent') filterEvent = new EventEmitter<string>();
   @Output('sortEvent') sortEvent = new EventEmitter<Sort>();
+  @Output('rowClick') rowClick = new EventEmitter<Server>();
   selectedRow = '';
 
   constructor() {}
@@ -63,11 +64,13 @@ export class ServerListComponent implements OnInit {
   sortData(sort: Sort) {
     this.sortEvent.emit(sort);
   }
-  highlight(row) {
+
+  highlight(row: Server) {
+    this.rowClick.emit(row);
     this.selectedRow = row.hostname;
   }
 
-  highlightRow(row): boolean {
+  useHighlightClass(row: Server): boolean {
     return this.selectedRow === row.hostname;
   }
 }

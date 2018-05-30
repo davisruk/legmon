@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { Server } from 'src/app/model/server.model';
+import { Server, ServerStatus } from 'src/app/model/server.model';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -26,5 +26,15 @@ export class ServersService {
       );
     }
     return throwError('Something bad happened; please try again later.');
+  }
+
+  public requestServerStatus(
+    server: string,
+    port: string,
+    url: string
+  ): Observable<ServerStatus> {
+    return this.http
+      .get<ServerStatus>('http://' + server + ':' + port + url)
+      .pipe(catchError(this.handleError));
   }
 }

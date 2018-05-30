@@ -1,3 +1,11 @@
-<p>
-  server-detail works!
-</p>
+<div *ngIf="server.status" style="min-height: 30vh" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-title>Server Details</mat-card-title>
+    <mat-card-content>
+      <input mat-input value="{{server.hostname}}" readonly="true">
+      <input mat-input value="{{server.status.status.available}}" readonly="true">
+      <input mat-input value="{{server.status.status.currentStatus}}" readonly="true">
+      <input mat-input value="{{server.status.status.label}}" readonly="true">
+    </mat-card-content>
+  </mat-card>
+</div>

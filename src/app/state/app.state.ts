@@ -114,3 +114,8 @@ export const selectServerCurrentPage = createSelector(
   selectServerPage,
   fromServersState.getServerCurrentPage
 );
+
+export const selectCurrentServer = createSelector(
+  selectServerPage,
+  fromServersState.getCurrentServer
+);
