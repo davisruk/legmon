@@ -14,7 +14,10 @@ export enum ServersActionTypes {
   REQUEST_SERVER_STATUS_SUCCESS = '[Servers] Request Server Status Success',
   REQUEST_SERVER_STATUS_FAILURE = '[Servers] Request Server Status Failure',
   SET_CURRENT_SERVER = '[Servers] Set Current Server',
-  SET_SERVER_STATUS_LOADING = '[Servers] Set Server Status Loading'
+  SET_SERVER_STATUS_LOADING = '[Servers] Set Server Status Loading',
+  CHECK_SERVERS_STATUS = '[Servers] Check Servers Status',
+  CHECK_SERVERS_STATUS_SUCCESS = '[Servers] Check Servers Status Success',
+  CHECK_SERVERS_STATUS_FAILURE = '[Servers] Check Servers Status Failure'
 }
 
 export class LoadServers implements Action {
@@ -111,6 +114,29 @@ export class SetServerStatusLoading implements Action {
   constructor(public payload: any) {}
 }
 
+export class CheckServersStatusPayload {
+  readonly servers: Server[];
+}
+
+export class CheckServersStatus implements Action {
+  readonly type: string = ServersActionTypes.CHECK_SERVERS_STATUS;
+  constructor(public payload: any) {}
+}
+
+export class CheckServersStatusSuccessPayload {
+  readonly servers: Server[];
+}
+
+export class CheckServersStatusSuccess implements Action {
+  readonly type: string = ServersActionTypes.CHECK_SERVERS_STATUS_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class CheckServersStatusFailure implements Action {
+  readonly type: string = ServersActionTypes.CHECK_SERVERS_STATUS_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LoadServers
   | LoadServersSuccess
@@ -123,4 +149,7 @@ export type All =
   | RequestServerStatusSuccess
   | RequestServerStatusFailure
   | SetCurrentServer
-  | SetServerStatusLoading;
+  | SetServerStatusLoading
+  | CheckServersStatus
+  | CheckServersStatusSuccess
+  | CheckServersStatusFailure;

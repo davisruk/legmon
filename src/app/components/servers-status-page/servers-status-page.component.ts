@@ -26,7 +26,9 @@ import {
   SetCurrentServer,
   SetCurrentServerPayload,
   SetServerStatusLoading,
-  SetServerStatusLoadingPayload
+  SetServerStatusLoadingPayload,
+  CheckServersStatusPayload,
+  CheckServersStatus
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
 import { Observable, interval } from 'rxjs';
@@ -40,9 +42,9 @@ import { ServerPage } from '../../state/servers.state';
   styleUrls: ['./servers-status-page.component.scss']
 })
 export class ServersStatusPageComponent implements OnInit {
-  displayedColumns = ['name', 'hostname', 'port', 'url'];
+  displayedColumns = ['name', 'hostname', 'port', 'status'];
   pageSizeOptions = [5, 10, 50];
-  pageSize = 10;
+  pageSize = 5;
   pageNumber = 0;
   numberOfServers$: Observable<number>;
   servers$: Observable<Server[]>;
@@ -73,7 +75,13 @@ export class ServersStatusPageComponent implements OnInit {
     const payload: SetServerStatusLoadingPayload = {
       servers: this.servers
     };
+
+    const checkStatusPayload: CheckServersStatusPayload = {
+      servers: this.servers
+    };
+
     this.store.dispatch(new SetServerStatusLoading(payload));
+    this.store.dispatch(new CheckServersStatus(checkStatusPayload));
   }
 
   handlePageEvent(event: PageEvent) {

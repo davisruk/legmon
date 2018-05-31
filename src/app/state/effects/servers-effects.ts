@@ -6,13 +6,19 @@ import {
   RequestServerStatus,
   RequestServerStatusSuccess,
   RequestServerStatusFailure,
-  RequestServerStatusSuccessPayload
+  RequestServerStatusSuccessPayload,
+  CheckServersStatus,
+  CheckServersStatusPayload,
+  CheckServersStatusSuccess,
+  CheckServersStatusSuccessPayload,
+  CheckServersStatusFailure
 } from './../actions/servers-actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { ServersService } from '../../services/servers.service';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
+import { Server } from '../../model/server.model';
 
 @Injectable()
 export class ServersEffects {
@@ -71,6 +77,42 @@ export class ServersEffects {
               return of(new RequestServerStatusFailure({ error: error }));
             })
           );
+      })
+    );
+
+  @Effect()
+  checkServersStatus$: Observable<any> = this.actions
+    .ofType(ServersActionTypes.CHECK_SERVERS_STATUS)
+    .pipe(
+      map((action: CheckServersStatus) => action.payload),
+      switchMap(payload => {
+        const checkPayload: CheckServersStatusPayload = payload as CheckServersStatusPayload;
+        payload.servers.forEach((s: Server) => {
+          this.serversService
+            .requestServerStatus(s.hostname, s.port, s.url)
+            .subscribe(status => {
+              console.log(status.status.currentStatus);
+              s.status = status;
+              console.log(s.status.status.currentStatus);
+            });
+        });
+        /*
+            .pipe(
+              tap(status => {
+                console.log(status.status.currentStatus);
+                s.status.status = status.status;
+              })
+            );
+        });
+*/
+        const successPayload: CheckServersStatusSuccessPayload = {
+          servers: payload.servers
+        };
+        return of(new CheckServersStatusSuccess(successPayload));
+      }),
+      catchError(error => {
+        console.log(error);
+        return of(new CheckServersStatusFailure({ error: error }));
       })
     );
 }
