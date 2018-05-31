@@ -1,3 +1,12 @@
-.highlight {
-  background: lightblue;
+@import '~@angular/material/theming';
+
+@mixin setThemeForServerList($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  .highlight-primary {
+    background: mat-color($primary);
+  }
+  .highlight-accent {
+    background: mat-color($accent);
+  }
 }

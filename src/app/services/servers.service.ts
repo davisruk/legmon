@@ -33,7 +33,6 @@ export class ServersService {
     port: string,
     url: string
   ): Observable<ServerStatus> {
-    /*
     const status: ServerStatus = {
       status: {
         message: {
@@ -49,9 +48,10 @@ export class ServersService {
       }
     };
     return of(status);
-  */
+    /*
     return this.http
       .get<ServerStatus>('http://' + server + ':' + port + url)
       .pipe(catchError(this.handleError));
+  */
   }
 }

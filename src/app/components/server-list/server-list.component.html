@@ -1,5 +1,6 @@
 <div style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
   <div fxLayoutAlign="center">
+    <button mat-raised-button color="accent"></button>
     <mat-form-field>
       <input id="filterInput" matInput placeholder="Filter">
     </mat-form-field>
@@ -21,10 +22,12 @@
         </ng-container>
         <ng-container cdkColumnDef="url">
           <mat-header-cell *cdkHeaderCellDef> URL </mat-header-cell>
-          <mat-cell *cdkCellDef="let server"> {{server.url}} </mat-cell>
+          <mat-cell *cdkCellDef="let server">
+            <mat-spinner [diameter]="24" color="accent"></mat-spinner>
+          </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row [ngClass]="{'highlight': useHighlightClass(row)}" (click)="highlight(row)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row [ngClass]="{'highlight-accent': useHighlightClass(row)}" (click)="highlight(row)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
       <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers"
         showFirstLastButtons (page)=onPageEvent($event)></mat-paginator>

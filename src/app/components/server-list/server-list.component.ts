@@ -3,9 +3,18 @@ import {
   selectServerList,
   selectServerArray,
   selectServerArrayLength,
-  selectServerFilteredDataSetLength
+  selectServerFilteredDataSetLength,
+  selectThemeNameState
 } from './../../state/app.state';
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  Renderer2,
+  ElementRef
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state/app.state';
 import { LoadServers } from '../../state/actions/servers-actions';
@@ -18,14 +27,20 @@ import {
   distinctUntilChanged,
   filter
 } from 'rxjs/operators';
-import { PageEvent, Sort } from '@angular/material';
+import {
+  PageEvent,
+  Sort,
+  CanColor,
+  mixinColor,
+  ThemePalette
+} from '@angular/material';
 
 @Component({
   selector: 'app-server-list',
   templateUrl: './server-list.component.html',
   styleUrls: ['./server-list.component.scss']
 })
-export class ServerListComponent implements OnInit {
+export class ServerListComponent implements OnInit, CanColor {
   @Input() displayedColumns: string[];
   @Input() pageSizeOptions: number[];
   @Input() pageSize: number;
@@ -36,9 +51,10 @@ export class ServerListComponent implements OnInit {
   @Output('filterEvent') filterEvent = new EventEmitter<string>();
   @Output('sortEvent') sortEvent = new EventEmitter<Sort>();
   @Output('rowClick') rowClick = new EventEmitter<Server>();
+  @Input() color: ThemePalette;
   selectedRow = '';
 
-  constructor() {}
+  constructor(public renderer: Renderer2, public _elementRef: ElementRef) {}
 
   ngOnInit() {
     const inputBox = document.getElementById('filterInput');
@@ -74,3 +90,4 @@ export class ServerListComponent implements OnInit {
     return this.selectedRow === row.hostname;
   }
 }
+export const _MyComponentMixinBase = mixinColor(ServerListComponent, 'accent');
