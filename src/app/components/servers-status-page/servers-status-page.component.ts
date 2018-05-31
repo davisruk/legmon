@@ -24,10 +24,12 @@ import {
   RequestServerStatus,
   RequestServerStatusPayload,
   SetCurrentServer,
-  SetCurrentServerPayload
+  SetCurrentServerPayload,
+  SetServerStatusLoading,
+  SetServerStatusLoadingPayload
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
 import { Server, ServerStatus } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
@@ -44,8 +46,9 @@ export class ServersStatusPageComponent implements OnInit {
   pageNumber = 0;
   numberOfServers$: Observable<number>;
   servers$: Observable<Server[]>;
-  serverPage$: Observable<ServerPage>;
   currentServer$: Observable<Server>;
+  timerCheckStatus$: Observable<number>;
+  servers: Server[];
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
@@ -54,10 +57,24 @@ export class ServersStatusPageComponent implements OnInit {
     );
     this.currentServer$ = this.store.select(selectCurrentServer);
     this.servers$ = this.store.select(selectServerPageData);
-    this.serverPage$ = this.store.select(selectServerPage);
+    this.servers$.subscribe(s => {
+      this.servers = s;
+    });
+    this.timerCheckStatus$ = interval(5000);
+    this.timerCheckStatus$.subscribe(val => this.checkServersStatus());
   }
 
   ngOnInit() {}
+
+  checkServersStatus() {
+    // determine servers to update
+    // fire serverupdateloading action (so that we can display the spinner)
+    // fire serverupdatestatus action
+    const payload: SetServerStatusLoadingPayload = {
+      servers: this.servers
+    };
+    this.store.dispatch(new SetServerStatusLoading(payload));
+  }
 
   handlePageEvent(event: PageEvent) {
     if (this.pageSize !== event.pageSize) {

@@ -3,6 +3,7 @@ export class Server {
   hostname: string;
   port: string;
   url;
+  serverStatusLoading: boolean;
   status?: ServerStatus;
 }
 

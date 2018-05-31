@@ -13,7 +13,8 @@ export enum ServersActionTypes {
   REQUEST_SERVER_STATUS = '[Servers] Request Server Status',
   REQUEST_SERVER_STATUS_SUCCESS = '[Servers] Request Server Status Success',
   REQUEST_SERVER_STATUS_FAILURE = '[Servers] Request Server Status Failure',
-  SET_CURRENT_SERVER = '[Servers] Set Current Server'
+  SET_CURRENT_SERVER = '[Servers] Set Current Server',
+  SET_SERVER_STATUS_LOADING = '[Servers] Set Server Status Loading'
 }
 
 export class LoadServers implements Action {
@@ -101,6 +102,15 @@ export class SetCurrentServer implements Action {
   constructor(public payload: any) {}
 }
 
+export class SetServerStatusLoadingPayload {
+  readonly servers: Server[];
+}
+
+export class SetServerStatusLoading implements Action {
+  readonly type: string = ServersActionTypes.SET_SERVER_STATUS_LOADING;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LoadServers
   | LoadServersSuccess
@@ -112,4 +122,5 @@ export type All =
   | RequestServerStatus
   | RequestServerStatusSuccess
   | RequestServerStatusFailure
-  | SetCurrentServer;
+  | SetCurrentServer
+  | SetServerStatusLoading;

@@ -20,7 +20,13 @@ const initialState: ServersState = {
     filter: { filter: '', filterSet: [], filteredDataSet: [] },
     currentPage: 0,
     currentSort: { active: null, direction: '' },
-    currentServer: { name: '', hostname: '', port: '', url: '' }
+    currentServer: {
+      name: '',
+      hostname: '',
+      port: '',
+      url: '',
+      serverStatusLoading: false
+    }
   }
 };
 
@@ -43,6 +49,41 @@ export function serverStateReducer(
             filter: '',
             filterSet: computeFilterSet(servers),
             filteredDataSet: servers
+          }
+        }
+      };
+    }
+    case ServersActionTypes.SET_SERVER_STATUS_LOADING: {
+      const servers: Server[] = action.payload.servers;
+      if (servers === undefined || servers == null || servers.length === 0) {
+        return state;
+      }
+
+      const newState: ServersState = Object.assign({}, state);
+      newState.serverList.servers.forEach(server => {
+        const i: number = servers.indexOf(server);
+        if (i === -1) {
+          server.serverStatusLoading = false;
+        }
+      });
+
+      servers.forEach(server => {
+        const i: number = newState.serverPage.pageData.indexOf(server);
+        newState.serverPage.pageData[i].serverStatusLoading = !newState
+          .serverPage.pageData[i].serverStatusLoading;
+      });
+      return {
+        serverList: newState.serverList,
+        serverPage: {
+          pageData: newState.serverPage.pageData,
+          pageSize: newState.serverPage.pageSize,
+          currentPage: newState.serverPage.currentPage,
+          currentSort: newState.serverPage.currentSort,
+          currentServer: newState.serverPage.currentServer,
+          filter: {
+            filter: newState.serverPage.filter.filter,
+            filterSet: computeFilterSet(newState.serverList.servers),
+            filteredDataSet: newState.serverPage.filter.filteredDataSet
           }
         }
       };

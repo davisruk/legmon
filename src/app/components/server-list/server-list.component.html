@@ -1,6 +1,5 @@
 <div style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
   <div fxLayoutAlign="center">
-    <button mat-raised-button color="accent"></button>
     <mat-form-field>
       <input id="filterInput" matInput placeholder="Filter">
     </mat-form-field>
@@ -23,7 +22,7 @@
         <ng-container cdkColumnDef="url">
           <mat-header-cell *cdkHeaderCellDef> URL </mat-header-cell>
           <mat-cell *cdkCellDef="let server">
-            <mat-spinner [diameter]="24" color="accent"></mat-spinner>
+            <mat-spinner *ngIf="server.serverStatusLoading" [diameter]="24" color="accent"></mat-spinner>
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
