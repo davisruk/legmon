@@ -60,17 +60,18 @@ export function serverStateReducer(
         return state;
       }
       const newState: ServersState = Object.assign({}, state);
-      newState.serverList.servers.forEach(server => {
-        const i: number = servers.indexOf(server);
-        if (i === -1) {
-          server.serverStatusLoading = false;
-        }
-      });
 
       servers.forEach(server => {
         const i: number = newState.serverPage.pageData.indexOf(server);
         newState.serverPage.pageData[i].status = server.status;
+        newState.serverPage.pageData[i].serverStatusLoading = false;
+        console.log(
+          `${new Date().toLocaleString()} : [CHECK_SERVERS_STATUS_SUCCESS] Setting server statusLoading for ${
+            newState.serverPage.pageData[i].hostname
+          } to ${newState.serverPage.pageData[i].serverStatusLoading}`
+        );
       });
+
       return {
         serverList: newState.serverList,
         serverPage: {
@@ -95,18 +96,18 @@ export function serverStateReducer(
       }
 
       const newState: ServersState = Object.assign({}, state);
-      newState.serverList.servers.forEach(server => {
-        const i: number = servers.indexOf(server);
-        if (i === -1) {
-          server.serverStatusLoading = false;
-        }
-      });
 
       servers.forEach(server => {
         const i: number = newState.serverPage.pageData.indexOf(server);
         newState.serverPage.pageData[i].serverStatusLoading = !newState
           .serverPage.pageData[i].serverStatusLoading;
+        console.log(
+          `${new Date().toLocaleString()} : [SET_SERVER_STATUS_LOADING] Setting server statusLoading for ${
+            newState.serverPage.pageData[i].hostname
+          } to ${newState.serverPage.pageData[i].serverStatusLoading}`
+        );
       });
+
       return {
         serverList: newState.serverList,
         serverPage: {

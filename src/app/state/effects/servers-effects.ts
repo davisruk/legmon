@@ -85,30 +85,19 @@ export class ServersEffects {
     .ofType(ServersActionTypes.CHECK_SERVERS_STATUS)
     .pipe(
       map((action: CheckServersStatus) => action.payload),
-      switchMap(payload => {
+      map(payload => {
         const checkPayload: CheckServersStatusPayload = payload as CheckServersStatusPayload;
         payload.servers.forEach((s: Server) => {
           this.serversService
             .requestServerStatus(s.hostname, s.port, s.url)
             .subscribe(status => {
-              console.log(status.status.currentStatus);
               s.status = status;
-              console.log(s.status.status.currentStatus);
             });
         });
-        /*
-            .pipe(
-              tap(status => {
-                console.log(status.status.currentStatus);
-                s.status.status = status.status;
-              })
-            );
-        });
-*/
         const successPayload: CheckServersStatusSuccessPayload = {
           servers: payload.servers
         };
-        return of(new CheckServersStatusSuccess(successPayload));
+        return new CheckServersStatusSuccess(successPayload);
       }),
       catchError(error => {
         console.log(error);

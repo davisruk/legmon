@@ -31,7 +31,7 @@ import {
   CheckServersStatus
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
-import { Observable, interval } from 'rxjs';
+import { Observable, interval, timer } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
 import { Server, ServerStatus } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
@@ -63,7 +63,7 @@ export class ServersStatusPageComponent implements OnInit {
       this.servers = s;
     });
     this.timerCheckStatus$ = interval(5000);
-    this.timerCheckStatus$.subscribe(val => this.checkServersStatus());
+    this.timerCheckStatus$.subscribe(_ => this.checkServersStatus());
   }
 
   ngOnInit() {}

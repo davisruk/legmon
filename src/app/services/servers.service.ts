@@ -50,8 +50,36 @@ export class ServersService {
     };
     return of(status);
   */
+    const errorStatus: ServerStatus = {
+      status: {
+        message: {
+          code: 'ERR',
+          level: '',
+          messageDefault: '',
+          parameters: { err: '' }
+        },
+        available: false,
+        currentStatus: 'UNRESPONSIVE',
+        deployments: [{ deploymentName: 'None', deployed: 'false' }],
+        label: ''
+      }
+    };
+
     return this.http
       .get<ServerStatus>('http://' + server + ':' + port + url)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(error => {
+          if (error.error instanceof ErrorEvent) {
+            errorStatus.status.message.messageDefault = `An error occurred:', ${
+              error.error.message
+            }`;
+          } else {
+            errorStatus.status.message.messageDefault =
+              `Backend returned code ${error.status}, ` +
+              `body was: ${error.error}`;
+          }
+          return of(errorStatus);
+        })
+      );
   }
 }
