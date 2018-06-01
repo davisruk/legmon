@@ -8,7 +8,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ServersService {
-  private _baseUrl = 'http://CENTLC076YWM:3000/';
+  private _baseUrl = 'http://localhost:3000/';
   constructor(private http: HttpClient) {}
 
   public loadServers(): Observable<Server[]> {

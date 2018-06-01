@@ -40,7 +40,7 @@ import {
   templateUrl: './server-list.component.html',
   styleUrls: ['./server-list.component.scss']
 })
-export class ServerListComponent implements OnInit, CanColor {
+export class ServerListComponent implements OnInit {
   @Input() displayedColumns: string[];
   @Input() pageSizeOptions: number[];
   @Input() pageSize: number;
@@ -51,10 +51,7 @@ export class ServerListComponent implements OnInit, CanColor {
   @Output('filterEvent') filterEvent = new EventEmitter<string>();
   @Output('sortEvent') sortEvent = new EventEmitter<Sort>();
   @Output('rowClick') rowClick = new EventEmitter<Server>();
-  @Input() color: ThemePalette;
   selectedRow = '';
-
-  constructor(public renderer: Renderer2, public _elementRef: ElementRef) {}
 
   ngOnInit() {
     const inputBox = document.getElementById('filterInput');
@@ -90,4 +87,3 @@ export class ServerListComponent implements OnInit, CanColor {
     return this.selectedRow === row.hostname;
   }
 }
-export const _MyComponentMixinBase = mixinColor(ServerListComponent, 'accent');

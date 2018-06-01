@@ -1,6 +1,10 @@
-<app-server-list [pageSize]="pageSize" [pageNumber]="pageNumber" [displayedColumns]="displayedColumns" [pageSizeOptions]="pageSizeOptions"
-  [numberOfServers]="numberOfServers$ | async" [servers]="servers$ | async" (filterEvent)="handleFilterEvent($event)" (pageEvent)="handlePageEvent($event)"
-  (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)">
+<div *ngIf="showSpinner()" style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
+  <mat-spinner diameter="200"></mat-spinner>
+</div>
+
+<app-server-list *ngIf="!showSpinner()" [pageSize]="pageSize" [pageNumber]="pageNumber" [displayedColumns]="displayedColumns"
+  [pageSizeOptions]="pageSizeOptions" [numberOfServers]="numberOfServers$ | async" [servers]="servers$ | async" (filterEvent)="handleFilterEvent($event)"
+  (pageEvent)="handlePageEvent($event)" (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)">
 </app-server-list>
 
 <app-server-detail [server]="(currentServer$ | async)"></app-server-detail>

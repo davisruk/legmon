@@ -89,6 +89,14 @@ export class ServersStatusPageComponent implements OnInit {
     }
   }
 
+  showSpinner() {
+    return (
+      this.servers == null ||
+      this.servers === undefined ||
+      this.servers.length === 0
+    );
+  }
+
   buildServerListToCheck(): Server[] {
     const servers: Server[] = [];
     from(this.servers)

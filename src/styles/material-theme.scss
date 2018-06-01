@@ -22,6 +22,9 @@ $theme: mat-light-theme($primary, $accent, $warn);
   $dark-warn: mat-palette($mat-red);
   $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include set-theme($theme);
+  .highlight-accent {
+    background: mat-color($dark-accent);
+  }
   @include angular-material-theme($dark-theme);
 }
 .deep-purple-amber-dark-theme {
@@ -35,6 +38,9 @@ $theme: mat-light-theme($primary, $accent, $warn);
     $dark-warn
   );
   @include set-theme($theme);
+  .highlight-accent {
+    background: mat-color($dark-accent);
+  }
   @include angular-material-theme($deep-purple-amber-theme);
 }
 .deep-purple-amber-light-theme {
@@ -48,6 +54,9 @@ $theme: mat-light-theme($primary, $accent, $warn);
     $light-warn
   );
   @include set-theme($theme);
+  .highlight-accent {
+    background: mat-color($light-accent);
+  }
   @include angular-material-theme($deep-purple-amber-theme);
 }
 .pink-blue-grey-dark-theme {
@@ -61,6 +70,9 @@ $theme: mat-light-theme($primary, $accent, $warn);
     $dark-warn
   );
   @include set-theme($theme);
+  .highlight-accent {
+    background: mat-color($dark-accent);
+  }
   @include angular-material-theme($pink-blue-grey-theme);
 }
 .pink-blue-grey-light-theme {
@@ -74,6 +86,9 @@ $theme: mat-light-theme($primary, $accent, $warn);
     $light-warn
   );
   @include set-theme($theme);
+  .highlight-accent {
+    background: mat-color($light-accent);
+  }
   @include angular-material-theme($pink-blue-grey-theme);
 }
 .purple-green-dark-theme {
@@ -83,6 +98,9 @@ $theme: mat-light-theme($primary, $accent, $warn);
   $dark-warn: mat-palette($mat-red);
   $purple-green-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include set-theme($theme);
+  .highlight-accent {
+    background: mat-color($dark-accent);
+  }
   @include angular-material-theme($purple-green-theme);
 }
 .purple-green-light-theme {
@@ -96,5 +114,8 @@ $theme: mat-light-theme($primary, $accent, $warn);
     $light-warn
   );
   @include set-theme($theme);
+  .highlight-accent {
+    background: mat-color($light-accent);
+  }
   @include angular-material-theme($purple-green-theme);
 }
