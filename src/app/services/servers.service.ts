@@ -8,7 +8,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ServersService {
-  private _baseUrl = 'http://localhost:3000/';
+  private _baseUrl = 'http://CENTLC076YWM:3000/';
   constructor(private http: HttpClient) {}
 
   public loadServers(): Observable<Server[]> {
@@ -34,7 +34,9 @@ export class ServersService {
     url: string
   ): Observable<ServerStatus> {
     /*
-    const status: ServerStatus = {
+    const validStatus: ServerStatus = {
+      dataStale: false,
+      lastChecked: 0,
       status: {
         message: {
           code: 'A1',
@@ -48,9 +50,15 @@ export class ServersService {
         label: 'X-Leg'
       }
     };
-    return of(status);
-  */
+
+    if (url === 'error') {
+      return of(errorStatus);
+    }
+    return of(validStatus);
+*/
     const errorStatus: ServerStatus = {
+      dataStale: false,
+      lastChecked: 0,
       status: {
         message: {
           code: 'ERR',

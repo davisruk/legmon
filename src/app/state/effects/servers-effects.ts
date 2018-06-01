@@ -40,7 +40,6 @@ export class ServersEffects {
       switchMap(payload => {
         return this.serversService.loadServers().pipe(
           map(servers => {
-            console.log(servers);
             return new LoadServersSuccess({ servers: servers });
           }),
           catchError(error => {
@@ -88,10 +87,26 @@ export class ServersEffects {
       map(payload => {
         const checkPayload: CheckServersStatusPayload = payload as CheckServersStatusPayload;
         payload.servers.forEach((s: Server) => {
+          /*
+          let url: string = s.url;
+          if (s.status && !s.status.dataStale) {
+            url = 'error';
+          }
+*/
           this.serversService
             .requestServerStatus(s.hostname, s.port, s.url)
             .subscribe(status => {
-              s.status = status;
+              if (
+                status.status.currentStatus === 'UNRESPONSIVE' &&
+                s.status !== undefined &&
+                s.status.status.currentStatus !== 'UNRESPONSIVE'
+              ) {
+                s.status.dataStale = true;
+              } else {
+                s.status = status;
+                s.status.dataStale = false;
+              }
+              s.status.lastChecked = Date.now();
             });
         });
         const successPayload: CheckServersStatusSuccessPayload = {

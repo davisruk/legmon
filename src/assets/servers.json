@@ -1,6 +1,7 @@
 {
   "servers": [
     {
+      "environments": "FT1",
       "name": "FT1 UIS 1",
       "hostname": "gbrpmsuisf01.corp.internal",
       "port": "8180",
@@ -8,13 +9,15 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "FT1",
       "name": "FT1 UIS 2",
       "hostname": "gbrpmsuisf02.corp.internal",
       "port": "8180",
       "url":
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
-    },	
+    },
     {
+      "environments": "FT1",
       "name": "FT1 EAS 1",
       "hostname": "10.141.129.49",
       "port": "8180",
@@ -22,6 +25,7 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "FT1",
       "name": "FT1 EAS 2",
       "hostname": "gbrpmseasf02.corp.internal",
       "port": "8180",
@@ -29,6 +33,7 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "FT1",
       "name": "FT1 BRG STP",
       "hostname": "10.141.129.132",
       "port": "8380",
@@ -36,6 +41,7 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "FT1",
       "name": "FT1 BRG OPT",
       "hostname": "10.141.129.152",
       "port": "8380",
@@ -43,6 +49,7 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "FT2",
       "name": "FT2 BRG OPT",
       "hostname": "10.141.129.172",
       "port": "8480",
@@ -50,6 +57,7 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "FT5",
       "name": "FT5 EAS",
       "hostname": "gbrpmseasf41.corp.internal",
       "port": "8180",
@@ -57,6 +65,7 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "LB",
       "name": "FT Y leg UIS LB",
       "hostname": "10.141.129.247",
       "port": "8858",
@@ -64,11 +73,12 @@
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
     },
     {
+      "environments": "LB",
       "name": "FT Y leg EAS LB",
       "hostname": "10.141.129.248",
       "port": "8858",
       "url":
         "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true"
-    }	
+    }
   ]
 }

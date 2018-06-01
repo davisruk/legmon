@@ -1,4 +1,5 @@
 export class Server {
+  environments: string;
   name: string;
   hostname: string;
   port: string;
@@ -12,6 +13,8 @@ export class ServerList {
 }
 
 export class ServerStatus {
+  lastChecked: number;
+  dataStale: boolean;
   status: Status;
 }
 

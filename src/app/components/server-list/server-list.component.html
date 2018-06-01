@@ -7,6 +7,10 @@
   <div fxLayoutAlign="center">
     <div style="min-width: 60vw">
       <mat-table [dataSource]="servers" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+        <ng-container cdkColumnDef="env">
+          <mat-header-cell mat-sort-header *cdkHeaderCellDef> Environments </mat-header-cell>
+          <mat-cell *cdkCellDef="let server"> {{server.environments}} </mat-cell>
+        </ng-container>
         <ng-container cdkColumnDef="name">
           <mat-header-cell mat-sort-header *cdkHeaderCellDef> Name </mat-header-cell>
           <mat-cell *cdkCellDef="let server"> {{server.name}} </mat-cell>
@@ -23,7 +27,9 @@
           <mat-header-cell *cdkHeaderCellDef> Status </mat-header-cell>
           <mat-cell *cdkCellDef="let server">
             <mat-spinner *ngIf="server.serverStatusLoading else displayStatus" [diameter]="24" color="accent"></mat-spinner>
+            <mat-icon *ngIf="server.status && server.status.dataStale">warning</mat-icon>
             <span #displayStatus *ngIf="server.status && !server.serverStatusLoading"> {{server.status.status.currentStatus}} </span>
+            <mat-icon *ngIf='server.status && server.status.status.currentStatus === "UNRESPONSIVE"'>error</mat-icon>
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>

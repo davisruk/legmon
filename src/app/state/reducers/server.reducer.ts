@@ -21,6 +21,7 @@ const initialState: ServersState = {
     currentPage: 0,
     currentSort: { active: null, direction: '' },
     currentServer: {
+      environments: '',
       name: '',
       hostname: '',
       port: '',
@@ -65,11 +66,6 @@ export function serverStateReducer(
         const i: number = newState.serverPage.pageData.indexOf(server);
         newState.serverPage.pageData[i].status = server.status;
         newState.serverPage.pageData[i].serverStatusLoading = false;
-        console.log(
-          `${new Date().toLocaleString()} : [CHECK_SERVERS_STATUS_SUCCESS] Setting server statusLoading for ${
-            newState.serverPage.pageData[i].hostname
-          } to ${newState.serverPage.pageData[i].serverStatusLoading}`
-        );
       });
 
       return {
@@ -101,11 +97,6 @@ export function serverStateReducer(
         const i: number = newState.serverPage.pageData.indexOf(server);
         newState.serverPage.pageData[i].serverStatusLoading = !newState
           .serverPage.pageData[i].serverStatusLoading;
-        console.log(
-          `${new Date().toLocaleString()} : [SET_SERVER_STATUS_LOADING] Setting server statusLoading for ${
-            newState.serverPage.pageData[i].hostname
-          } to ${newState.serverPage.pageData[i].serverStatusLoading}`
-        );
       });
 
       return {
@@ -210,12 +201,20 @@ function sortServers(servers: Server[], sort: Sort): Server[] {
     sortedData = servers.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
+        case 'env':
+          return compare(a.environments, b.environments, isAsc);
         case 'name':
           return compare(a.name, b.name, isAsc);
         case 'hostname':
           return compare(a.hostname, b.hostname, isAsc);
         case 'port':
           return compare(a.port, b.port, isAsc);
+        case 'status':
+          return compare(
+            a.status.status.currentStatus,
+            b.status.status.currentStatus,
+            isAsc
+          );
         default:
           return 0;
       }
@@ -264,7 +263,11 @@ function getPage(servers: Server[], page: number, pageSize: number): Server[] {
 function computeFilterSet(servers: Server[]): string[] {
   const retVal: string[] = [];
   servers.forEach((s: Server, i: number, sa: Server[]) => {
-    retVal.push((s.hostname + s.name + s.port).toLowerCase());
+    let statusFilter = '';
+    if (s.status !== undefined && s.status.status !== undefined) {
+      statusFilter = s.status.status.currentStatus;
+    }
+    retVal.push((s.hostname + s.name + s.port + statusFilter).toLowerCase());
   });
   return retVal;
 }
