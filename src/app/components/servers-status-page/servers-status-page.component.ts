@@ -36,7 +36,7 @@ import { PageEvent, Sort } from '@angular/material';
 import { Server, ServerStatus } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
 import { filter, map } from 'rxjs/operators';
-
+import { List as ImmutableList } from 'immutable';
 @Component({
   selector: 'app-servers-status-page',
   templateUrl: './servers-status-page.component.html',
@@ -48,10 +48,10 @@ export class ServersStatusPageComponent implements OnInit {
   pageSize = 5;
   pageNumber = 0;
   numberOfServers$: Observable<number>;
-  servers$: Observable<Server[]>;
+  servers$: Observable<ImmutableList<Server>>;
   currentServer$: Observable<Server>;
   timerCheckStatus$: Observable<number>;
-  servers: Server[];
+  servers: Server[] = [];
   runInitServerCheck = true;
 
   constructor(private store: Store<AppState>) {
@@ -65,8 +65,11 @@ export class ServersStatusPageComponent implements OnInit {
 
   ngOnInit() {
     this.servers$.subscribe(s => {
-      this.servers = s;
-      this.checkServersStatus();
+      this.servers = s.toArray();
+      if (this.servers.length > 0 && this.runInitServerCheck) {
+        this.checkServersStatus();
+        this.runInitServerCheck = false;
+      }
     });
 
     this.timerCheckStatus$ = interval(3000);
@@ -85,7 +88,9 @@ export class ServersStatusPageComponent implements OnInit {
       };
 
       this.store.dispatch(new SetServerStatusLoading(payload));
-      this.store.dispatch(new CheckServersStatus(checkStatusPayload));
+      setTimeout(() => {
+        this.store.dispatch(new CheckServersStatus(checkStatusPayload));
+      }, 2000);
     }
   }
 
@@ -103,7 +108,7 @@ export class ServersStatusPageComponent implements OnInit {
       .pipe(
         filter(
           (s: Server) =>
-            s.status === undefined || s.status.lastChecked < Date.now() - 10000
+            s.status === undefined || s.status.lastChecked < Date.now() - 6000
         )
       )
       .subscribe(s => {
@@ -113,6 +118,7 @@ export class ServersStatusPageComponent implements OnInit {
   }
 
   handlePageEvent(event: PageEvent) {
+    this.runInitServerCheck = true;
     if (this.pageSize !== event.pageSize) {
       this.pageSize = event.pageSize;
       this.changePageSize(event.pageSize);

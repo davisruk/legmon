@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,6 @@ export class ServersService {
     port: string,
     url: string
   ): Observable<ServerStatus> {
-    /*
     const validStatus: ServerStatus = {
       dataStale: false,
       lastChecked: 0,
@@ -51,11 +50,13 @@ export class ServersService {
       }
     };
 
+    return of(validStatus);
+    /*
     if (url === 'error') {
       return of(errorStatus);
     }
     return of(validStatus);
-*/
+
     const errorStatus: ServerStatus = {
       dataStale: false,
       lastChecked: 0,
@@ -89,5 +90,6 @@ export class ServersService {
           return of(errorStatus);
         })
       );
+*/
   }
 }

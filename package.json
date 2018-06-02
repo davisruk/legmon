@@ -29,7 +29,8 @@
     "@ngrx/store": "^6.0.1",
     "@ngrx/effects": "^6.0.1",
     "@ngrx/router-store": "^6.0.1",
-    "@ngrx/store-devtools": "^6.0.1"
+    "@ngrx/store-devtools": "^6.0.1",
+    "immutable": "^3.8.2"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^6.0.3",

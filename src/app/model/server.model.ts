@@ -1,15 +1,16 @@
+import { List as ImmutableList } from 'immutable';
 export class Server {
   environments: string;
   name: string;
   hostname: string;
   port: string;
   url;
-  serverStatusLoading: boolean;
+  statusLoading: boolean;
   status?: ServerStatus;
 }
 
 export class ServerList {
-  servers: Server[];
+  servers: ImmutableList<Server>;
 }
 
 export class ServerStatus {
