@@ -33,6 +33,7 @@ export class ServersService {
     port: string,
     url: string
   ): Observable<ServerStatus> {
+    /*
     const validStatus: ServerStatus = {
       dataStale: false,
       lastChecked: 0,
@@ -56,7 +57,7 @@ export class ServersService {
       return of(errorStatus);
     }
     return of(validStatus);
-
+*/
     const errorStatus: ServerStatus = {
       dataStale: false,
       lastChecked: 0,
@@ -90,6 +91,5 @@ export class ServersService {
           return of(errorStatus);
         })
       );
-*/
   }
 }
