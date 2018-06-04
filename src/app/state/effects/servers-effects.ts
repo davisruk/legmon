@@ -3,11 +3,6 @@ import {
   LoadServersSuccess,
   ServersActionTypes,
   LoadServersFailure,
-  CheckServersStatus,
-  CheckServersStatusPayload,
-  CheckServersStatusSuccess,
-  CheckServersStatusSuccessPayload,
-  CheckServersStatusFailure,
   CheckServerStatus,
   CheckServerStatusSuccessPayload,
   CheckServerStatusSuccess,
@@ -16,7 +11,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { ServersService } from '../../services/servers.service';
-import { map, switchMap, catchError, tap } from 'rxjs/operators';
+import { map, switchMap, catchError, tap, mergeMap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { Server } from '../../model/server.model';
 
@@ -55,7 +50,9 @@ export class ServersEffects {
     .ofType(ServersActionTypes.CHECK_SERVER_STATUS)
     .pipe(
       map((action: CheckServerStatus) => action.payload),
-      switchMap(payload => {
+      // use mergeMap here as it is likely there will be many calls and we want all the responses
+      // switchMap will only give us back the latest emitted value so we'd lose previous responses
+      mergeMap(payload => {
         return this.serversService
           .requestServerStatus(
             payload.server.hostname,
@@ -63,71 +60,31 @@ export class ServersEffects {
             payload.server.url
           )
           .pipe(
-            map(serverStatus => {
-              console.log(serverStatus);
-              if (
-                serverStatus.status.currentStatus === 'UNRESPONSIVE' &&
-                payload.server.status !== undefined &&
-                payload.server.status.status.currentStatus !== 'UNRESPONSIVE'
-              ) {
-                payload.server.status.dataStale = true;
-              } else {
-                payload.server.status = serverStatus;
-                payload.server.status.dataStale = false;
-              }
-              payload.server.status.lastChecked = Date.now();
+            map(
+              serverStatus => {
+                if (
+                  serverStatus.status.currentStatus === 'UNRESPONSIVE' &&
+                  payload.server.status !== undefined &&
+                  payload.server.status.status.currentStatus !== 'UNRESPONSIVE'
+                ) {
+                  payload.server.status.dataStale = true;
+                } else {
+                  payload.server.status = serverStatus;
+                  payload.server.status.dataStale = false;
+                }
+                payload.server.status.lastChecked = Date.now();
 
-              const successPayload: CheckServerStatusSuccessPayload = {
-                server: payload.server
-              };
-              return new CheckServerStatusSuccess(successPayload);
-            }),
-            catchError(error => {
-              console.log(error);
-              return of(new CheckServerStatusFailure({ error: error }));
-            })
+                const successPayload: CheckServerStatusSuccessPayload = {
+                  server: payload.server
+                };
+                return new CheckServerStatusSuccess(successPayload);
+              },
+              catchError(error => {
+                console.log(error);
+                return of(new CheckServerStatusFailure({ error: error }));
+              })
+            )
           );
-      })
-    );
-
-  @Effect()
-  checkServersStatus$: Observable<any> = this.actions
-    .ofType(ServersActionTypes.CHECK_SERVERS_STATUS)
-    .pipe(
-      map((action: CheckServersStatus) => action.payload),
-      map(payload => {
-        const checkPayload: CheckServersStatusPayload = payload as CheckServersStatusPayload;
-        payload.servers.forEach((s: Server) => {
-          /*
-          let url: string = s.url;
-          if (s.status && !s.status.dataStale) {
-            url = 'error';
-          }
-*/
-          this.serversService
-            .requestServerStatus(s.hostname, s.port, s.url)
-            .subscribe(status => {
-              if (
-                status.status.currentStatus === 'UNRESPONSIVE' &&
-                s.status !== undefined &&
-                s.status.status.currentStatus !== 'UNRESPONSIVE'
-              ) {
-                s.status.dataStale = true;
-              } else {
-                s.status = status;
-                s.status.dataStale = false;
-              }
-              s.status.lastChecked = Date.now();
-            });
-        });
-        const successPayload: CheckServersStatusSuccessPayload = {
-          servers: payload.servers
-        };
-        return new CheckServersStatusSuccess(successPayload);
-      }),
-      catchError(error => {
-        console.log(error);
-        return of(new CheckServersStatusFailure({ error: error }));
       })
     );
 }

@@ -26,9 +26,7 @@ import {
   SetCurrentServer,
   SetCurrentServerPayload,
   SetServerStatusLoading,
-  SetServerStatusLoadingPayload,
-  CheckServersStatusPayload,
-  CheckServersStatus
+  SetServerStatusLoadingPayload
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
 import { Observable, interval, timer, from } from 'rxjs';
@@ -72,7 +70,7 @@ export class ServersStatusPageComponent implements OnInit {
       }
     });
 
-    this.timerCheckStatus$ = interval(5000);
+    this.timerCheckStatus$ = interval(30000);
     this.timerCheckStatus$.subscribe(_ => this.checkServersStatus());
   }
 
@@ -84,14 +82,12 @@ export class ServersStatusPageComponent implements OnInit {
       };
 
       this.store.dispatch(new SetServerStatusLoading(payload));
-      setTimeout(() => {
-        servers.forEach((server: Server) => {
-          const checkStatusPayload: CheckServerStatusPayload = {
-            server: server
-          };
-          this.store.dispatch(new CheckServerStatus(checkStatusPayload));
-        });
-      }, 2000);
+      servers.forEach((server: Server) => {
+        const checkStatusPayload: CheckServerStatusPayload = {
+          server: server
+        };
+        this.store.dispatch(new CheckServerStatus(checkStatusPayload));
+      });
     }
   }
 
@@ -151,7 +147,6 @@ export class ServersStatusPageComponent implements OnInit {
   }
 
   handleRowClick(server: Server) {
-    console.log(server);
     const payload: CheckServerStatusPayload = {
       server: server
     };

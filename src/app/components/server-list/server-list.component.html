@@ -29,7 +29,7 @@
             <mat-spinner *ngIf="server.statusLoading else displayStatus" [diameter]="24" color="primary"></mat-spinner>
             <mat-icon *ngIf="server.status && server.status.dataStale">warning</mat-icon>
             <span #displayStatus *ngIf="server.status && !server.statusLoading"> {{server.status.status.currentStatus}} </span>
-            <mat-icon *ngIf='server.status && server.status.status.currentStatus === "UNRESPONSIVE"'>error</mat-icon>
+            <mat-icon color="warn" *ngIf='server.status && server.status.status.currentStatus === "UNRESPONSIVE" && !server.statusLoading'>error</mat-icon>
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>

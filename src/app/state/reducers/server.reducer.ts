@@ -65,20 +65,18 @@ export function serverStateReducer(
       };
     }
 
+    case ServersActionTypes.CHECK_SERVER_STATUS_FAILURE: {
+      console.log('CHECK SERVER STATUS ERROR - Should never get here!!');
+      return state;
+    }
+
     case ServersActionTypes.SET_SERVER_STATUS_LOADING: {
       const servers: Server[] = action.payload.servers;
       return setServersStateLoading(state, servers, true);
     }
 
-    case ServersActionTypes.CHECK_SERVERS_STATUS_SUCCESS: {
-      const servers: Server[] = action.payload.servers;
-      return checkServersStatusSuccess(state, servers);
-    }
-
     case ServersActionTypes.CHECK_SERVER_STATUS_SUCCESS: {
       const s: Server = action.payload.server;
-      console.log('Get Status Success');
-      console.log(s.status.status.currentStatus);
       return checkServerStatusSuccess(state, s);
     }
 
@@ -345,68 +343,24 @@ function setServersStateLoading(
   };
 }
 
-function checkServersStatusSuccess(state: ServersState, servers: Server[]) {
-  if (servers === undefined || servers == null || servers.length === 0) {
-    return state;
-  }
-
-  const newState: ServersState = setServersStateLoading(state, servers, false);
-  let newPageData: ImmutableList<Server> = ImmutableList(
-    newState.serverPage.pageData
-  );
-  let newServerList: ImmutableList<Server> = ImmutableList(
-    newState.serverList.servers
-  );
-  let newFilteredDataSet: ImmutableList<Server> = ImmutableList(
-    newState.serverPage.filter.filteredDataSet
-  );
-
-  servers.forEach(server => {
-    const stateServer: Server = getServerInServerList(server, newPageData);
-    stateServer.status = { ...server.status };
-    newPageData = updateServerInServerList(stateServer, newPageData);
-    newServerList = updateServerInServerList(stateServer, newServerList);
-    newFilteredDataSet = updateServerInServerList(
-      stateServer,
-      newFilteredDataSet
-    );
-  });
-
-  return {
-    serverList: { servers: newServerList },
-    serverPage: {
-      pageData: newPageData,
-      pageSize: newState.serverPage.pageSize,
-      currentPage: newState.serverPage.currentPage,
-      currentSort: newState.serverPage.currentSort,
-      currentServer: newState.serverPage.currentServer,
-      filter: {
-        filter: newState.serverPage.filter.filter,
-        filterSet: computeFilterSet(newServerList),
-        filteredDataSet: newFilteredDataSet
-      }
-    }
-  };
-}
-
 function checkServerStatusSuccess(state: ServersState, server: Server) {
   if (server === undefined || server == null) {
     return state;
   }
 
-  const newState: ServersState = setServersStateLoading(state, [server], false);
   let newPageData: ImmutableList<Server> = ImmutableList(
-    newState.serverPage.pageData
+    state.serverPage.pageData
   );
   let newServerList: ImmutableList<Server> = ImmutableList(
-    newState.serverList.servers
+    state.serverList.servers
   );
   let newFilteredDataSet: ImmutableList<Server> = ImmutableList(
-    newState.serverPage.filter.filteredDataSet
+    state.serverPage.filter.filteredDataSet
   );
 
   const stateServer: Server = getServerInServerList(server, newPageData);
   stateServer.status = { ...server.status };
+  stateServer.statusLoading = false;
   newPageData = updateServerInServerList(stateServer, newPageData);
   newServerList = updateServerInServerList(stateServer, newServerList);
   newFilteredDataSet = updateServerInServerList(
@@ -427,14 +381,14 @@ function checkServerStatusSuccess(state: ServersState, server: Server) {
     serverList: { servers: newServerList },
     serverPage: {
       pageData: newPageData,
-      pageSize: newState.serverPage.pageSize,
-      currentPage: newState.serverPage.currentPage,
-      currentSort: newState.serverPage.currentSort,
+      pageSize: state.serverPage.pageSize,
+      currentPage: state.serverPage.currentPage,
+      currentSort: state.serverPage.currentSort,
       currentServer: useStateCurrentServer
-        ? newState.serverPage.currentServer
+        ? state.serverPage.currentServer
         : state.serverPage.currentServer,
       filter: {
-        filter: newState.serverPage.filter.filter,
+        filter: state.serverPage.filter.filter,
         filterSet: computeFilterSet(newServerList),
         filteredDataSet: newFilteredDataSet
       }
