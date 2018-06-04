@@ -94,8 +94,12 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     );
   }
   ngOnDestroy(): void {
-    this.timerSubScription.unsubscribe();
-    this.serverSubscription.unsubscribe();
+    if (this.timerSubScription) {
+      this.timerSubScription.unsubscribe();
+    }
+    if (this.serverSubscription) {
+      this.serverSubscription.unsubscribe();
+    }
   }
 
   cancelCheckServersStatus() {
@@ -154,7 +158,6 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   }
 
   handlePageEvent(event: PageEvent) {
-    // this.runInitServerCheck = true;
     if (this.pageSize !== event.pageSize) {
       this.pageSize = event.pageSize;
       this.changePageSize(event.pageSize);

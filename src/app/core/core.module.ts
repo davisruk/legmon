@@ -1,3 +1,4 @@
+import { metaReducers } from './meta-reducers';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -85,7 +86,7 @@ import { ServerDetailComponent } from '../components/server-detail/server-detail
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production // Restrict extension to log-only mode
