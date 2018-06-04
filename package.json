@@ -30,7 +30,8 @@
     "@ngrx/effects": "^6.0.1",
     "@ngrx/router-store": "^6.0.1",
     "@ngrx/store-devtools": "^6.0.1",
-    "immutable": "^3.8.2"
+    "immutable": "^3.8.2",
+    "ts-md5": "1.2.4"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^6.0.3",

@@ -15,6 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MenuItem } from '../../model/menu-item.model';
 import { MatSidenav } from '@angular/material/sidenav';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { Md5 } from 'ts-md5/dist/md5';
 import {
   ThemePickerOverlayService,
   ThemePickerOverlayRef
@@ -45,7 +46,9 @@ export class AppNavComponent implements OnInit {
   appTitle = 'LegMon';
   overlayRef: ThemePickerOverlayRef;
   themeCloseState: boolean;
-
+  gravatarHash: string;
+  imageInfo: Object;
+  imageUrl: string;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private themePickerService: ThemePickerOverlayService,
@@ -60,6 +63,18 @@ export class AppNavComponent implements OnInit {
         : this.initSideMenu;
       this.showToolbarButton = breakState.matches;
     });
+
+    this.gravatarHash = Md5.hashStr('rich@davisfamily.eu').toString();
+    this.imageUrl = `'https://www.gravatar.com/avatar/${
+      this.gravatarHash
+    }?s=50'`;
+    this.imageInfo = {
+      'border-radius': '50%',
+      width: '50px',
+      height: '50px',
+      'background-image': 'url(' + this.imageUrl + ')',
+      'background-repeat': 'no-repeat'
+    };
   }
 
   ngOnInit(): void {

@@ -28,6 +28,7 @@
         <a *ngFor="let menuItem of toolbarMenu" mat-button href='#'>{{menuItem.title}}</a>
       </div>
       <span class="fill-space"></span>
+      <img [ngStyle]="imageInfo">
       <button #themeButton mat-icon-button (click)="toggleThemePicker()">
         <mat-icon>format_paint</mat-icon>
       </button>
