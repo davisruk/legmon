@@ -102,7 +102,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     const servers = this.buildServerListToCancel();
     if (servers.length > 0) {
       const payload: SetServerStatusLoadingPayload = {
-        servers: this.servers,
+        servers: servers,
         isLoading: false
       };
       this.store.dispatch(new SetServerStatusLoading(payload));
