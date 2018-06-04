@@ -21,8 +21,8 @@ import {
   SetFilter,
   ChangePageSizePayload,
   ChangePageSize,
-  RequestServerStatus,
-  RequestServerStatusPayload,
+  CheckServerStatus,
+  CheckServerStatusPayload,
   SetCurrentServer,
   SetCurrentServerPayload,
   SetServerStatusLoading,
@@ -72,7 +72,7 @@ export class ServersStatusPageComponent implements OnInit {
       }
     });
 
-    this.timerCheckStatus$ = interval(3000);
+    this.timerCheckStatus$ = interval(5000);
     this.timerCheckStatus$.subscribe(_ => this.checkServersStatus());
   }
 
@@ -83,13 +83,14 @@ export class ServersStatusPageComponent implements OnInit {
         servers: this.servers
       };
 
-      const checkStatusPayload: CheckServersStatusPayload = {
-        servers: this.servers
-      };
-
       this.store.dispatch(new SetServerStatusLoading(payload));
       setTimeout(() => {
-        this.store.dispatch(new CheckServersStatus(checkStatusPayload));
+        servers.forEach((server: Server) => {
+          const checkStatusPayload: CheckServerStatusPayload = {
+            server: server
+          };
+          this.store.dispatch(new CheckServerStatus(checkStatusPayload));
+        });
       }, 2000);
     }
   }
@@ -108,7 +109,8 @@ export class ServersStatusPageComponent implements OnInit {
       .pipe(
         filter(
           (s: Server) =>
-            s.status === undefined || s.status.lastChecked < Date.now() - 6000
+            s.status === undefined ||
+            (s.status.lastChecked < Date.now() - 30000 && !s.statusLoading)
         )
       )
       .subscribe(s => {
@@ -150,13 +152,11 @@ export class ServersStatusPageComponent implements OnInit {
 
   handleRowClick(server: Server) {
     console.log(server);
-    const payload: RequestServerStatusPayload = {
-      url: server.url,
-      serverName: server.hostname,
-      serverPort: server.port
+    const payload: CheckServerStatusPayload = {
+      server: server
     };
 
-    this.store.dispatch(new RequestServerStatus(payload));
+    this.store.dispatch(new CheckServerStatus(payload));
     const currentServerPayload: SetCurrentServerPayload = { server: server };
     this.store.dispatch(new SetCurrentServer(currentServerPayload));
   }

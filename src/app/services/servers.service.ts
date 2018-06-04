@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
-import { map, catchError, delay } from 'rxjs/operators';
+import { map, catchError, delay, timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +78,7 @@ export class ServersService {
     return this.http
       .get<ServerStatus>('http://' + server + ':' + port + url)
       .pipe(
+        timeout(10000),
         catchError(error => {
           if (error.error instanceof ErrorEvent) {
             errorStatus.status.message.messageDefault = `An error occurred:', ${

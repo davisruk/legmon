@@ -3,15 +3,15 @@ import {
   LoadServersSuccess,
   ServersActionTypes,
   LoadServersFailure,
-  RequestServerStatus,
-  RequestServerStatusSuccess,
-  RequestServerStatusFailure,
-  RequestServerStatusSuccessPayload,
   CheckServersStatus,
   CheckServersStatusPayload,
   CheckServersStatusSuccess,
   CheckServersStatusSuccessPayload,
-  CheckServersStatusFailure
+  CheckServersStatusFailure,
+  CheckServerStatus,
+  CheckServerStatusSuccessPayload,
+  CheckServerStatusSuccess,
+  CheckServerStatusFailure
 } from './../actions/servers-actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
@@ -51,29 +51,40 @@ export class ServersEffects {
     );
 
   @Effect()
-  requestServerStatus$: Observable<any> = this.actions
-    .ofType(ServersActionTypes.REQUEST_SERVER_STATUS)
+  checkServerStatus$: Observable<any> = this.actions
+    .ofType(ServersActionTypes.CHECK_SERVER_STATUS)
     .pipe(
-      map((action: RequestServerStatus) => action.payload),
+      map((action: CheckServerStatus) => action.payload),
       switchMap(payload => {
         return this.serversService
           .requestServerStatus(
-            payload.serverName,
-            payload.serverPort,
-            payload.url
+            payload.server.hostname,
+            payload.server.port,
+            payload.server.url
           )
           .pipe(
             map(serverStatus => {
               console.log(serverStatus);
-              const successPayload: RequestServerStatusSuccessPayload = {
-                originalRequest: payload,
-                serverStatus: serverStatus
+              if (
+                serverStatus.status.currentStatus === 'UNRESPONSIVE' &&
+                payload.server.status !== undefined &&
+                payload.server.status.status.currentStatus !== 'UNRESPONSIVE'
+              ) {
+                payload.server.status.dataStale = true;
+              } else {
+                payload.server.status = serverStatus;
+                payload.server.status.dataStale = false;
+              }
+              payload.server.status.lastChecked = Date.now();
+
+              const successPayload: CheckServerStatusSuccessPayload = {
+                server: payload.server
               };
-              return new RequestServerStatusSuccess(successPayload);
+              return new CheckServerStatusSuccess(successPayload);
             }),
             catchError(error => {
               console.log(error);
-              return of(new RequestServerStatusFailure({ error: error }));
+              return of(new CheckServerStatusFailure({ error: error }));
             })
           );
       })

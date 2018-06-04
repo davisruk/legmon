@@ -10,9 +10,9 @@ export enum ServersActionTypes {
   CHANGE_PAGE_SIZE = '[Servers] Change Page Size',
   SET_FILTER = '[Servers] Set Filter',
   SORT_DATA_SET = '[Servers] Sort Data Set',
-  REQUEST_SERVER_STATUS = '[Servers] Request Server Status',
-  REQUEST_SERVER_STATUS_SUCCESS = '[Servers] Request Server Status Success',
-  REQUEST_SERVER_STATUS_FAILURE = '[Servers] Request Server Status Failure',
+  CHECK_SERVER_STATUS = '[Servers] Check Server Status',
+  CHECK_SERVER_STATUS_SUCCESS = '[Servers] Check Server Status Success',
+  CHECK_SERVER_STATUS_FAILURE = '[Servers] Check Server Status Failure',
   SET_CURRENT_SERVER = '[Servers] Set Current Server',
   SET_SERVER_STATUS_LOADING = '[Servers] Set Server Status Loading',
   CHECK_SERVERS_STATUS = '[Servers] Check Servers Status',
@@ -70,32 +70,6 @@ export class SortDataSet implements Action {
   constructor(public payload: any) {}
 }
 
-export class RequestServerStatusPayload {
-  readonly url: string;
-  readonly serverName: string;
-  readonly serverPort: string;
-}
-
-export class RequestServerStatus implements Action {
-  readonly type: string = ServersActionTypes.REQUEST_SERVER_STATUS;
-  constructor(public payload: any) {}
-}
-
-export class RequestServerStatusSuccessPayload {
-  readonly originalRequest: RequestServerStatusPayload;
-  readonly serverStatus: ServerStatus;
-}
-
-export class RequestServerStatusSuccess implements Action {
-  readonly type: string = ServersActionTypes.REQUEST_SERVER_STATUS_SUCCESS;
-  constructor(public payload: any) {}
-}
-
-export class RequestServerStatusFailure implements Action {
-  readonly type: string = ServersActionTypes.REQUEST_SERVER_STATUS_FAILURE;
-  constructor(public payload: any) {}
-}
-
 export class SetCurrentServerPayload {
   readonly server: Server;
 }
@@ -137,6 +111,29 @@ export class CheckServersStatusFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class CheckServerStatusPayload {
+  readonly server: Server;
+}
+
+export class CheckServerStatus implements Action {
+  readonly type: string = ServersActionTypes.CHECK_SERVER_STATUS;
+  constructor(public payload: any) {}
+}
+
+export class CheckServerStatusSuccessPayload {
+  readonly server: Server;
+}
+
+export class CheckServerStatusSuccess implements Action {
+  readonly type: string = ServersActionTypes.CHECK_SERVER_STATUS_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class CheckServerStatusFailure implements Action {
+  readonly type: string = ServersActionTypes.CHECK_SERVER_STATUS_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LoadServers
   | LoadServersSuccess
@@ -145,9 +142,9 @@ export type All =
   | ChangePageSize
   | SetFilter
   | SortDataSet
-  | RequestServerStatus
-  | RequestServerStatusSuccess
-  | RequestServerStatusFailure
+  | CheckServerStatus
+  | CheckServerStatusSuccess
+  | CheckServerStatusFailure
   | SetCurrentServer
   | SetServerStatusLoading
   | CheckServersStatus
