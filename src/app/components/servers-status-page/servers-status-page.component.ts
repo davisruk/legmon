@@ -58,6 +58,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   serverSubscription: Subscription;
   timerSubScription: Subscription;
   showSpinner = true;
+  serversUnderCheck: string[];
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
@@ -83,12 +84,12 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     this.serverSubscription = this.servers$.subscribe(s => {
       this.servers = s.toArray();
       if (this.servers.length > 0 && this.runInitServerCheck) {
-        this.checkServersStatus();
         this.runInitServerCheck = false;
+        this.checkServersStatus();
       }
     });
 
-    this.timerSubScription = interval(30000).subscribe(_ =>
+    this.timerSubScription = interval(10000).subscribe(_ =>
       this.checkServersStatus()
     );
   }
@@ -113,7 +114,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     const servers = this.buildServerListToCheck();
     if (servers.length > 0) {
       const payload: SetServerStatusLoadingPayload = {
-        servers: this.servers,
+        servers: servers,
         isLoading: true
       };
 
@@ -133,8 +134,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
       .pipe(
         filter(
           (s: Server) =>
-            s.status === undefined ||
-            (s.status.lastChecked < Date.now() - 30000 && !s.statusLoading)
+            s.status === undefined || s.status.lastChecked < Date.now() - 9000
         )
       )
       .subscribe(s => {
@@ -154,12 +154,13 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   }
 
   handlePageEvent(event: PageEvent) {
-    this.runInitServerCheck = true;
+    // this.runInitServerCheck = true;
     if (this.pageSize !== event.pageSize) {
       this.pageSize = event.pageSize;
       this.changePageSize(event.pageSize);
+    } else {
+      this.changePage(event.pageIndex, event.pageSize);
     }
-    this.changePage(event.pageIndex, event.pageSize);
   }
 
   handleFilterEvent(filterValue: string) {
