@@ -72,7 +72,7 @@ export function serverStateReducer(
 
     case ServersActionTypes.SET_SERVER_STATUS_LOADING: {
       const servers: Server[] = action.payload.servers;
-      return setServersStateLoading(state, servers, true);
+      return setServersStateLoading(state, servers, action.payload.isLoading);
     }
 
     case ServersActionTypes.CHECK_SERVER_STATUS_SUCCESS: {
@@ -241,7 +241,7 @@ function getPageWithFilter(
 ): ServersState {
   // if filter reset then return the base set
   const _pageSize = pageSize ? pageSize : state.serverPage.pageSize;
-  const _page = page ? page : 0;
+  let _page = page ? page : 0;
   if (filter == null || filter === undefined || filter.length === 0) {
     const sortedData: ImmutableList<Server> = sortServers(
       state.serverList.servers,
@@ -273,6 +273,9 @@ function getPageWithFilter(
       filteredServers.push(state.serverList.servers.get(i));
     }
   }
+
+  const maxPage = Math.floor(filteredServers.length / _pageSize);
+  _page = _page >= maxPage ? maxPage : _page;
 
   const filteredDataSet = ImmutableList<Server>(filteredServers);
   const newState: ServersState = {

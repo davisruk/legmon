@@ -1,8 +1,8 @@
-<div *ngIf="showSpinner()" style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="showSpinner" style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
   <mat-spinner diameter="200"></mat-spinner>
 </div>
 
-<app-server-list *ngIf="!showSpinner()" [pageSize]="pageSize" [pageNumber]="pageNumber" [displayedColumns]="displayedColumns"
+<app-server-list *ngIf="!showSpinner" [pageSize]="pageSize" [pageNumber]="currentPage$.currentPage | async" [displayedColumns]="displayedColumns"
   [pageSizeOptions]="pageSizeOptions" [numberOfServers]="numberOfServers$ | async" [servers]="servers" (filterEvent)="handleFilterEvent($event)"
   (pageEvent)="handlePageEvent($event)" (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)">
 </app-server-list>

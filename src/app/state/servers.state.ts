@@ -40,6 +40,10 @@ export const getServerPageData = (state: ServerPage): ImmutableList<Server> =>
 export const getServerFilter = (state: ServerPage): ServerFilter =>
   state.filter;
 
+export const getServerFilteredDataSet = (
+  state: ServerFilter
+): ImmutableList<Server> => state.filteredDataSet;
+
 export const getServerFilterDataSetLength = (state: ServerFilter): number =>
   state.filteredDataSet.size;
 

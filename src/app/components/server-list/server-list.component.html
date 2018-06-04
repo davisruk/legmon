@@ -36,7 +36,7 @@
         <mat-row [ngClass]="{'highlight-accent': useHighlightClass(row)}" (click)="highlight(row)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
       <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers"
-        showFirstLastButtons (page)=onPageEvent($event)></mat-paginator>
+        [pageIndex]="pageNumber" showFirstLastButtons (page)=onPageEvent($event)></mat-paginator>
     </div>
   </div>
 </div>

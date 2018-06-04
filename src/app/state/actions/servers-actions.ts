@@ -78,6 +78,7 @@ export class SetCurrentServer implements Action {
 
 export class SetServerStatusLoadingPayload {
   readonly servers: Server[];
+  readonly isLoading: boolean;
 }
 
 export class SetServerStatusLoading implements Action {
