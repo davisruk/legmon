@@ -6,7 +6,10 @@ import {
   CheckServerStatus,
   CheckServerStatusSuccessPayload,
   CheckServerStatusSuccess,
-  CheckServerStatusFailure
+  CheckServerStatusFailure,
+  UploadServersFile,
+  UploadServersFileSuccess,
+  UploadServersFileFailure
 } from './../actions/servers-actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
@@ -85,6 +88,25 @@ export class ServersEffects {
               })
             )
           );
+      })
+    );
+
+  @Effect()
+  uploadServer$: Observable<any> = this.actions
+    .ofType(ServersActionTypes.UPLOAD_SERVERS_FILE)
+    .pipe(
+      map((action: UploadServersFile) => action.payload),
+      switchMap(payload => {
+        return this.serversService.uploadServersFile(payload.fileName).pipe(
+          map(servers => {
+            this.serversService.updateServers(servers);
+            return new UploadServersFileSuccess({ servers: servers });
+          }),
+          catchError(error => {
+            console.log(error);
+            return of(new UploadServersFileFailure({ error: error }));
+          })
+        );
       })
     );
 }

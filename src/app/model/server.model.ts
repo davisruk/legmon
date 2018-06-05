@@ -1,5 +1,6 @@
 import { List as ImmutableList } from 'immutable';
 export class Server {
+  id: number;
   environments: string;
   name: string;
   hostname: string;
@@ -41,4 +42,21 @@ class ServerMessage {
 class Deployment {
   deploymentName: string;
   deployed: string;
+}
+
+class ServerImport {
+  environment: string;
+  status: string;
+  machineType: string;
+  location: string;
+  serverName: string;
+  os: string;
+  vcpu: string;
+  ram: string;
+  vlan: string;
+  ip: string;
+  storage: string;
+  datastore: string;
+  drsCluster: string;
+  componentsDeployed: string;
 }

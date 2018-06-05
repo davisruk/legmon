@@ -1,0 +1,189 @@
+Environment,Status,Physical/VM,Location,Server Name,Operating System,vCPU,RAM (GB),VLAN ,IP Address,Storage (GB) per server,Datastore,Hardware / DRS Cluster,Components Deployed
+FT,Provisioned,VM,Chessington,gbrpmsmigf01,Windows 2012 Standard 64bit,4,6,3457,10.141.129.42,,,AB-PMS-Test-DR,HA Proxy
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsdbst03,Windows 2008R2 Enterprise 64 bit,2,4,3457,10.141.129.130,,,AB-PMS-Test-DR,Master Data Database Services
+FT/IT/UT,Provisioned,Physical TBC,Chessington,gbrcbidbst01,RHEL 6,12,128,3457,10.141.129.15,,,AB-PMS-Test-DR,
+FT/IT/UT,Provisioned,Physical TBC,Chessington,gbrcbiappt01,RHEL 6,12,128,3457,10.141.129.14,,,AB-PMS-Test-DR,
+FT/IT/UT/ST,Provisioned,Physical TBC,Chessington,gbrcbiappt02,Windows,12,128,3457,10.141.129.16,,,AB-PMS-Test-DR,
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsdbst14,Windows 2012,4,4,3457,10.141.129.70,,,AB-PMS-Test-DR,RESIP
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsmdft01,Windows 2012 Standard 64bit,2,8,3457,10.141.129.128,95GB,GB2_XIV_BGR_PMS_Vmware_LUN_01,AB-PMS-Test-DR,Master Data Web Services
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsmdrt01,Windows 2012 Standard 64bit,2,32,3457,10.141.129.129,265GB,XIV-GB2-PMS_13,AB-PMS-Test-DR,Master Data Reporting Services
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsrept01,Windows 2008R2 Enterprise 64 bit,2,4,3457,10.141.129.227,165,,AB-PMS-Test-DR,Reporting Services
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsrept02,Windows 2008R2 Enterprise 64 bit,2,4,3457,10.141.129.228,100,,AB-PMS-Test-DR,Reporting Services
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsrpxt01,,,,3457,10.141.129.251,,,AB-PMS-Test-DR,HA Proxy
+FT1,Provisioned,VM,Chessington,gbrpmseasf01,RHEL 6,2,8,3457,10.141.129.97,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+FT1,Provisioned,VM,Chessington,gbrpmseasf02,RHEL 6,2,8,3457,10.141.129.49,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+FT1,Provisioned,VM,Chessington,gbrpmsepsf01,RHEL 6,4,8,3457,10.141.129.141 ,50,,AB-PMS-Test-DR,EPS Bridge Servers
+FT1,Provisioned,VM,Chessington,gbrpmsoptf01,RHEL 6,4,8,3457,10.141.129.152 ,,,AB-PMS-Test-DR,Optimus Bridge Servers
+FT1,Provisioned,VM,Chessington,gbrpmssdsf01,RHEL 6,4,8,3457,10.141.129.131,,,AB-PMS-Test-DR,Offline Bridge Servers
+FT1,Provisioned,VM,Chessington,gbrpmsstpf01,RHEL 6,4,8,3457,10.141.129.132,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+FT1,Provisioned,VM,Chessington,gbrpmsstpf01,RHEL 6,4,8,3457,10.141.129.132,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+FT1,Provisioned,VM,Chessington,gbrpmstalf01,CentOS 6,2,4,3457,10.141.129.87,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+FT1,Provisioned,VM,Chessington,gbrpmstalf02,CentOS 6,2,4,3457,10.141.129.92,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+FT1,Provisioned,VM,Chessington,gbrpmstalf03,CentOS 6,2,4,3457,10.141.129.78,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+FT1,Provisioned,VM,Chessington,gbrpmsuisf01,RHEL 6,2,8,3457,10.141.129.5,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+FT1,Provisioned,VM,Chessington,gbrpmsuisf02,RHEL 6,2,8,3457,10.141.129.48,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+FT2,Provisioned,VM,Chessington,gbrpmseasf11,RHEL 6,2,8,3457,10.141.129.98,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+FT2,Provisioned,VM,Chessington,gbrpmsepsf11,RHEL 6,2,8,3457,10.141.129.178 ,,,AB-PMS-Test-DR,EPS Bridge Servers
+FT2,Power Off,VM,Chessington,gbrpmsoptf11,RHEL 6,4,8,3457,10.141.129.179,,,AB-PMS-Test-DR,Optimus Bridge Servers
+FT2,Provisioned,VM,Chessington,gbrpmssdsf11,RHEL 6,4,8,3457,10.141.129.176,,,,Offline Bridge Servers
+FT2,Provisioned,VM,Chessington,gbrpmsstpf11,RHEL 6,4,8,3457,10.141.129.177,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+FT2,Provisioned,VM,Chessington,gbrpmstalf11,RHEL 6,2,4,3457,10.141.129.88,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+FT2,Provisioned,VM,Chessington,gbrpmstalf12,RHEL 6,2,4,3457,10.141.129.93,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+FT2,Provisioned,VM,Chessington,gbrpmstalf13,RHEL 6,2,4,3457,10.141.129.79,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+FT2,Provisioned,VM,Chessington,gbrpmsuisf11,RHEL 6,2,8,3457,10.141.129.6,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+FT3,Provisioned,VM,Chessington,gbrpmseasf21,RHEL 6,2,8,3457,10.141.129.111,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+FT3,Provisioned,VM,Chessington,gbrpmsepsf21,RHEL 6,2,8,3457,10.141.129.184 ,,,AB-PMS-Test-DR,EPS Bridge Servers
+FT3,Power Off,VM,Chessington,gbrpmsoptf21,RHEL 6,4,8,3457,10.141.129.185 ,,,AB-PMS-Test-DR,Optimus Bridge Servers
+FT3,Provisioned,VM,Chessington,gbrpmssdsf21,RHEL 6,4,8,3457,10.141.129.182,,,,Offline Bridge Servers
+FT3,Provisioned,VM,Chessington,gbrpmsstpf21,RHEL 6,4,8,3457,10.141.129.183,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+FT3,Provisioned,VM,Chessington,gbrpmstalf21,RHEL 6,1,4,3457,10.141.129.99,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+FT3,Provisioned,VM,Chessington,gbrpmstalf22,RHEL 6,1,4,3457,10.141.129.100,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+FT3,Provisioned,VM,Chessington,gbrpmstalf23,RHEL 6,1,4,3457,10.141.129.90,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+FT3,Provisioned,VM,Chessington,gbrpmsuisf21,RHEL 6,2,8,3457,10.141.129.110,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+FT4,Provisioned,VM,Chessington,gbrpmsbrgf31,RHEL 6,2,8,3457,10.141.129.26,,,AB-PMS-Test-DR,Combined Bridge Server
+FT4,Provisioned,VM,Chessington,gbrpmseasf31,RHEL 6,2,8,3457,10.141.129.25,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+FT4,Provisioned,VM,Chessington,gbrpmstalf31,RHEL 6,1,4,3457,10.141.129.28,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+FT4,Provisioned,VM,Chessington,gbrpmstalf32,RHEL 6,1,4,3457,10.141.129.29,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+FT4,Provisioned,VM,Chessington,gbrpmstalf33,RHEL 6,1,4,3457,10.141.129.30,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+FT4,Provisioned,VM,Chessington,gbrpmsuisf31,RHEL 6,2,8,3457,10.141.129.24,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+FT5,Provisioned,VM,Chessington,gbrpmseasf41,RHEL 6,2,8,3457,10.141.129.126,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+FT5,Provisioned,VM,Chessington,gbrpmstalf41,CentOS 6,1,4,3457,10.141.129.127,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+FT5,Provisioned,VM,Chessington,gbrpmsuisf41,RHEL 6,2,8,3457,10.141.129.125,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+IT,Provisioned,VM,Chessington,gbrpmsmigi01,Windows 2012 Standard 64bit,4,6,3457,10.141.129.39,,,AB-PMS-Test-DR,Migration Server
+IT1,Provisioned,VM,Chessington,gbrpmsdynt01,,,,3457,10.141.129.210,,,AB-PMS-Test-DR,Dynatrace Server
+IT1,Provisioned,VM,Chessington,gbrpmsdynt02,,,,3457,10.141.129.211,,,AB-PMS-Test-DR,Dynatrace Server
+IT1,Provisioned,VM,Chessington,gbrpmseasi01,RHEL 6,2,12,3457,10.141.129.95,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+IT1,Provisioned,VM,Chessington,gbrpmseasi01,RHEL 6,2,12,3457,10.141.129.95,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+IT1,Provisioned,VM,Chessington,gbrpmsepsi01,RHEL 6,2,8,3457,10.141.129.34,,,AB-PMS-Test-DR,EPS Bridge Servers
+IT1,Provisioned,VM,Chessington,gbrpmsimst01,,,,3457,10.141.129.71,,,AB-PMS-Test-DR,IMS DCA Server
+IT1,Power Off,VM,Chessington,gbrpmsopti01,RHEL 6,4,8,3457,10.141.129.41,,,AB-PMS-Test-DR,Optimus Bridge Servers
+IT1,Provisioned,VM,Chessington,gbrpmssdsi01,RHEL 6,4,8,3457,10.141.129.31,,,,Offline Bridge Servers
+IT1,Provisioned,VM,Chessington,gbrpmsstpi01,RHEL 6,4,8,3457,10.141.129.32,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+IT1,Provisioned,VM,Chessington,gbrpmstali01,CentOS 6,2,4,3457,10.141.129.85,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+IT1,Provisioned,VM,Chessington,gbrpmstali02,CentOS 6,2,4,3457,10.141.129.239,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+IT1,Provisioned,VM,Chessington,gbrpmstali03,CentOS 6,2,4,3457,10.141.129.94,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+IT1,Provisioned,VM,Chessington,gbrpmsuisi01,RHEL 6,2,8,3457,10.141.129.3,,,AB-PMS-Test-DR,Columbus UIS Servers
+IT2,Provisioned,VM,Chessington,gbrcbiappt01,,,,3457,10.141.129.14,,,AB-PMS-Test-DR,BI Application
+IT2,Provisioned,VM,Chessington,gbrcbiappt02,,,,3457,10.141.129.16,,,AB-PMS-Test-DR,BI Application
+IT2,Provisioned,VM,Chessington,gbrpmseasi11,RHEL 6,2,12,3457,10.141.129.96,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+IT2,Provisioned,VM,Chessington,gbrpmsepsi11,RHEL 6,2,8,3457,10.141.129.58,,,AB-PMS-Test-DR,EPS Bridge Servers
+IT2,Provisioned,VM,Chessington,gbrpmsmigi11,Windows 2012 Standard 64bit,4,6,3457,10.141.129.40,,,AB-PMS-Test-DR,Migration Server
+IT2,Power Off,VM,Chessington,gbrpmsopti11,RHEL 6,4,8,3457,10.141.129.69 ,,,AB-PMS-Test-DR,Optimus Bridge Servers
+IT2,Provisioned,VM,Chessington,gbrpmssdsi11,RHEL 6,4,8,3457,10.141.129.56,,,AB-PMS-Test-DR,Offline Bridge Servers
+IT2,Provisioned,VM,Chessington,gbrpmsstpi11,RHEL 6,4,8,3457,10.141.129.57,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+IT2,Provisioned,VM,Chessington,gbrpmstali11,CentOS 6,2,4,3457,10.141.129.86,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+IT2,Provisioned,VM,Chessington,gbrpmstali12,CentOS 6,2,4,3457,10.141.129.91,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+IT2,Provisioned,VM,Chessington,gbrpmstali13,CentOS 6,2,4,3457,10.141.129.77,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+IT2,Provisioned,VM,Chessington,gbrpmsuisi11,RHEL 6,2,8,3457,10.141.129.4,,,AB-PMS-Test-DR,Columbus UIS Servers
+FT/IT/UT/ST,Provisioned,VM,Chessington,gbrpmsdbst05,Windows 2012,4,4,3457,10.141.129.75,,,AB-PMS-Test-DR,RESIP
+IT4,Provisioned,VM,Chessington,gbrpmseasi31,RHEL 6,2,12,3457,10.141.129.65,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+IT4,Provisioned,VM,Chessington,gbrpmseasi32,RHEL 6,2,12,3457,10.141.129.66,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+IT4,Provisioned,VM,Chessington,gbrpmsepsi31,RHEL 6,2,8,3457,10.141.129.170,,,AB-PMS-Test-DR,EPS Bridge Servers
+IT4,Power Off,VM,Chessington,gbrpmsopti31,RHEL 6,4,8,3457,10.141.129.175,,,AB-PMS-Test-DR,Optimus Bridge Servers
+IT4,Provisioned,VM,Chessington,gbrpmssdsi31,RHEL 6,4,8,3457,10.141.129.151,,,,Offline Bridge Servers
+IT4,Provisioned,VM,Chessington,gbrpmsstpi31,RHEL 6,4,8,3457,10.141.129.169,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+IT4,Provisioned,VM,Chessington,gbrpmstali31,CentOS 6,2,4,3457,10.141.129.101,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+IT4,Provisioned,VM,Chessington,gbrpmstali32,CentOS 6,2,4,3457,10.141.129.102,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+IT4,Provisioned,VM,Chessington,gbrpmstali33,CentOS 6,2,4,3457,10.141.129.103,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+IT4,Provisioned,VM,Chessington,gbrpmsuisi31,RHEL 6,2,8,3457,10.141.129.63,,,AB-PMS-Test-DR,Columbus UIS Servers
+IT4,Provisioned,VM,Chessington,gbrpmsuisi32,RHEL 6,2,8,3457,10.141.129.64,,,AB-PMS-Test-DR,Columbus UIS Servers
+IT5,Provisioned,VM,Chessington,gbrpmseasi41,RHEL 6,2,12,3457,10.141.129.107,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+IT5,Provisioned,VM,Chessington,gbrpmseasi42,RHEL 6,2,12,3457,10.141.129.109,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+IT5,Provisioned,VM,Chessington,gbrpmsepsi41,RHEL 6,4,8,3457,10.141.129.155,,,AB-PMS-Test-DR,EPS Bridge Servers
+IT5,Provisioned,VM,Chessington,gbrpmsopti41,RHEL 6,4,8,3457,10.141.129.156,,,AB-PMS-Test-DR,Optimus Bridge Servers
+IT5,Provisioned,VM,Chessington,gbrpmssdsi41,RHEL 6,4,8,3457,10.141.129.153,,,AB-PMS-Test-DR,Offline Bridge Servers
+IT5,Provisioned,VM,Chessington,gbrpmsstpi41,RHEL 6,4,8,3457,10.141.129.154,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+IT5,Provisioned,VM,Chessington,gbrpmsstpi41,RHEL 6,4,8,3457,10.141.129.154,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+IT5,Provisioned,VM,Chessington,gbrpmstali41,CentOS 6,4,8,3457,10.141.129.122,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+IT5,Provisioned,VM,Chessington,gbrpmstali42,CentOS 6,1,4,3457,10.141.129.123,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+IT5,Provisioned,VM,Chessington,gbrpmstali43,CentOS 6,1,4,3457,10.141.129.124,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+IT5,Provisioned,VM,Chessington,gbrpmsuisi41,RHEL 6,2,8,3457,10.141.129.104,,,AB-PMS-Test-DR,Columbus UIS Servers
+IT5,Provisioned,VM,Chessington,gbrpmsuisi42,RHEL 6,2,8,3457,10.141.129.106,,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss01,RHEL 6,4,8,3328,10.141.16.1,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss21,RHEL 6,4,8,3328,10.141.16.128,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss22,RHEL 6,4,8,3328,10.141.16.129,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss23,RHEL 6,4,8,3328,10.141.16.130,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss24,RHEL 6,4,8,3328,10.141.16.131,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss02,RHEL 6,4,8,3328,10.141.16.2,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss03,RHEL 6,4,8,3328,10.141.16.3,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss04,RHEL 6,4,8,3328,10.141.16.4,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss11,RHEL 6,4,8,3328,10.141.16.64,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss12,RHEL 6,4,8,3328,10.141.16.65,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss13,RHEL 6,4,8,3328,10.141.16.66,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsuiss14,RHEL 6,4,8,3328,10.141.16.67,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus UIS Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass01,RHEL 6,4,16,3329,10.141.17.1,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsopts02,RHEL 6,4,8,3329,10.141.17.11,45GB storage for system drive & Application,,AB-PMS-Test-DR,Optimus Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsopts01,RHEL 6,4,8,3329,10.141.17.112,45GB storage for system drive & Application,,AB-PMS-Test-DR,Optimus Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass21,RHEL 6,4,16,3329,10.141.17.128,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsepss01,RHEL 6,4,8,3329,10.141.17.80,45GB storage for system drive & Application,,AB-PMS-Test-DR,EPS Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsepss02,RHEL 6,4,8,3329,10.141.17.81,45GB storage for system drive & Application,,AB-PMS-Test-DR,EPS Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass22,RHEL 6,4,16,3329,10.141.17.129,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsmdfs01,Windows 2012 Standard 64bit,2,8,3330,10.141.18.43,160GB storage for system drive & Application,,AB-PMS-Test-DR,Master Data Web Services
+PreProduction,Provisioned,VM,Chessington,gbrpmsmdfs02,Windows 2012 Standard 64bit,2,8,3330,10.141.18.37,160GB storage for system drive & Application,,AB-PMS-Test-DR,Master Data Web Services
+PreProduction,Provisioned,VM,Chessington,gbrpmsmdrs01,Windows 2012 Standard 64bit,2,16,3330,10.141.18.44,300GB storage for system drive & Application,,AB-PMS-Test-DR,Master Data Reporting Services
+PreProduction,Provisioned,VM,Chessington,gbrpmsmdrs02,Windows 2012 Standard 64bit,2,16,3330,10.141.18.40,300GB storage for system drive & Application,,AB-PMS-Test-DR,Master Data Reporting Services
+PreProduction,Provisioned,VM,Chessington,gbrpmseass23,RHEL 6,4,16,3329,10.141.17.130,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass24,RHEL 6,4,16,3329,10.141.17.131,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass02,RHEL 6,4,16,3329,10.141.17.2,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass03,RHEL 6,4,16,3329,10.141.17.3,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmssdss01,RHEL 6,4,8,3329,10.141.17.32,45GB storage for system drive & Application,,AB-PMS-Test-DR,Offline Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmssdss02,RHEL 6,4,8,3329,10.141.17.33,45GB storage for system drive & Application,,AB-PMS-Test-DR,Offline Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass04,RHEL 6,4,16,3329,10.141.17.4,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsstps01,RHEL 6,4,12,3329,10.141.17.48,45GB storage for system drive & Application,,AB-PMS-Test-DR,StockPlus Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsstps02,RHEL 6,4,12,3329,10.141.17.49,45GB storage for system drive & Application,,AB-PMS-Test-DR,StockPlus Bridge Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmstals01,RHEL 6,6,8,3330,10.141.18.29,45GB storage for system drive & Application,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+PreProduction,Provisioned,VM,Chessington,gbrpmstals02,RHEL 6,4,8,3330,10.141.18.30,40GB storage for system drive & Application,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+PreProduction,Provisioned,VM,Chessington,gbrpmstals03,RHEL 6,4,8,3330,10.141.18.31,40GB storage for system drive & Application,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+PreProduction,Provisioned,VM,Chessington,gbrpmseass11,RHEL 6,4,16,3329,10.141.17.64,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass12,RHEL 6,4,16,3329,10.141.17.65,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass13,RHEL 6,4,16,3329,10.141.17.66,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmseass14,RHEL 6,4,16,3329,10.141.17.67,50GB storage for system drive & Application,,AB-PMS-Test-DR,Columbus EAS Application Servers
+PreProduction,Provisioned,VM,Chessington,gbrcbiapps01,,,,3330,10.141.18.233,,,AB-PMS-Test-DR,Spotfire Web Player 
+PreProduction,Provisioned,VM,Chessington,gbrcbiapps02,,,,3330,10.141.18.234,,,AB-PMS-Test-DR,Spotfire Web Player 
+PreProduction,Provisioned,VM,Chessington,gbrcbiapps03,RHEL 6,4,8,3330,10.141.18.235,90GB storage for system drive & Application,,AB-PMS-Test-DR,Spotfire Admin & GoldenGate Server
+PreProduction,Provisioned,VM,Chessington,gbrpmsmigs01,Windows 2012 Standard 64bit,4,6,3330,10.141.18.32,90GB storage for system drive & Application,,AB-PMS-Test-DR,Nexphase / SmartScript Migration Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsmigs02,Windows 2012 Standard 64bit,4,6,3330,10.141.18.33,90GB storage for system drive & Application,,AB-PMS-Test-DR,Nexphase / SmartScript Migration Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsimss01,Windows 2012 Standard 64bit,2,8,3330,10.141.18.34,130GB storage for system drive & Application,,AB-PMS-Test-DR,IMS DCA Server
+PreProduction,Provisioned,VM,Chessington,gbrpmsreps01,Windows 2008R2 Standard 64bit,2,4,3330,10.141.18.5,115,,AB-PMS-Test-DR,Reporting Services
+ST1,Provisioned,VM,Chessington,gbrpmsdbst,,,,3031,10.141.19.193,,,AB-PMS-Test-DR,
+PreProduction,Provisioned,Physical,Chessington,gbrcbidbss01,RHEL 6,12,128,3031,10.141.19.195,,,BL460c Gen8,Columbus DB Servers
+PreProduction,Provisioned,Physical,Chessington,gbrpmsdbss1,RHEL 6,40,512,3031,10.141.19.195,,,BL680c Gen8,Columbus DB Servers
+PreProduction,Provisioned,Physical,Chessington,gbrcbidbss01,RHEL 6,12,128,3031,10.141.19.196,,,BL460c Gen8,Columbus DB Servers
+ST1,Provisioned,VM,Chessington,gbrpmseast01,RHEL 6,12,12,3457,10.141.129.54,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+ST1,Provisioned,VM,Chessington,gbrpmseast02,RHEL 6,12,12,3457,10.141.129.55,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+ST1,Provisioned,VM,Chessington,gbrpmseast03,RHEL 6,12,12,3457,10.141.129.55,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+ST1,Provisioned,VM,Chessington,gbrpmseast04,RHEL 6,12,12,3457,10.141.129.55,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+ST1,Provisioned,VM,Chessington,gbrpmsepst01,RHEL 6,4,8,3457,10.141.129.165,,,AB-PMS-Test-DR,EPS Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmsepst02,RHEL 6,4,8,3457,10.141.129.166,,,AB-PMS-Test-DR,EPS Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmsmigt01,Windows 2012 Standard 64bit,4,6,3457,10.141.129.62,,,AB-PMS-Test-DR,Migration Server
+ST1,Provisioned,VM,Chessington,gbrpmsoptt01,RHEL 6,12,8,3457,10.141.129.167,,,AB-PMS-Test-DR,Optimus Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmsoptt02,RHEL 6,12,8,3457,10.141.129.168,,,AB-PMS-Test-DR,Optimus Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmssdst01,RHEL 6,12,8,3457,10.141.129.157,,,AB-PMS-Test-DR,Offline Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmssdst02,RHEL 6,12,8,3457,10.141.129.158,,,AB-PMS-Test-DR,Offline Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmsstpt01,RHEL 6,12,8,3457,10.141.129.159,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmsstpt02,RHEL 6,12,8,3457,10.141.129.160,,,AB-PMS-Test-DR,StockPlus Bridge Servers
+ST1,Provisioned,VM,Chessington,gbrpmstalt01,RHEL 6,6,8,3457,10.141.129.59,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+ST1,Provisioned,VM,Chessington,gbrpmstalt02,RHEL 6,2,4,3457,10.141.129.60,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+ST1,Provisioned,VM,Chessington,gbrpmstalt03,RHEL 6,2,4,3457,10.141.129.61,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+ST1,Provisioned,VM,Chessington,gbrpmsuist01,RHEL 6,4,8,3457,10.141.129.52,,,AB-PMS-Test-DR,Columbus UIS Servers
+ST1,Provisioned,VM,Chessington,gbrpmsuist02,RHEL 6,4,8,3457,10.141.129.53,,,AB-PMS-Test-DR,Columbus UIS Servers
+ST1,Provisioned,VM,Chessington,gbrpmsuist03,RHEL 6,4,8,3457,10.141.129.171,,,AB-PMS-Test-DR,Columbus UIS Servers
+ST1,Provisioned,VM,Chessington,gbrpmsuist04,RHEL 6,4,8,3457,10.141.129.172,,,AB-PMS-Test-DR,Columbus UIS Servers
+UT1,Provisioned,VM,Chessington,gbrpmsbrgu01,RHEL 6,2,8,3457,10.141.129.116,,,AB-PMS-Test-DR,Combined Bridge Server
+PreProduction,Provisioned,Physical,Chessington,gbrpmsdbss1,RHEL 6,40,512,3031,10.141.19.196,,,BL680c Gen8,Columbus DB Servers
+PreProduction,Provisioned,VM,Chessington,gbrpmsdbss31,Windows 2012 Standard 64bit,4,16,3031,10.141.19.198,,,AB-PMS-Test-DR,Master Data Database Services
+UT1,Provisioned,VM,Chessington,gbrpmseasu01,RHEL 6,2,12,3457,10.141.129.115,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+UT1,Provisioned,VM,Chessington,gbrpmsmigu01,Windows 2012 Standard 64bit,4,6,3457,10.141.129.46,,,AB-PMS-Test-DR,Migration Server
+UT1,Provisioned,VM,Chessington,gbrpmstalu01,RHEL 6,1,4,3457,10.141.129.118,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+UT1,Provisioned,VM,Chessington,gbrpmstalu02,RHEL 6,1,4,3457,10.141.129.119,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+UT1,Provisioned,VM,Chessington,gbrpmstalu03,RHEL 6,1,4,3457,10.141.129.120,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+UT1,Provisioned,VM,Chessington,gbrpmsuisu01,RHEL 6,1,8,3457,10.141.129.114,,,AB-PMS-Test-DR,Columbus UIS Servers
+UT2,Provisioned,VM,Chessington,gbrpmsbrgu11,RHEL 6,2,8,3457,10.141.129.33,,,AB-PMS-Test-DR,Combined Bridge Server
+PreProduction,Provisioned,VM,Chessington,gbrpmsdbss32,Windows 2012 Standard 64bit,4,16,3031,10.141.19.199,,,AB-PMS-Test-DR,Master Data Database Services
+FT/IT/UT,Provisioned,VM,Chessington,gb2pmsdbst3,RHEL 6,,,,10.141.65.3,,,AB-PMS-Test-DR,Shared Oracle PMS DB Test Server
+UT2,Provisioned,VM,Chessington,gbrpmseasu11,RHEL 6,2,12,3457,10.141.129.32,,,AB-PMS-Test-DR,Columbus EAS Application Servers
+UT2,Provisioned,VM,Chessington,gbrpmsmigu02,Windows 2012 Standard 64bit,4,6,3457,10.141.129.47,,,AB-PMS-Test-DR,Migration Server
+UT2,Provisioned,VM,Chessington,gbrpmstalu11,RHEL 6,1,4,3457,10.141.129.35,,,AB-PMS-Test-DR,TSF-N/Boots Talend Application/Database Server
+UT2,Provisioned,VM,Chessington,gbrpmstalu12,RHEL 6,1,4,3457,10.141.129.36,,,AB-PMS-Test-DR,TSF-Z Talend Application/Database Server
+UT2,Provisioned,VM,Chessington,gbrpmstalu13,RHEL 6,1,4,3457,10.141.129.37,,,AB-PMS-Test-DR,Optimus/PCE Talend Application/Database Server
+UT2,Provisioned,VM,Chessington,gbrpmsuisu11,RHEL 6,2,8,3457,10.141.129.31,,,AB-PMS-Test-DR,Columbus UIS Servers

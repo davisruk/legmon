@@ -26,6 +26,7 @@ const initialState: ServersState = {
     currentPage: 0,
     currentSort: { active: null, direction: '' },
     currentServer: {
+      id: 0,
       environments: '',
       name: '',
       hostname: '',
@@ -67,6 +68,12 @@ export function serverStateReducer(
 
     case ServersActionTypes.RESET_STATE: {
       return initialState;
+    }
+
+    case ServersActionTypes.UPLOAD_SERVERS_FILE_SUCCESS: {
+      const servers: Server[] = action.payload.servers;
+      console.log('File Upload Success');
+      return state;
     }
 
     case ServersActionTypes.CHECK_SERVER_STATUS_FAILURE: {
@@ -232,7 +239,15 @@ function computeFilterSet(
     if (s.status !== undefined && s.status.status !== undefined) {
       statusFilter = s.status.status.currentStatus;
     }
-    retVal.push((s.hostname + s.name + s.port + statusFilter).toLowerCase());
+    retVal.push(
+      (
+        s.environments +
+        s.hostname +
+        s.name +
+        s.port +
+        statusFilter
+      ).toLowerCase()
+    );
   });
   return ImmutableList<string>(retVal);
 }

@@ -1,3 +1,4 @@
-<p>
-  server-import works!
-</p>
+<mat-form-field>
+  <input matInput [(ngModel)]="fileName" placeholder="File Name">
+</mat-form-field>
+<button mat-raised-button color="primary" (click)=getFile($event)>Upload</button>

@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders
+} from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
-import { map, catchError, delay, timeout } from 'rxjs/operators';
+import { map, catchError, delay, timeout, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +19,85 @@ export class ServersService {
     return this.http
       .get<Server[]>(this._baseUrl + 'servers')
       .pipe(catchError(this.handleError));
+  }
+
+  public updateServers(servers: Server[]) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    servers.forEach(server => {
+      this.http
+        .put<Server>(
+          this._baseUrl + 'servers/' + server.id,
+          server,
+          httpOptions
+        )
+        .pipe(
+          catchError(_ => {
+            return this.http.post<Server>(
+              this._baseUrl + 'servers/',
+              server,
+              httpOptions
+            );
+          })
+        )
+        .subscribe();
+    });
+  }
+
+  public uploadServersFile(fileName: string): Observable<Server[]> {
+    const file = 'assets/servers-master.csv';
+    return this.http.get(file, { responseType: 'text' }).pipe(
+      map(res => {
+        return this.convertData(this.extractData(res));
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  extractData(res: any): any {
+    const csvData = res;
+    const allTextLines = csvData.split(/\r\n|\n/);
+    const headers = allTextLines[0].split(',');
+    const lines = [];
+
+    for (let i = 0; i < allTextLines.length; i++) {
+      // split content based on comma
+      const data = allTextLines[i].split(',');
+      if (data.length === headers.length) {
+        const tarr = [];
+        for (let j = 0; j < headers.length; j++) {
+          tarr.push(data[j]);
+        }
+        lines.push(tarr);
+      }
+    }
+    console.log(lines);
+    return lines;
+  }
+
+  convertData(lines: string[][]): Server[] {
+    const servers: Server[] = [];
+    let id = 1;
+    lines.forEach((line: string[]) => {
+      const server: Server = {
+        id: id,
+        environments: line[0],
+        name: line[4],
+        hostname: line[9],
+        port: '8180',
+        url:
+          '/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true',
+        statusLoading: false
+      };
+      id++;
+      servers.push(server);
+    });
+    servers.splice(0, 1);
+    return servers;
   }
 
   private handleError(error: HttpErrorResponse) {
