@@ -14,7 +14,8 @@ export enum ServersActionTypes {
   CHECK_SERVER_STATUS_SUCCESS = '[Servers] Check Server Status Success',
   CHECK_SERVER_STATUS_FAILURE = '[Servers] Check Server Status Failure',
   SET_CURRENT_SERVER = '[Servers] Set Current Server',
-  SET_SERVER_STATUS_LOADING = '[Servers] Set Server Status Loading'
+  SET_SERVER_STATUS_LOADING = '[Servers] Set Server Status Loading',
+  RESET_STATE = '[Servers] Reset State'
 }
 
 export class LoadServers implements Action {
@@ -106,6 +107,11 @@ export class CheckServerStatusSuccess implements Action {
 
 export class CheckServerStatusFailure implements Action {
   readonly type: string = ServersActionTypes.CHECK_SERVER_STATUS_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class ResetState implements Action {
+  readonly type: string = ServersActionTypes.RESET_STATE;
   constructor(public payload: any) {}
 }
 

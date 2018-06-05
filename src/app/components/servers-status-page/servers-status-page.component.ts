@@ -29,7 +29,8 @@ import {
   SetCurrentServer,
   SetCurrentServerPayload,
   SetServerStatusLoading,
-  SetServerStatusLoadingPayload
+  SetServerStatusLoadingPayload,
+  ResetState
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
 import { Observable, interval, timer, from, Subscription } from 'rxjs';
@@ -100,6 +101,8 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     if (this.serverSubscription) {
       this.serverSubscription.unsubscribe();
     }
+
+    this.store.dispatch(new ResetState({}));
   }
 
   cancelCheckServersStatus() {

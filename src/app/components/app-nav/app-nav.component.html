@@ -12,7 +12,7 @@
     </mat-toolbar>
 
     <mat-nav-list>
-      <a *ngFor="let menuItem of sidebarMenu" mat-list-item href='#'>{{menuItem.title}}</a>
+      <a *ngFor="let menuItem of sidebarMenu" mat-list-item [routerLink]=menuItem.routerLink href='#'>{{menuItem.title}}</a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -38,7 +38,6 @@
     </mat-toolbar>
 
     <!-- content and routing should go here -->
-    <app-servers-status-page></app-servers-status-page>
-
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

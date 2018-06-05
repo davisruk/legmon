@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ServerImportComponent } from '../components/server-import/server-import.component';
+
 import {
   MatToolbarModule,
   MatButtonModule,
@@ -99,14 +101,14 @@ import { ServerDetailComponent } from '../components/server-detail/server-detail
       {
         path: 'content',
         component: MainContentComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
         // all app routes should go as children off Main Content to keep the side panel and nav bar eg.
-        // children: [
-        //  { path: 'patients', component: PatientListComponent },
-        //  { path: 'prescriptions', component: PrescriptionListComponent }
-        // ]
+        children: [
+          { path: 'servers-status', component: ServersStatusPageComponent },
+          { path: 'servers-import', component: ServerImportComponent }
+        ]
       },
-      { path: '**', redirectTo: 'content' }
+      { path: '**', redirectTo: 'content/servers-status' }
     ]),
     StoreRouterConnectingModule.forRoot({ stateKey: 'router' })
   ],
@@ -144,6 +146,7 @@ import { ServerDetailComponent } from '../components/server-detail/server-detail
     MainContentComponent,
     ServerListComponent,
     ServersStatusPageComponent,
+    ServerImportComponent,
     FlexLayoutModule
   ],
   declarations: [
@@ -155,7 +158,8 @@ import { ServerDetailComponent } from '../components/server-detail/server-detail
     SignUpComponent,
     MainContentComponent,
     ServersStatusPageComponent,
-    ServerDetailComponent
+    ServerDetailComponent,
+    ServerImportComponent
   ],
   providers: [
     { provide: RouterStateSerializer, useClass: RouterCustomSerializer }

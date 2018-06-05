@@ -37,11 +37,17 @@ export class AppNavComponent implements OnInit {
   isHandSet: Observable<BreakpointState>;
   showToolbarButton = false;
   sidebarMenu: MenuItem[];
-  toolbarMenu: MenuItem[] = [{ title: 'Documentation' }, { title: 'About' }];
+  toolbarMenu: MenuItem[] = [
+    { title: 'Documentation', routerLink: [''] },
+    { title: 'About', routerLink: [''] }
+  ];
   initSideMenu: MenuItem[] = [
-    { title: 'Patients' },
-    { title: 'Prescriptions' },
-    { title: 'Stores' }
+    {
+      title: 'Import Servers',
+      routerLink: ['/content/servers-import']
+    },
+    { title: 'Server Status', routerLink: ['/content/servers-status'] },
+    { title: 'User Maintenance', routerLink: ['/content'] }
   ];
   appTitle = 'LegMon';
   overlayRef: ThemePickerOverlayRef;

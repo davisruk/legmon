@@ -1,3 +1,4 @@
 export class MenuItem {
-    title: string;
+  title: string;
+  routerLink: string[];
 }

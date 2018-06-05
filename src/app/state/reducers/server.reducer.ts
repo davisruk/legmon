@@ -65,6 +65,10 @@ export function serverStateReducer(
       };
     }
 
+    case ServersActionTypes.RESET_STATE: {
+      return initialState;
+    }
+
     case ServersActionTypes.CHECK_SERVER_STATUS_FAILURE: {
       console.log('CHECK SERVER STATUS ERROR - Should never get here!!');
       return state;
