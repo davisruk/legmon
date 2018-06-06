@@ -98,9 +98,12 @@ export class ServersEffects {
       map((action: UploadServersFile) => action.payload),
       switchMap(payload => {
         return this.serversService.uploadServersFile(payload.fileName).pipe(
-          map(servers => {
-            this.serversService.updateServers(servers);
-            return new UploadServersFileSuccess({ servers: servers });
+          map(newServers => {
+            this.serversService.updateServers(
+              newServers,
+              payload.currentServerFileContents
+            );
+            return new UploadServersFileSuccess({ servers: newServers });
           }),
           catchError(error => {
             console.log(error);

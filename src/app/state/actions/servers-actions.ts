@@ -125,6 +125,7 @@ export class UploadServersFile implements Action {
 
 export class UploadServersFilePayload {
   readonly fileName: string;
+  readonly currentServerFileContents: Server[];
 }
 
 export class UploadServersFileSuccess implements Action {

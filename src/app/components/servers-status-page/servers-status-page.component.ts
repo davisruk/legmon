@@ -55,11 +55,11 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   servers: Server[] = [];
   currentPage$: Observable<ServerPage>;
   runInitServerCheck = true;
-  serverLoadSubscription: Subscription;
   serverSubscription: Subscription;
   timerSubScription: Subscription;
   showSpinner = true;
   serversUnderCheck: string[];
+  serverLoadSubscription: Subscription;
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
@@ -75,8 +75,8 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
       .select(selectServerArray)
       .subscribe((servers: ImmutableList<Server>) => {
         if (servers !== undefined && servers.size > 0) {
-          this.serverLoadSubscription.unsubscribe();
           this.showSpinner = false;
+          this.serverLoadSubscription.unsubscribe();
         }
       });
   }
@@ -95,7 +95,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     );
   }
   ngOnDestroy(): void {
-    if (this.timerSubScription) {
+    if (this.timerSubScription && !this.timerSubScription) {
       this.timerSubScription.unsubscribe();
     }
     if (this.serverSubscription) {

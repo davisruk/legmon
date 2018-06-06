@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
   HttpHeaders
 } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, Subscription } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
 import { map, catchError, delay, timeout, tap } from 'rxjs/operators';
 
@@ -21,30 +21,29 @@ export class ServersService {
       .pipe(catchError(this.handleError));
   }
 
-  public updateServers(servers: Server[]) {
+  public updateServers(newServers: Server[], oldServers: Server[]) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
 
-    servers.forEach(server => {
-      this.http
-        .put<Server>(
-          this._baseUrl + 'servers/' + server.id,
-          server,
-          httpOptions
-        )
-        .pipe(
-          catchError(_ => {
-            return this.http.post<Server>(
-              this._baseUrl + 'servers/',
-              server,
-              httpOptions
-            );
-          })
-        )
-        .subscribe();
+    newServers.forEach(server => {
+      if (oldServers.find(s => s.id === server.id)) {
+        this.http
+          .put(this._baseUrl + 'servers/' + server.id, server, httpOptions)
+          .pipe(catchError(this.handleError))
+          .subscribe((serverResponse: Server) => {
+            console.log(`${serverResponse.hostname} updated in db`);
+          });
+      } else {
+        this.http
+          .post(this._baseUrl + 'servers/', server, httpOptions)
+          .pipe(catchError(this.handleError))
+          .subscribe((serverResponse: Server) => {
+            console.log(`${serverResponse.hostname} added to db`);
+          });
+      }
     });
   }
 

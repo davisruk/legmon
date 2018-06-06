@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { selectServerArray } from './../../state/app.state';
+import { Server } from 'src/app/model/server.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state/app.state';
 import {
   UploadServersFile,
-  UploadServersFilePayload
+  UploadServersFilePayload,
+  LoadServers
 } from '../../state/actions/servers-actions';
+import { List as ImmutableList } from 'immutable';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-server-import',
@@ -13,15 +18,26 @@ import {
 })
 export class ServerImportComponent implements OnInit {
   fileName = '';
-  constructor(private store: Store<AppState>) {}
+  fullServerListSubscription: Subscription;
+
+  constructor(private store: Store<AppState>) {
+    this.store.dispatch(new LoadServers({}));
+  }
 
   ngOnInit() {}
 
   getFile() {
     console.log('getting file ' + this.fileName);
-    const payload: UploadServersFilePayload = {
-      fileName: this.fileName
-    };
-    this.store.dispatch(new UploadServersFile(payload));
+
+    this.store
+      .select(selectServerArray)
+      .subscribe((servers: ImmutableList<Server>) => {
+        const payload: UploadServersFilePayload = {
+          fileName: this.fileName,
+          currentServerFileContents: servers.toArray()
+        };
+        this.store.dispatch(new UploadServersFile(payload));
+      })
+      .unsubscribe();
   }
 }
