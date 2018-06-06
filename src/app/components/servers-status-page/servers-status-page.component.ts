@@ -86,6 +86,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
         tap(pg => {
           this.currentPage = pg;
           this.servers = pg.pageData.toArray();
+          // run an initial status check
           if (this.servers.length > 0 && this.runInitServerCheck) {
             this.runInitServerCheck = false;
             this.checkServersStatus();
@@ -96,6 +97,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // run a status check every x seconds
     interval(10000)
       .pipe(takeUntil(this.destroy$))
       .subscribe(_ => this.checkServersStatus());
@@ -121,6 +123,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   }
 
   checkServersStatus() {
+    // cancel any currently running checks
     this.cancelCheckServersStatus();
     const servers = this.buildServerListToCheck();
     if (servers.length > 0) {
@@ -129,7 +132,9 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
         isLoading: true
       };
 
+      // set all servers to a loading status (for spinner)
       this.store.dispatch(new SetServerStatusLoading(payload));
+      // check the status of each server
       servers.forEach((server: Server) => {
         const checkStatusPayload: CheckServerStatusPayload = {
           server: server
@@ -141,6 +146,8 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
 
   buildServerListToCheck(): Server[] {
     const servers: Server[] = [];
+    // only add servers to check that have not been checked
+    // or have not been checked in x seconds
     from(this.servers)
       .pipe(
         filter(
@@ -156,6 +163,10 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
 
   buildServerListToCancel(): Server[] {
     const servers: Server[] = [];
+    // if a server is already loading its status set the loading indicator to false
+    // we aren't subscribing to the actual load so this is the best we can do
+    // the current load will continue but the state update in the store will
+    // be overwritten by the newer status request resulting from this cancel
     from(this.servers)
       .pipe(filter((s: Server) => s.statusLoading))
       .subscribe(s => {
