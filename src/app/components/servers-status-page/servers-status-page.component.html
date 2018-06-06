@@ -2,9 +2,9 @@
   <mat-spinner diameter="200"></mat-spinner>
 </div>
 
-<app-server-list *ngIf="!showSpinner" [pageSize]="pageSize" [pageNumber]="currentPage$.currentPage | async" [displayedColumns]="displayedColumns"
-  [pageSizeOptions]="pageSizeOptions" [numberOfServers]="numberOfServers$ | async" [servers]="servers" (filterEvent)="handleFilterEvent($event)"
+<app-server-list *ngIf="!showSpinner" [pageSize]="currentPage.pageSize" [pageNumber]="currentPage.currentPage" [displayedColumns]="displayedColumns"
+  [pageSizeOptions]="pageSizeOptions" [numberOfServers]="currentPage.filter.filteredDataSet.size" [servers]="servers" (filterEvent)="handleFilterEvent($event)"
   (pageEvent)="handlePageEvent($event)" (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)">
 </app-server-list>
 
-<app-server-detail [server]="(currentServer$ | async)"></app-server-detail>
+<app-server-detail [server]="currentPage.currentServer"></app-server-detail>

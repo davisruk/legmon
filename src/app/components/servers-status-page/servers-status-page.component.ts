@@ -33,11 +33,19 @@ import {
   ResetState
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
-import { Observable, interval, timer, from, Subscription } from 'rxjs';
+import {
+  Observable,
+  interval,
+  timer,
+  from,
+  Subscription,
+  of,
+  Subject
+} from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
 import { Server, ServerStatus } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
-import { filter, map, takeWhile } from 'rxjs/operators';
+import { filter, map, takeWhile, tap, takeUntil, take } from 'rxjs/operators';
 import { List as ImmutableList } from 'immutable';
 @Component({
   selector: 'app-servers-status-page',
@@ -47,61 +55,57 @@ import { List as ImmutableList } from 'immutable';
 export class ServersStatusPageComponent implements OnInit, OnDestroy {
   displayedColumns = ['env', 'name', 'hostname', 'port', 'status'];
   pageSizeOptions = [5, 10, 50];
-  pageSize = 5;
-  numberOfServers$: Observable<number>;
-  servers$: Observable<ImmutableList<Server>>;
-  currentServer$: Observable<Server>;
-  timerCheckStatus$: Observable<number>;
   servers: Server[] = [];
-  currentPage$: Observable<ServerPage>;
   runInitServerCheck = true;
-  serverSubscription: Subscription;
-  timerSubScription: Subscription;
   showSpinner = true;
   serversUnderCheck: string[];
-  serverLoadSubscription: Subscription;
+  destroy$: Subject<boolean> = new Subject<boolean>();
+  currentPage: ServerPage;
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
-    this.numberOfServers$ = this.store.select(
-      selectServerFilteredDataSetLength
-    );
-    this.currentServer$ = this.store.select(selectCurrentServer);
-    this.servers$ = this.store.select(selectServerPageData);
-    this.currentPage$ = this.store.select(selectServerPage);
 
     // show the spinner until all servers are loaded
-    this.serverLoadSubscription = this.store
+    const serversPopulated$: Subject<boolean> = new Subject<boolean>();
+    this.store
       .select(selectServerArray)
-      .subscribe((servers: ImmutableList<Server>) => {
-        if (servers !== undefined && servers.size > 0) {
+      .pipe(
+        takeUntil(serversPopulated$), // unsubscribe triggered
+        filter(servers => servers.size > 0),
+        tap(_ => {
           this.showSpinner = false;
-          this.serverLoadSubscription.unsubscribe();
-        }
-      });
+          serversPopulated$.next(true); // trigger unsubscribe
+        })
+      )
+      .subscribe();
+
+    this.store
+      .select(selectServerPage)
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(pg => {
+          this.currentPage = pg;
+          this.servers = pg.pageData.toArray();
+          if (this.servers.length > 0 && this.runInitServerCheck) {
+            this.runInitServerCheck = false;
+            this.checkServersStatus();
+          }
+        })
+      )
+      .subscribe();
   }
 
   ngOnInit() {
-    this.serverSubscription = this.servers$.subscribe(s => {
-      this.servers = s.toArray();
-      if (this.servers.length > 0 && this.runInitServerCheck) {
-        this.runInitServerCheck = false;
-        this.checkServersStatus();
-      }
-    });
-
-    this.timerSubScription = interval(10000).subscribe(_ =>
-      this.checkServersStatus()
-    );
+    interval(10000)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(_ => this.checkServersStatus());
   }
-  ngOnDestroy(): void {
-    if (this.timerSubScription && !this.timerSubScription) {
-      this.timerSubScription.unsubscribe();
-    }
-    if (this.serverSubscription) {
-      this.serverSubscription.unsubscribe();
-    }
 
+  ngOnDestroy(): void {
+    // cancel all subscriptions
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+    // reset the server page state
     this.store.dispatch(new ResetState({}));
   }
 
@@ -161,8 +165,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   }
 
   handlePageEvent(event: PageEvent) {
-    if (this.pageSize !== event.pageSize) {
-      this.pageSize = event.pageSize;
+    if (this.currentPage.pageSize !== event.pageSize) {
       this.changePageSize(event.pageSize);
     } else {
       this.changePage(event.pageIndex, event.pageSize);
