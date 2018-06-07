@@ -1,39 +1,8 @@
 import { Server } from './../../model/server.model';
-import {
-  selectServerList,
-  selectServerArray,
-  selectServerArrayLength,
-  selectServerFilteredDataSetLength,
-  selectThemeNameState
-} from './../../state/app.state';
-import {
-  Component,
-  OnInit,
-  Input,
-  EventEmitter,
-  Output,
-  Renderer2,
-  ElementRef
-} from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../state/app.state';
-import { LoadServers } from '../../state/actions/servers-actions';
-import { Observable, of, fromEvent } from 'rxjs';
-import { ServerList } from '../../model/server.model';
-import {
-  combineLatest,
-  map,
-  debounceTime,
-  distinctUntilChanged,
-  filter
-} from 'rxjs/operators';
-import {
-  PageEvent,
-  Sort,
-  CanColor,
-  mixinColor,
-  ThemePalette
-} from '@angular/material';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { PageEvent, Sort } from '@angular/material';
 
 @Component({
   selector: 'app-server-list',

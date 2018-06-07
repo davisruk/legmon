@@ -1,29 +1,21 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  OnInit,
-  HostBinding
-} from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import {
   BreakpointObserver,
   Breakpoints,
   BreakpointState,
   MediaMatcher
 } from '@angular/cdk/layout';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MenuItem } from '../../model/menu-item.model';
 import { MatSidenav } from '@angular/material/sidenav';
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { Md5 } from 'ts-md5/dist/md5';
 import {
   ThemePickerOverlayService,
   ThemePickerOverlayRef
 } from '../theme-picker/theme-picker-overlay.service';
 import { MatButton } from '@angular/material';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState, selectThemeCanCloseState } from '../../state/app.state';
-import * as uiReducer from '../../state/reducers/ui.reducer';
 import * as auth from '../../state/actions/auth-actions';
 import * as NavActions from '../../state/actions/nav-actions';
 

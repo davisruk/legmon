@@ -4,8 +4,6 @@ import { Effect, ofType, Actions } from '@ngrx/effects';
 import * as RouterActions from '../actions/nav-actions';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ROUTER_CANCEL, RouterCancelAction } from '@ngrx/router-store';
-import { RouterStateUrl } from '../router.state';
 
 @Injectable()
 export class RouterEffects {

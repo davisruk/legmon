@@ -6,12 +6,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   AppState,
-  selectServerFilteredDataSetLength,
-  selectServerPageData,
-  selectCurrentServer,
   selectServerPage,
-  selectServerFilter,
-  selectServerFilteredDataSet,
   selectServerArray
 } from '../../state/app.state';
 import {
@@ -33,20 +28,12 @@ import {
   ResetState
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
-import {
-  Observable,
-  interval,
-  timer,
-  from,
-  Subscription,
-  of,
-  Subject
-} from 'rxjs';
+import { interval, from, Subject } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
-import { Server, ServerStatus } from 'src/app/model/server.model';
+import { Server } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
-import { filter, map, takeWhile, tap, takeUntil, take } from 'rxjs/operators';
-import { List as ImmutableList } from 'immutable';
+import { filter, tap, takeUntil, take } from 'rxjs/operators';
+
 @Component({
   selector: 'app-servers-status-page',
   templateUrl: './servers-status-page.component.html',

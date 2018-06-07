@@ -1,19 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user.model';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  AppState,
-  selectAuthState,
-  selectAuthError,
-  selectAuthUser,
-  selectAuthenticated
-} from '../../state/app.state';
+import { AppState, selectAuthError } from '../../state/app.state';
 import { Login } from '../../state/actions/auth-actions';
 import { Observable } from 'rxjs';
-import { AuthenticationState } from '../../state/authentication-state';
-import * as NavActions from '../../state/actions/nav-actions';
 
 @Component({
   selector: 'app-login',

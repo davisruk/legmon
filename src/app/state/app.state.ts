@@ -1,4 +1,4 @@
-import { ServersState, getServerList, getServerFilter } from './servers.state';
+import { ServersState } from './servers.state';
 import { UIState } from '../state/ui.state';
 import { AuthenticationState } from './authentication-state';
 import * as auth from './reducers/auth-reducer';

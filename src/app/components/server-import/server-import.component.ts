@@ -1,6 +1,6 @@
 import { selectServerArray } from './../../state/app.state';
 import { Server } from 'src/app/model/server.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state/app.state';
 import {
@@ -9,7 +9,7 @@ import {
   LoadServers
 } from '../../state/actions/servers-actions';
 import { List as ImmutableList } from 'immutable';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-server-import',

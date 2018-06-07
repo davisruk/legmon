@@ -1,10 +1,5 @@
-import {
-  RouterReducerState,
-  RouterStateSerializer,
-  routerReducer
-} from '@ngrx/router-store';
+import { RouterStateSerializer } from '@ngrx/router-store';
 import { RouterStateSnapshot, Params } from '@angular/router';
-import { ActionReducerMap } from '@ngrx/store';
 
 export interface RouterStateUrl {
   url: string;

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState, selectThemeNameState } from '../../state/app.state';
-import * as UIState from '../../state/reducers/ui.reducer';
 
 @Component({
   selector: 'app-main-content',
@@ -10,14 +9,11 @@ import * as UIState from '../../state/reducers/ui.reducer';
   styleUrls: ['./main-content.component.scss']
 })
 export class MainContentComponent implements OnInit {
-
   styleTheme: Observable<string>;
 
-  constructor (private store: Store<AppState>) {
+  constructor(private store: Store<AppState>) {
     this.styleTheme = store.select(selectThemeNameState);
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

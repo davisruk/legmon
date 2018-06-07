@@ -6,7 +6,6 @@ import {
   Router
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
 import { Store } from '@ngrx/store';
 import { AppState, selectAuthenticated } from '../state/app.state';
 import { map } from 'rxjs/operators';

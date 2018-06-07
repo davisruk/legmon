@@ -1,6 +1,5 @@
-import { ActionReducer, MetaReducer, Action } from '@ngrx/store';
+import { ActionReducer, MetaReducer } from '@ngrx/store';
 import { AuthActionTypes } from '../state/actions/auth-actions';
-import { AppState } from '../state/app.state';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {

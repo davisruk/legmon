@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Sort } from '@angular/material';
-import { ServerStatus, Server } from '../../model/server.model';
+import { Server } from '../../model/server.model';
 
 export enum ServersActionTypes {
   LOAD_SERVERS = '[Servers] Load Servers',

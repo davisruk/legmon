@@ -40,7 +40,6 @@ import { LoginComponent } from '../components/login/login.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { LandingComponent } from '../components/landing/landing.component';
 import { MainContentComponent } from '../components/main-content/main-content.component';
-import { AuthenticationService } from '../services/authentication.service';
 import { AuthEffects } from '../state/effects/auth-effects';
 import { ServerListComponent } from '../components/server-list/server-list.component';
 import { EffectsModule } from '@ngrx/effects';

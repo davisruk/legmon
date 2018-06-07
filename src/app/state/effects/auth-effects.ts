@@ -9,7 +9,6 @@ import {
   Login,
   LoginSuccess,
   LoginFailure,
-  LoginSuccessPayload,
   Logout,
   LogoutSuccess
 } from '../actions/auth-actions';

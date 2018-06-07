@@ -14,9 +14,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { ServersService } from '../../services/servers.service';
-import { map, switchMap, catchError, tap, mergeMap } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
-import { Server } from '../../model/server.model';
+import { map, switchMap, catchError, mergeMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class ServersEffects {

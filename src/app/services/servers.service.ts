@@ -4,16 +4,9 @@ import {
   HttpErrorResponse,
   HttpHeaders
 } from '@angular/common/http';
-import {
-  Observable,
-  throwError,
-  of,
-  Subscription,
-  timer,
-  forkJoin
-} from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
-import { map, catchError, delay, timeout, tap } from 'rxjs/operators';
+import { map, catchError, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

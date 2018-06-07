@@ -2,13 +2,10 @@ import {
   ChangePagePayload,
   ChangePageSizePayload,
   SetFilterPayload,
-  SortDataSetPayload,
-  SortDataSet,
-  CheckServerStatusPayload
+  SortDataSetPayload
 } from './../actions/servers-actions';
 import { Server, ServerStatus } from './../../model/server.model';
 import { ServersState } from '../servers.state';
-import { Action } from '@ngrx/store';
 import { ServersActionTypes, All } from '../actions/servers-actions';
 import { Sort } from '@angular/material';
 import { List as ImmutableList } from 'immutable';
