@@ -162,14 +162,7 @@ export class ServersService {
     return this.randomIntBetween(1, 2) === 1
       ? of(validStatus).pipe(delay(this.randomIntBetween(2000, 5000)))
       : of(errorStatus).pipe(delay(this.randomIntBetween(2000, 5000)));
-
     /*
-    if (url === 'error') {
-      return of(errorStatus);
-    }
-    return of(validStatus);
-/*
-
     return this.http
       .get<ServerStatus>('http://' + server + ':' + port + url)
       .pipe(
