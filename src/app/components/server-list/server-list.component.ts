@@ -52,6 +52,7 @@ export class ServerListComponent implements OnInit {
   @Output('sortEvent') sortEvent = new EventEmitter<Sort>();
   @Output('rowClick') rowClick = new EventEmitter<Server>();
   @Output('refreshAll') refreshAll = new EventEmitter();
+  @Output('refreshServer') refreshServer = new EventEmitter();
 
   selectedRow = '';
 
@@ -91,5 +92,9 @@ export class ServerListComponent implements OnInit {
 
   handleRefresh() {
     this.refreshAll.emit();
+  }
+
+  handleRefreshServer(server: Server) {
+    this.refreshServer.emit(server);
   }
 }

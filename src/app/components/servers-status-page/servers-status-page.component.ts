@@ -53,7 +53,14 @@ import { List as ImmutableList } from 'immutable';
   styleUrls: ['./servers-status-page.component.scss']
 })
 export class ServersStatusPageComponent implements OnInit, OnDestroy {
-  displayedColumns = ['env', 'name', 'hostname', 'port', 'status'];
+  displayedColumns = [
+    'env',
+    'name',
+    'hostname',
+    'port',
+    'status',
+    'refreshServer'
+  ];
   pageSizeOptions = [5, 10, 50];
   servers: Server[] = [];
   runInitServerCheck = true;
@@ -223,5 +230,9 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
         );
         this.checkServersStatus(checkServers);
       });
+  }
+
+  handleRefreshServer(server: Server) {
+    this.checkServersStatus([server]);
   }
 }

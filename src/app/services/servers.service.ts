@@ -4,7 +4,14 @@ import {
   HttpErrorResponse,
   HttpHeaders
 } from '@angular/common/http';
-import { Observable, throwError, of, Subscription } from 'rxjs';
+import {
+  Observable,
+  throwError,
+  of,
+  Subscription,
+  timer,
+  forkJoin
+} from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
 import { map, catchError, delay, timeout, tap } from 'rxjs/operators';
 
@@ -115,7 +122,6 @@ export class ServersService {
     port: string,
     url: string
   ): Observable<ServerStatus> {
-    /*
     const validStatus: ServerStatus = {
       dataStale: false,
       lastChecked: 0,
@@ -133,13 +139,15 @@ export class ServersService {
       }
     };
 
-    return of(validStatus);
+    const retVal: Observable<ServerStatus> = of(validStatus).pipe(delay(2000));
+    return retVal;
+
     /*
     if (url === 'error') {
       return of(errorStatus);
     }
     return of(validStatus);
-*/
+/*
     const errorStatus: ServerStatus = {
       dataStale: false,
       lastChecked: 0,
@@ -174,5 +182,6 @@ export class ServersService {
           return of(errorStatus);
         })
       );
+*/
   }
 }

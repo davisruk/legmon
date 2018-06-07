@@ -1,11 +1,10 @@
 <div style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
-  <div fxLayout="row" fxLayoutAlign="space-around center">
+  <div fxLayoutAlign="center center">
     <mat-form-field>
       <input id="filterInput" matInput placeholder="Filter">
     </mat-form-field>
-    <button style="max-height: 40px" mat-raised-button color="primary" (click)="handleRefresh()">Refresh All</button>
   </div>
-  <div>
+  <div fxLayoutAlign="center center">
     <div style="min-width: 60vw">
       <mat-table [dataSource]="servers" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
         <ng-container cdkColumnDef="env">
@@ -24,6 +23,15 @@
           <mat-header-cell mat-sort-header *cdkHeaderCellDef> Port </mat-header-cell>
           <mat-cell *cdkCellDef="let server"> {{server.port}} </mat-cell>
         </ng-container>
+        <ng-container cdkColumnDef="refreshServer">
+          <mat-header-cell *cdkHeaderCellDef>
+            <button style="min-width: 100px; max-height: 40px" mat-raised-button color="primary" (click)="handleRefresh()">Refresh All</button>
+          </mat-header-cell>
+          <mat-cell *cdkCellDef="let server" (click)="$event.stopPropagation()">
+            <button style="min-width: 100px; max-height: 40px" mat-raised-button color="primary" (click)="handleRefreshServer(server)">Refresh</button>
+          </mat-cell>
+        </ng-container>
+
         <ng-container cdkColumnDef="status">
           <mat-header-cell *cdkHeaderCellDef> Status </mat-header-cell>
           <mat-cell *cdkCellDef="let server">
