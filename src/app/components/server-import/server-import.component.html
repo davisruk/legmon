@@ -1,4 +1,13 @@
-<mat-form-field>
-  <input matInput [(ngModel)]="fileName" placeholder="File Name">
-</mat-form-field>
-<button mat-raised-button color="primary" (click)=getFile($event)>Upload</button>
+<div fxLayout="row" fxLayoutWrap style="min-height: 60vh" fxLayoutAlign="center center">
+  <div fxFlex fxLayoutAlign="center center" style="min-height: 90vh">
+    <mat-card>
+      <mat-card-title>Server Import</mat-card-title>
+      <mat-card-content fxLayoutWrap fxLayoutGap="5px">
+        <mat-form-field>
+          <input matInput [(ngModel)]="fileName" placeholder="File Name">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)=getFile($event)>Upload</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

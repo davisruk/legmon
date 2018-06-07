@@ -55,8 +55,8 @@ export class ServersService {
   }
 
   public uploadServersFile(fileName: string): Observable<Server[]> {
-    const file = 'assets/servers-master.csv';
-    return this.http.get(file, { responseType: 'text' }).pipe(
+    // const file = 'assets/servers-master.csv';
+    return this.http.get(fileName, { responseType: 'text' }).pipe(
       map(res => {
         return this.convertData(this.extractData(res));
       }),
