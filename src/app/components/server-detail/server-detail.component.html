@@ -1,11 +1,35 @@
-<div *ngIf="server.hostname" style="min-height: 30vh" fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="server.hostname" flexLayout="column" fxLayoutAlign="center center">
   <mat-card>
-    <mat-card-title>Server Details - {{server.hostname}} </mat-card-title>
+    <mat-card-title>Server Details - {{server.details.serverName}} </mat-card-title>
     <mat-card-content *ngIf="server.status">
-      <input mat-input value="{{server.hostname}}" readonly="true">
-      <input mat-input value="{{server.status.status.available}}" readonly="true">
-      <input mat-input value="{{server.status.status.currentStatus}}" readonly="true">
-      <input mat-input value="{{server.status.status.label}}" readonly="true">
+      <div flexLayout="row" fxLayoutAlign="center center">
+        <div flex style="min-width:200px">
+          <!-- 1st Row -->
+          <div flexLayout="column">
+            <div flex>Environments: {{server.details.environment}}</div>
+            <div flex>Available: {{server.status.status.available}}</div>
+            <div flex>App Status:{{server.status.status.currentStatus}}</div>
+            <div flex>Leg: {{server.status.status.label}}</div>
+            <div flex>Location: {{server.details.location}}</div>
+            <div flex>VLAN: {{server.details.vlan}}</div>
+            <div flex>IP: {{server.details.ip}}</div>
+            <div flex>VM Status: {{server.details.status}}</div>
+          </div>
+        </div>
+        <div flex style="min-width:200px">
+          <!-- 2nd Row -->
+          <div flexLayout="column">
+            <div flex>OS: {{server.details.os}}</div>
+            <div flex>VCPU: {{server.details.vcpu}}</div>
+            <div flex>RAM:{{server.details.ram}} GB</div>
+            <div flex>Components: {{server.details.componentsDeployed}}</div>
+            <div flex>Storage: {{server.details.storage}}</div>
+            <div flex>Datastore: {{server.details.datastore}}</div>
+            <div flex>Cluster: {{server.details.drsCluster}}</div>
+            <div flex>Machine Type: {{server.details.machineType}}</div>
+          </div>
+        </div>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
