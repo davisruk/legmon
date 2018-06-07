@@ -51,6 +51,8 @@ export class ServerListComponent implements OnInit {
   @Output('filterEvent') filterEvent = new EventEmitter<string>();
   @Output('sortEvent') sortEvent = new EventEmitter<Sort>();
   @Output('rowClick') rowClick = new EventEmitter<Server>();
+  @Output('refreshAll') refreshAll = new EventEmitter();
+
   selectedRow = '';
 
   ngOnInit() {
@@ -85,5 +87,9 @@ export class ServerListComponent implements OnInit {
 
   useHighlightClass(row: Server): boolean {
     return this.selectedRow === row.hostname;
+  }
+
+  handleRefresh() {
+    this.refreshAll.emit();
   }
 }

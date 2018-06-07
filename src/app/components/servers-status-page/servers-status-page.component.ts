@@ -89,7 +89,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
           // run an initial status check
           if (this.servers.length > 0 && this.runInitServerCheck) {
             this.runInitServerCheck = false;
-            this.checkServersStatus();
+            this.checkServersStatus(this.servers);
           }
         })
       )
@@ -100,7 +100,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     // run a status check every x seconds
     interval(10000)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(_ => this.checkServersStatus());
+      .subscribe(_ => this.checkServersStatus(this.servers));
   }
 
   ngOnDestroy(): void {
@@ -122,10 +122,10 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkServersStatus() {
+  checkServersStatus(serversToCheck: Server[]) {
     // cancel any currently running checks
-    this.cancelCheckServersStatus();
-    const servers = this.buildServerListToCheck();
+    // this.cancelCheckServersStatus();
+    const servers = this.buildServerListToCheck(serversToCheck);
     if (servers.length > 0) {
       const payload: SetServerStatusLoadingPayload = {
         servers: servers,
@@ -144,8 +144,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  buildServerListToCheck(): Server[] {
-    const servers: Server[] = [];
+  buildServerListToCheck(servers: Server[]): Server[] {
     // only add servers to check that have not been checked
     // or have not been checked in x seconds
     from(this.servers)
@@ -188,29 +187,41 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     filterValue = filterValue.toLowerCase();
     const payload: SetFilterPayload = { filter: filterValue };
     this.store.dispatch(new SetFilter(payload));
-    this.checkServersStatus();
+    this.checkServersStatus(this.servers);
   }
 
   handleSortEvent(sort: Sort) {
     const payload: SortDataSetPayload = { sort: sort };
     this.store.dispatch(new SortDataSet(payload));
-    this.checkServersStatus();
+    this.checkServersStatus(this.servers);
   }
 
   changePage(page: number, pageSize: number) {
     const payload: ChangePagePayload = { page: page, pageSize: pageSize };
     this.store.dispatch(new ChangePage(payload));
-    this.checkServersStatus();
+    this.checkServersStatus(this.servers);
   }
 
   changePageSize(pageSize: number) {
     const payload: ChangePageSizePayload = { pageSize: pageSize };
     this.store.dispatch(new ChangePageSize(payload));
-    this.checkServersStatus();
+    this.checkServersStatus(this.servers);
   }
 
   handleRowClick(server: Server) {
     const currentServerPayload: SetCurrentServerPayload = { server: server };
     this.store.dispatch(new SetCurrentServer(currentServerPayload));
+  }
+
+  handleRefresh() {
+    this.store
+      .select(selectServerArray)
+      .pipe(take(1))
+      .subscribe(servers => {
+        const checkServers: Server[] = this.buildServerListToCheck(
+          servers.toArray()
+        );
+        this.checkServersStatus(checkServers);
+      });
   }
 }
