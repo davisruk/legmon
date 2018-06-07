@@ -26,6 +26,22 @@ const initialState: ServersState = {
     currentPage: 0,
     currentSort: { active: null, direction: '' },
     currentServer: {
+      details: {
+        environment: '',
+        status: '',
+        machineType: '',
+        location: '',
+        serverName: '',
+        os: '',
+        vcpu: '',
+        ram: '',
+        vlan: '',
+        ip: '',
+        storage: '',
+        datastore: '',
+        drsCluster: '',
+        componentsDeployed: ''
+      },
       id: 0,
       environments: '',
       name: '',

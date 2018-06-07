@@ -90,6 +90,22 @@ export class ServersService {
     let id = 1;
     lines.forEach((line: string[]) => {
       const server: Server = {
+        details: {
+          environment: line[0],
+          status: line[1],
+          machineType: line[2],
+          location: line[3],
+          serverName: line[4],
+          os: line[5],
+          vcpu: line[6],
+          ram: line[7],
+          vlan: line[8],
+          ip: line[9],
+          storage: line[10],
+          datastore: line[11],
+          drsCluster: line[12],
+          componentsDeployed: line[13]
+        },
         id: id,
         environments: line[0],
         name: line[4],
