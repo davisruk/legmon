@@ -86,6 +86,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
+    // all store updates for the serverlist are handled here
     this.store
       .select(selectServerPage)
       .pipe(
@@ -116,17 +117,6 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
     // reset the server page state
     this.store.dispatch(new ResetState({}));
-  }
-
-  cancelCheckServersStatus() {
-    const servers = this.buildServerListToCancel();
-    if (servers.length > 0) {
-      const payload: SetServerStatusLoadingPayload = {
-        servers: servers,
-        isLoading: false
-      };
-      this.store.dispatch(new SetServerStatusLoading(payload));
-    }
   }
 
   checkServersStatus(serversToCheck: Server[]) {

@@ -25,6 +25,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState, selectThemeCanCloseState } from '../../state/app.state';
 import * as uiReducer from '../../state/reducers/ui.reducer';
 import * as auth from '../../state/actions/auth-actions';
+import * as NavActions from '../../state/actions/nav-actions';
 
 @Component({
   selector: 'app-nav',
@@ -93,6 +94,12 @@ export class AppNavComponent implements OnInit {
 
     this.themePickerService.backDropClicked.subscribe(
       _ => (this.overlayRef = null)
+    );
+
+    this.store.dispatch(
+      new NavActions.Go({
+        path: ['content/servers-status']
+      })
     );
   }
 
