@@ -117,6 +117,9 @@ export class ServersService {
     return throwError('Something bad happened; please try again later.');
   }
 
+  private randomIntBetween(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
   public requestServerStatus(
     server: string,
     port: string,
@@ -139,17 +142,6 @@ export class ServersService {
       }
     };
 
-    const retVal: Observable<ServerStatus> = of(validStatus).pipe(
-      delay(Math.floor(Math.random() * 5000 - 2000 + 1) + 2000)
-    );
-    return retVal;
-
-    /*
-    if (url === 'error') {
-      return of(errorStatus);
-    }
-    return of(validStatus);
-/*
     const errorStatus: ServerStatus = {
       dataStale: false,
       lastChecked: 0,
@@ -166,6 +158,17 @@ export class ServersService {
         label: ''
       }
     };
+
+    return this.randomIntBetween(1, 2) === 1
+      ? of(validStatus).pipe(delay(this.randomIntBetween(2000, 5000)))
+      : of(errorStatus).pipe(delay(this.randomIntBetween(2000, 5000)));
+
+    /*
+    if (url === 'error') {
+      return of(errorStatus);
+    }
+    return of(validStatus);
+/*
 
     return this.http
       .get<ServerStatus>('http://' + server + ':' + port + url)
