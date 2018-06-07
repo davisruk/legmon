@@ -96,6 +96,7 @@ export class AppNavComponent implements OnInit {
       _ => (this.overlayRef = null)
     );
 
+    // default page is Server Status so forward on
     this.store.dispatch(
       new NavActions.Go({
         path: ['content/servers-status']
