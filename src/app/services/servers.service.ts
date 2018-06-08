@@ -5,7 +5,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
-import { Server, ServerStatus } from 'src/app/model/server.model';
+import { Server, ServerStatus, serverPorts } from 'src/app/model/server.model';
 import { map, catchError, delay } from 'rxjs/operators';
 
 @Injectable({
@@ -82,34 +82,37 @@ export class ServersService {
     const servers: Server[] = [];
     let id = 1;
     lines.forEach((line: string[]) => {
-      const server: Server = {
-        details: {
-          environment: line[0],
-          status: line[1],
-          machineType: line[2],
-          location: line[3],
-          serverName: line[4],
-          os: line[5],
-          vcpu: line[6],
-          ram: line[7],
-          vlan: line[8],
-          ip: line[9],
-          storage: line[10],
-          datastore: line[11],
-          drsCluster: line[12],
-          componentsDeployed: line[13]
-        },
-        id: id,
-        environments: line[0],
-        name: line[4],
-        hostname: line[9],
-        port: '8180',
-        url:
-          '/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true',
-        statusLoading: false
-      };
-      id++;
-      servers.push(server);
+      const port: string = serverPorts.portMap.get(line[13]);
+      if (port !== undefined && port !== '') {
+        const server: Server = {
+          details: {
+            environment: line[0],
+            status: line[1],
+            machineType: line[2],
+            location: line[3],
+            serverName: line[4],
+            os: line[5],
+            vcpu: line[6],
+            ram: line[7],
+            vlan: line[8],
+            ip: line[9],
+            storage: line[10],
+            datastore: line[11],
+            drsCluster: line[12],
+            componentsDeployed: line[13]
+          },
+          id: id,
+          environments: line[0],
+          name: line[4],
+          hostname: line[9],
+          port: port,
+          url:
+            '/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true',
+          statusLoading: false
+        };
+        id++;
+        servers.push(server);
+      }
     });
     servers.splice(0, 1);
     return servers;
