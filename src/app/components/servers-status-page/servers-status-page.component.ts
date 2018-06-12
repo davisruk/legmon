@@ -28,7 +28,8 @@ import {
   ResetState
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
-import { interval, from, Subject } from 'rxjs';
+import { List as ImmutableList } from 'immutable';
+import { interval, from, Subject, merge, Subscription, Observable } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
 import { Server } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
@@ -55,12 +56,13 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   serversUnderCheck: string[];
   destroy$: Subject<boolean> = new Subject<boolean>();
   currentPage: ServerPage;
-
+  readonly DELAY = 30000;
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
 
     // show the spinner until all servers are loaded
     const serversPopulated$: Subject<boolean> = new Subject<boolean>();
+
     this.store
       .select(selectServerArray)
       .pipe(
@@ -72,9 +74,16 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  ngOnInit() {
+    // run a status check every x seconds
+    const timerOb$: Observable<number> = interval(this.DELAY).pipe(
+      tap(_ => this.checkServersStatus(this.servers))
+    );
 
     // all store updates for the serverlist are handled here
-    this.store
+    const serverPage$: Observable<ServerPage> = this.store
       .select(selectServerPage)
       .pipe(
         takeUntil(this.destroy$),
@@ -87,15 +96,11 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
             this.checkServersStatus(this.servers);
           }
         })
-      )
-      .subscribe();
-  }
+      );
 
-  ngOnInit() {
-    // run a status check every x seconds
-    interval(10000)
+    merge(serverPage$, timerOb$)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(_ => this.checkServersStatus(this.servers));
+      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -106,10 +111,11 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ResetState({}));
   }
 
-  checkServersStatus(serversToCheck: Server[]) {
+  checkServersStatus(serversToCheck: Server[], override?: boolean) {
+    override = override === undefined ? false : override;
     // cancel any currently running checks
     // this.cancelCheckServersStatus();
-    const servers = this.buildServerListToCheck(serversToCheck);
+    const servers = this.buildServerListToCheck(serversToCheck, override);
     if (servers.length > 0) {
       const payload: SetServerStatusLoadingPayload = {
         servers: servers,
@@ -128,34 +134,24 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  buildServerListToCheck(servers: Server[]): Server[] {
+  buildServerListToCheck(servers: Server[], override?: boolean): Server[] {
+    override = override === undefined ? false : override;
     // only add servers to check that have not been checked
     // or have not been checked in x seconds
-    from(this.servers)
+    const retVal: Server[] = [];
+    from(servers)
       .pipe(
         filter(
           (s: Server) =>
-            s.status === undefined || s.status.lastChecked < Date.now() - 9000
+            s.status === undefined ||
+            s.status.lastChecked < Date.now() - this.DELAY ||
+            override
         )
       )
       .subscribe(s => {
-        servers.push(s);
+        retVal.push(s);
       });
-    return servers;
-  }
-
-  buildServerListToCancel(): Server[] {
-    const servers: Server[] = [];
-    // if a server is already loading its status set the loading indicator to false
-    // we aren't subscribing to the actual load so this is the best we can do
-    // the current load will continue but the state update in the store will
-    // be overwritten by the newer status request resulting from this cancel
-    from(this.servers)
-      .pipe(filter((s: Server) => s.statusLoading))
-      .subscribe(s => {
-        servers.push(s);
-      });
-    return servers;
+    return retVal;
   }
 
   handlePageEvent(event: PageEvent) {
@@ -203,13 +199,14 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(servers => {
         const checkServers: Server[] = this.buildServerListToCheck(
-          servers.toArray()
+          servers.toArray(),
+          true
         );
-        this.checkServersStatus(checkServers);
+        this.checkServersStatus(checkServers, true);
       });
   }
 
   handleRefreshServer(server: Server) {
-    this.checkServersStatus([server]);
+    this.checkServersStatus([server], true);
   }
 }
