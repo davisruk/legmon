@@ -86,7 +86,6 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     const serverPage$: Observable<ServerPage> = this.store
       .select(selectServerPage)
       .pipe(
-        takeUntil(this.destroy$),
         tap(pg => {
           this.currentPage = pg;
           this.servers = pg.pageData.toArray();
