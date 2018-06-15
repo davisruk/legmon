@@ -16,6 +16,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { ServersService } from '../../services/servers.service';
 import { map, switchMap, catchError, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { Server, ServerStatus } from 'src/app/model/server.model';
 
 @Injectable()
 export class ServersEffects {
@@ -64,20 +65,22 @@ export class ServersEffects {
           .pipe(
             map(
               serverStatus => {
+                const server: Server = Object.assign({}, payload.server);
                 if (
                   serverStatus.status.currentStatus === 'UNRESPONSIVE' &&
-                  payload.server.status !== undefined &&
-                  payload.server.status.status.currentStatus !== 'UNRESPONSIVE'
+                  server.status !== undefined &&
+                  server.status.status.currentStatus !== 'UNRESPONSIVE'
                 ) {
-                  payload.server.status.dataStale = true;
+                  serverStatus.dataStale = true;
+                  server.status = serverStatus;
                 } else {
-                  payload.server.status = serverStatus;
-                  payload.server.status.dataStale = false;
+                  server.status = serverStatus;
+                  server.status.dataStale = false;
                 }
-                payload.server.status.lastChecked = Date.now();
+                server.status.lastChecked = Date.now();
 
                 const successPayload: CheckServerStatusSuccessPayload = {
-                  server: payload.server
+                  server: server
                 };
                 return new CheckServerStatusSuccess(successPayload);
               },
