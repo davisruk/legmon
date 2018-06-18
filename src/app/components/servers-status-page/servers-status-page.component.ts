@@ -49,14 +49,14 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     'status',
     'refreshServer'
   ];
-  pageSizeOptions = [5, 10, 50];
+  pageSizeOptions = [5, 10, 20, 50];
   servers: Server[] = [];
   runInitServerCheck = true;
   showSpinner = true;
   serversUnderCheck: string[];
   destroy$: Subject<boolean> = new Subject<boolean>();
   currentPage: ServerPage;
-  readonly DELAY = 10000;
+  readonly DELAY = 5000;
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
 
@@ -112,8 +112,6 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
 
   checkServersStatus(serversToCheck: Server[], override?: boolean) {
     override = override === undefined ? false : override;
-    // cancel any currently running checks
-    // this.cancelCheckServersStatus();
     const servers = this.buildServerListToCheck(serversToCheck, override);
     if (servers.length > 0) {
       const payload: SetServerStatusLoadingPayload = {
@@ -142,9 +140,10 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
       .pipe(
         filter(
           (s: Server) =>
-            s.status === undefined ||
-            s.status.lastChecked < Date.now() - this.DELAY ||
-            override
+            (s.status === undefined ||
+              s.status.lastChecked < Date.now() - this.DELAY ||
+              override) &&
+            !s.statusLoading
         )
       )
       .subscribe(s => {

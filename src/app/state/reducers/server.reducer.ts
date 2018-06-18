@@ -14,7 +14,7 @@ const initialState: ServersState = {
   serverList: { servers: ImmutableList<Server>() },
   serverPage: {
     pageData: ImmutableList<Server>(),
-    pageSize: 5,
+    pageSize: 10,
     filter: {
       filter: '',
       filterSet: ImmutableList<string>(),
@@ -393,7 +393,7 @@ function checkServerStatusSuccess(state: ServersState, server: Server) {
     state.serverPage.filter.filteredDataSet
   );
 
-  const stateServer: Server = getServerInServerList(server, newPageData);
+  const stateServer: Server = getServerInServerList(server, newServerList);
   stateServer.status = { ...server.status };
   stateServer.statusLoading = false;
   newPageData = updateServerInServerList(stateServer, newPageData);
@@ -406,7 +406,7 @@ function checkServerStatusSuccess(state: ServersState, server: Server) {
   let newCurrentServer: Server;
   const useStateCurrentServer =
     state.serverPage.currentServer &&
-    state.serverPage.currentServer.hostname === server.hostname;
+    state.serverPage.currentServer.id === server.id;
   if (useStateCurrentServer) {
     newCurrentServer = Object.assign({}, state.serverPage.currentServer);
     newCurrentServer.status = server.status;
@@ -421,7 +421,7 @@ function checkServerStatusSuccess(state: ServersState, server: Server) {
       currentSort: state.serverPage.currentSort,
       currentServer: useStateCurrentServer
         ? state.serverPage.currentServer
-        : state.serverPage.currentServer,
+        : newCurrentServer,
       filter: {
         filter: state.serverPage.filter.filter,
         filterSet: computeFilterSet(newServerList),
@@ -435,18 +435,14 @@ function getServerInServerList(
   server: Server,
   list: ImmutableList<Server>
 ): Server {
-  const i: number = list.findIndex((item: Server) => {
-    return item.hostname === server.hostname;
-  });
-  return Object.assign({}, list.get(i));
+  const i: number = list.findIndex((item: Server) => item.id === server.id);
+  return i === -1 ? undefined : Object.assign({}, list.get(i));
 }
 
 function updateServerInServerList(
   server: Server,
   list: ImmutableList<Server>
 ): ImmutableList<Server> {
-  const i: number = list.findIndex((item: Server) => {
-    return item.hostname === server.hostname;
-  });
-  return list.update(i, val => server);
+  const i: number = list.findIndex((item: Server) => item.id === server.id);
+  return i === -1 ? list : list.update(i, () => server);
 }
