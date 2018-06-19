@@ -56,6 +56,7 @@ import { ServersEffects } from '../state/effects/servers-effects';
 import { CdkTableModule } from '@angular/cdk/table';
 import { ServersStatusPageComponent } from '../components/servers-status-page/servers-status-page.component';
 import { ServerDetailComponent } from '../components/server-detail/server-detail.component';
+import { CdkDetailRowDirective } from './directives/cdk-detail-row.directive';
 
 @NgModule({
   imports: [
@@ -158,7 +159,8 @@ import { ServerDetailComponent } from '../components/server-detail/server-detail
     MainContentComponent,
     ServersStatusPageComponent,
     ServerDetailComponent,
-    ServerImportComponent
+    ServerImportComponent,
+    CdkDetailRowDirective
   ],
   providers: [
     { provide: RouterStateSerializer, useClass: RouterCustomSerializer }

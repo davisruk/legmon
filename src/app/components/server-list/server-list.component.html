@@ -42,10 +42,20 @@
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row [ngClass]="{'highlight-accent': useHighlightClass(row)}" (click)="highlight(row)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+        <!-- <mat-row [ngClass]="{'highlight-accent': useHighlightClass(row)}" (click)="highlight(row)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row> -->
+        <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl"
+          (toggleChange)="onToggleChange($event)">
+        </mat-row>
+
       </mat-table>
       <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="numberOfServers"
         [pageIndex]="pageNumber" showFirstLastButtons (page)=onPageEvent($event)></mat-paginator>
     </div>
   </div>
 </div>
+
+<ng-template #tpl let-server>
+  <div class="mat-row" [@detailExpand] style="overflow: hidden">
+    <app-server-detail [server]="server"></app-server-detail>
+  </div>
+</ng-template>
