@@ -7,5 +7,3 @@
   (pageEvent)="handlePageEvent($event)" (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)" (refreshAll)="handleRefresh()"
   [singleChildRowDetail]=true (refreshServer)="handleRefreshServer($event)">
 </app-server-list>
-
-<app-server-detail *ngIf="currentPage.currentServer !== undefined" [server]="currentPage.currentServer"></app-server-detail>

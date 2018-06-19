@@ -4,12 +4,26 @@
     <mat-card-content *ngIf="server.status">
       <div flexLayout="row" fxLayoutAlign="center center">
         <div flex style="min-width:200px">
-          <!-- 1st Row -->
+          <!-- 1st Col -->
           <div flexLayout="column">
             <div flex>Environments: {{server.details.environment}}</div>
             <div flex>Available: {{server.status.status.available}}</div>
             <div flex>App Status:{{server.status.status.currentStatus}}</div>
             <div flex>Leg: {{server.status.status.label}}</div>
+          </div>
+        </div>
+        <div flex style="min-width:200px">
+          <!-- 2nd Col -->
+          <div flexLayout="column">
+            <div flex>OS: {{server.details.os}}</div>
+            <div flex>VCPU: {{server.details.vcpu}}</div>
+            <div flex>RAM:{{server.details.ram}} GB</div>
+            <div flex>Components: {{server.details.componentsDeployed}}</div>
+          </div>
+        </div>
+        <div flex style="min-width:200px">
+          <!-- 3rd Col -->
+          <div flexLayout="column">
             <div flex>Location: {{server.details.location}}</div>
             <div flex>VLAN: {{server.details.vlan}}</div>
             <div flex>IP: {{server.details.ip}}</div>
@@ -17,12 +31,8 @@
           </div>
         </div>
         <div flex style="min-width:200px">
-          <!-- 2nd Row -->
+          <!-- 4th Col -->
           <div flexLayout="column">
-            <div flex>OS: {{server.details.os}}</div>
-            <div flex>VCPU: {{server.details.vcpu}}</div>
-            <div flex>RAM:{{server.details.ram}} GB</div>
-            <div flex>Components: {{server.details.componentsDeployed}}</div>
             <div flex>Storage: {{server.details.storage}}</div>
             <div flex>Datastore: {{server.details.datastore}}</div>
             <div flex>Cluster: {{server.details.drsCluster}}</div>
