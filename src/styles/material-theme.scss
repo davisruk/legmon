@@ -2,12 +2,15 @@
 @include mat-core();
 
 @import '../app/components/server-list/server-list.component';
+@import '../app/components/server-detail/server-detail.component';
+
 @mixin set-theme($theme) {
   // define a new @mixin that will be invoked each time the theme is changed {
   @include setThemeForServerList(
     $theme
   ); // invoke the mixin we defined for component_1
   // repeat this for each component that uses theme colors
+  @include setThemeForServerDetail($theme);
 }
 $primary: mat-palette($mat-indigo);
 $accent: mat-palette($mat-pink);
@@ -23,6 +26,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include set-theme($theme);
   .highlight-accent {
+    background: mat-color($dark-accent);
+  }
+  .server-detail {
+    background: mat-color($dark-accent);
+  }
+  .server-detail .mat-card {
     background: mat-color($dark-accent);
   }
   @include angular-material-theme($dark-theme);
@@ -41,6 +50,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   .highlight-accent {
     background: mat-color($dark-accent);
   }
+  .server-detail {
+    background: mat-color($dark-accent);
+  }
+  .server-detail .mat-card {
+    background: mat-color($dark-accent);
+  }
   @include angular-material-theme($deep-purple-amber-theme);
 }
 .deep-purple-amber-light-theme {
@@ -55,6 +70,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   );
   @include set-theme($theme);
   .highlight-accent {
+    background: mat-color($light-accent);
+  }
+  .server-detail {
+    background: mat-color($light-accent);
+  }
+  .server-detail .mat-card {
     background: mat-color($light-accent);
   }
   @include angular-material-theme($deep-purple-amber-theme);
@@ -73,6 +94,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   .highlight-accent {
     background: mat-color($dark-accent);
   }
+  .server-detail {
+    background: mat-color($dark-accent);
+  }
+  .server-detail .mat-card {
+    background: mat-color($dark-accent);
+  }
   @include angular-material-theme($pink-blue-grey-theme);
 }
 .pink-blue-grey-light-theme {
@@ -89,6 +116,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   .highlight-accent {
     background: mat-color($light-accent);
   }
+  .server-detail {
+    background: mat-color($light-accent);
+  }
+  .server-detail .mat-card {
+    background: mat-color($light-accent);
+  }
   @include angular-material-theme($pink-blue-grey-theme);
 }
 .purple-green-dark-theme {
@@ -99,6 +132,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   $purple-green-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include set-theme($theme);
   .highlight-accent {
+    background: mat-color($dark-accent);
+  }
+  .server-detail {
+    background: mat-color($dark-accent);
+  }
+  .server-detail .mat-card {
     background: mat-color($dark-accent);
   }
   @include angular-material-theme($purple-green-theme);
@@ -115,6 +154,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   );
   @include set-theme($theme);
   .highlight-accent {
+    background: mat-color($light-accent);
+  }
+  .server-detail {
+    background: mat-color($light-accent);
+  }
+  .server-detail .mat-card {
     background: mat-color($light-accent);
   }
   @include angular-material-theme($purple-green-theme);

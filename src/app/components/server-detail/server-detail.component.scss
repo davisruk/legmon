@@ -1,0 +1,14 @@
+@import '~@angular/material/theming';
+
+@mixin setThemeForServerDetail($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .server-detail {
+    background: mat-color($accent);
+  }
+
+  .server-detail .mat-card {
+    background: mat-color($accent);
+  }
+}

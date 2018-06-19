@@ -56,7 +56,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   serversUnderCheck: string[];
   destroy$: Subject<boolean> = new Subject<boolean>();
   currentPage: ServerPage;
-  readonly DELAY = 30000;
+  readonly DELAY = 300000;
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
 
