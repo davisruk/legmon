@@ -5,5 +5,5 @@
 <app-server-list *ngIf="!showSpinner" [pageSize]="currentPage.pageSize" [pageNumber]="currentPage.currentPage" [displayedColumns]="displayedColumns"
   [pageSizeOptions]="pageSizeOptions" [numberOfServers]="currentPage.filter.filteredDataSet.size" [servers]="servers" (filterEvent)="handleFilterEvent($event)"
   (pageEvent)="handlePageEvent($event)" (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)" (refreshAll)="handleRefresh()"
-  [singleChildRowDetail]=true (refreshServer)="handleRefreshServer($event)">
+  [singleChildRowDetail]=false (refreshServer)="handleRefreshServer($event)">
 </app-server-list>
