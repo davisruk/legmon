@@ -10,7 +10,7 @@ import {
   transition,
   trigger
 } from '@angular/animations';
-
+import { List as ImmutableList } from 'immutable';
 import { CdkDetailRowDirective } from '../../core/directives/cdk-detail-row.directive';
 
 @Component({
@@ -34,8 +34,11 @@ export class ServerListComponent implements OnInit {
   @Input() pageSize: number;
   @Input() pageNumber: number;
   @Input() numberOfServers: number;
-  @Input() servers: Server[];
   @Input() singleChildRowDetail: boolean;
+  @Input()
+  set serverData(servers: ImmutableList<Server>) {
+    this.servers = servers === null ? [] : servers.toArray();
+  }
 
   @Output('pageEvent') pageEvent = new EventEmitter<PageEvent>();
   @Output('filterEvent') filterEvent = new EventEmitter<string>();
@@ -45,6 +48,7 @@ export class ServerListComponent implements OnInit {
   @Output('refreshServer') refreshServer = new EventEmitter();
 
   selectedRow = '';
+  servers: Server[];
   private openedRow: CdkDetailRowDirective;
 
   ngOnInit() {
@@ -58,6 +62,12 @@ export class ServerListComponent implements OnInit {
     typeahead.subscribe(data => {
       this.applyFilter(data);
     });
+
+    if (this.servers != null) {
+      console.log(`servers size is ${this.servers.length}`);
+    } else {
+      console.log(`servers undefined`);
+    }
   }
 
   onPageEvent(event: PageEvent) {

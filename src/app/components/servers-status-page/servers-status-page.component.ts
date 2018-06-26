@@ -30,7 +30,7 @@ import { interval, from, Subject, merge, Observable } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
 import { Server } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
-import { filter, tap, takeUntil, take } from 'rxjs/operators';
+import { filter, tap, takeUntil, take, share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-servers-status-page',
@@ -47,54 +47,30 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     'refreshServer'
   ];
   pageSizeOptions = [5, 10, 20, 50];
-  servers: Server[] = [];
   runInitServerCheck = true;
   showSpinner = true;
-  serversUnderCheck: string[];
   destroy$: Subject<boolean> = new Subject<boolean>();
-  currentPage: ServerPage;
+  currentPage$: Observable<ServerPage>;
   readonly DELAY = 10000;
+
   constructor(private store: Store<AppState>) {
+    // load the servers
     this.store.dispatch(new LoadServers({}));
-
-    // show the spinner until all servers are loaded
-    const serversPopulated$: Subject<boolean> = new Subject<boolean>();
-
-    this.store
-      .select(selectServerArray)
-      .pipe(
-        takeUntil(serversPopulated$), // unsubscribe triggered
-        filter(servers => servers.size > 0),
-        tap(_ => {
-          this.showSpinner = false;
-          serversPopulated$.next(true); // trigger unsubscribe
-        })
-      )
-      .subscribe();
   }
 
   ngOnInit() {
+    this.initialiseServers();
+
     // run a status check every x seconds
     const timerOb$: Observable<number> = interval(this.DELAY).pipe(
-      tap(_ => this.checkServersStatus(this.servers))
+      tap(_ => this.checkServersStatus())
     );
 
-    // all store updates for the serverlist are handled here
-    const serverPage$: Observable<ServerPage> = this.store
-      .select(selectServerPage)
-      .pipe(
-        tap(pg => {
-          this.currentPage = pg;
-          this.servers = pg.pageData.toArray();
-          // run an initial status check
-          if (this.servers.length > 0 && this.runInitServerCheck) {
-            this.runInitServerCheck = false;
-            this.checkServersStatus(this.servers);
-          }
-        })
-      );
+    // initialise the view's Observable
+    this.currentPage$ = this.store.select(selectServerPage).pipe(share());
 
-    merge(serverPage$, timerOb$)
+    // merge the two observables for easy management of unsubscribe
+    merge(this.currentPage$, timerOb$)
       .pipe(takeUntil(this.destroy$))
       .subscribe();
   }
@@ -107,7 +83,49 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ResetState({}));
   }
 
-  checkServersStatus(serversToCheck: Server[], override?: boolean) {
+  initialiseServers() {
+    // show the spinner until all servers are loaded
+    const serversPopulated$: Subject<boolean> = new Subject<boolean>();
+
+    this.store
+      .select(selectServerArray)
+      .pipe(
+        takeUntil(serversPopulated$), // unsubscribe triggered
+        filter(servers => servers.size > 0),
+        tap(_ => {
+          this.showSpinner = false;
+          serversPopulated$.next(true); // trigger unsubscribe
+          serversPopulated$.unsubscribe();
+        })
+      )
+      .subscribe();
+
+    // get status for first servers in first page
+    const initDone$: Subject<boolean> = new Subject<boolean>();
+    this.store
+      .select(selectServerPage)
+      .pipe(
+        takeUntil(initDone$),
+        filter(pg => pg.pageData.size > 0) // do nothing until the page is populated
+      )
+      .subscribe(_ => {
+        initDone$.next(true);
+        this.checkServersStatus(); // now check the status
+        initDone$.unsubscribe();
+      });
+  }
+
+  // could argue that this logic belongs in a side effect
+  // along with the buildServerListToCheck logic
+  checkServersStatus(serversToCheck?: Server[], override?: boolean) {
+    if (serversToCheck === undefined) {
+      this.store
+        .select(selectServerPage)
+        .pipe(take(1))
+        .subscribe(
+          (page: ServerPage) => (serversToCheck = page.pageData.toArray())
+        );
+    }
     override = override === undefined ? false : override;
     const servers = this.buildServerListToCheck(serversToCheck, override);
 
@@ -117,7 +135,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
       };
 
       // notify store that these servers should be checked
-      // effect will split the action into 1 setStatusLoading
+      // side effect will split the action into 1 setStatusLoading
       // and multiple checkServerStatus actions
       this.store.dispatch(new CheckStatusForServers(payload));
     }
@@ -125,9 +143,15 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
 
   buildServerListToCheck(servers: Server[], override?: boolean): Server[] {
     override = override === undefined ? false : override;
-    // only add servers to check that have not been checked
-    // or have not been checked in x seconds
+    // only add servers to check that have never been checked
+    // or have not been checked in this.DELAY seconds
+    // or are currently being checked
     const retVal: Server[] = [];
+
+    if (servers == null) {
+      return retVal;
+    }
+
     from(servers)
       .pipe(
         filter(
@@ -139,6 +163,8 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
         )
       )
       .subscribe(s => {
+        // servers are from the store and therefore immutable
+        // side effect / reducer should probably do this
         const newServer: Server = Object.assign({}, s);
         retVal.push(newServer);
       });
@@ -146,11 +172,16 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   }
 
   handlePageEvent(event: PageEvent) {
-    if (this.currentPage.pageSize !== event.pageSize) {
-      this.changePageSize(event.pageSize);
-    } else {
-      this.changePage(event.pageIndex, event.pageSize);
-    }
+    this.store
+      .select(selectServerPage)
+      .pipe(take(1))
+      .subscribe((page: ServerPage) => {
+        if (page.pageSize !== event.pageSize) {
+          this.changePageSize(event.pageSize);
+        } else {
+          this.changePage(event.pageIndex, event.pageSize);
+        }
+      });
   }
 
   handleFilterEvent(filterValue: string) {
@@ -158,25 +189,25 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     filterValue = filterValue.toLowerCase();
     const payload: SetFilterPayload = { filter: filterValue };
     this.store.dispatch(new SetFilter(payload));
-    this.checkServersStatus(this.servers);
+    this.checkServersStatus();
   }
 
   handleSortEvent(sort: Sort) {
     const payload: SortDataSetPayload = { sort: sort };
     this.store.dispatch(new SortDataSet(payload));
-    this.checkServersStatus(this.servers);
+    this.checkServersStatus();
   }
 
   changePage(page: number, pageSize: number) {
     const payload: ChangePagePayload = { page: page, pageSize: pageSize };
     this.store.dispatch(new ChangePage(payload));
-    this.checkServersStatus(this.servers);
+    this.checkServersStatus();
   }
 
   changePageSize(pageSize: number) {
     const payload: ChangePageSizePayload = { pageSize: pageSize };
     this.store.dispatch(new ChangePageSize(payload));
-    this.checkServersStatus(this.servers);
+    this.checkServersStatus();
   }
 
   handleRowClick(server: Server) {
