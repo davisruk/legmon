@@ -19,17 +19,14 @@ import {
   SetFilter,
   ChangePageSizePayload,
   ChangePageSize,
-  CheckServerStatus,
-  CheckServerStatusPayload,
   SetCurrentServer,
   SetCurrentServerPayload,
-  SetServerStatusLoading,
-  SetServerStatusLoadingPayload,
-  ResetState
+  ResetState,
+  CheckStatusForServersPayload,
+  CheckStatusForServers
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
-import { List as ImmutableList } from 'immutable';
-import { interval, from, Subject, merge, Subscription, Observable } from 'rxjs';
+import { interval, from, Subject, merge, Observable } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
 import { Server } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
@@ -56,7 +53,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   serversUnderCheck: string[];
   destroy$: Subject<boolean> = new Subject<boolean>();
   currentPage: ServerPage;
-  readonly DELAY = 300000;
+  readonly DELAY = 10000;
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new LoadServers({}));
 
@@ -113,21 +110,16 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   checkServersStatus(serversToCheck: Server[], override?: boolean) {
     override = override === undefined ? false : override;
     const servers = this.buildServerListToCheck(serversToCheck, override);
+
     if (servers.length > 0) {
-      const payload: SetServerStatusLoadingPayload = {
-        servers: servers,
-        isLoading: true
+      const payload: CheckStatusForServersPayload = {
+        servers: servers
       };
 
-      // set all servers to a loading status (for spinner)
-      this.store.dispatch(new SetServerStatusLoading(payload));
-      // check the status of each server
-      servers.forEach((server: Server) => {
-        const checkStatusPayload: CheckServerStatusPayload = {
-          server: server
-        };
-        this.store.dispatch(new CheckServerStatus(checkStatusPayload));
-      });
+      // notify store that these servers should be checked
+      // effect will split the action into 1 setStatusLoading
+      // and multiple checkServerStatus actions
+      this.store.dispatch(new CheckStatusForServers(payload));
     }
   }
 

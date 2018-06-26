@@ -9,14 +9,27 @@ import {
   CheckServerStatusFailure,
   UploadServersFile,
   UploadServersFileSuccess,
-  UploadServersFileFailure
+  UploadServersFileFailure,
+  CheckStatusForServers,
+  SetServerStatusLoadingPayload,
+  SetServerStatusLoading,
+  CheckStatusForServersPayload,
+  CheckServerStatusPayload
 } from './../actions/servers-actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { ServersService } from '../../services/servers.service';
-import { map, switchMap, catchError, mergeMap } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  catchError,
+  mergeMap,
+  tap,
+  flatMap
+} from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
+import { Action } from '@ngrx/store';
 
 @Injectable()
 export class ServersEffects {
@@ -112,6 +125,29 @@ export class ServersEffects {
             return of(new UploadServersFileFailure({ error: error }));
           })
         );
+      })
+    );
+
+  // action splitter - creates multiple actions from a single action
+  @Effect()
+  checkStatusForServers$: Observable<any> = this.actions
+    .ofType(ServersActionTypes.CHECK_STATUS_FOR_SERVERS)
+    .pipe(
+      flatMap((action: CheckStatusForServers) => {
+        const actions: Action[] = [];
+        const loadingPayload: SetServerStatusLoadingPayload = {
+          servers: action.payload.servers,
+          isLoading: true
+        };
+        actions.push(new SetServerStatusLoading(loadingPayload));
+        // create server status check action for each server
+        action.payload.servers.forEach(server => {
+          const checkStatusPayload: CheckServerStatusPayload = {
+            server: server
+          };
+          actions.push(new CheckServerStatus(checkStatusPayload));
+        });
+        return actions;
       })
     );
 }

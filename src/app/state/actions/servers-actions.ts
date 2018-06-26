@@ -18,7 +18,8 @@ export enum ServersActionTypes {
   RESET_STATE = '[Servers] Reset State',
   UPLOAD_SERVERS_FILE = '[Servers] Upload Servers File',
   UPLOAD_SERVERS_FILE_SUCCESS = '[Servers] Upload Servers File Success',
-  UPLOAD_SERVERS_FILE_FAILURE = '[Servers] Upload Servers File Failure'
+  UPLOAD_SERVERS_FILE_FAILURE = '[Servers] Upload Servers File Failure',
+  CHECK_STATUS_FOR_SERVERS = '[Servers] Check Status For Servers'
 }
 
 export class LoadServers implements Action {
@@ -138,6 +139,15 @@ export class UploadServersFileFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class CheckStatusForServersPayload {
+  readonly servers: Server[];
+}
+
+export class CheckStatusForServers implements Action {
+  readonly type: string = ServersActionTypes.CHECK_STATUS_FOR_SERVERS;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LoadServers
   | LoadServersSuccess
@@ -154,4 +164,5 @@ export type All =
   | ResetState
   | UploadServersFile
   | UploadServersFileSuccess
-  | UploadServersFileFailure;
+  | UploadServersFileFailure
+  | CheckStatusForServers;
