@@ -14,7 +14,9 @@ import {
   SetServerStatusLoadingPayload,
   SetServerStatusLoading,
   CheckStatusForServersPayload,
-  CheckServerStatusPayload
+  CheckServerStatusPayload,
+  CheckStatusForAllServers,
+  CheckStatusForServer
 } from './../actions/servers-actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
@@ -25,17 +27,22 @@ import {
   catchError,
   mergeMap,
   tap,
-  flatMap
+  flatMap,
+  take,
+  filter
 } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { Server, ServerStatus } from 'src/app/model/server.model';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
+import { AppState, selectServerPage, selectServerArray } from '../app.state';
+import { ServerPage } from '../servers.state';
 
 @Injectable()
 export class ServersEffects {
   constructor(
     private actions: Actions,
-    private serversService: ServersService
+    private serversService: ServersService,
+    private store: Store<AppState>
   ) {}
 
   // ngrx effects listen for actions from the Store, perform some
@@ -134,20 +141,114 @@ export class ServersEffects {
     .ofType(ServersActionTypes.CHECK_STATUS_FOR_SERVERS)
     .pipe(
       flatMap((action: CheckStatusForServers) => {
-        const actions: Action[] = [];
-        const loadingPayload: SetServerStatusLoadingPayload = {
-          servers: action.payload.servers,
-          isLoading: true
-        };
-        actions.push(new SetServerStatusLoading(loadingPayload));
-        // create server status check action for each server
-        action.payload.servers.forEach(server => {
-          const checkStatusPayload: CheckServerStatusPayload = {
-            server: server
-          };
-          actions.push(new CheckServerStatus(checkStatusPayload));
-        });
+        let actions: Action[];
+        let servers: Server[];
+        this.store
+          .select(selectServerPage)
+          .pipe(take(1))
+          .subscribe((page: ServerPage) => {
+            servers = this.buildServerListToCheck(
+              page.pageData.toArray(),
+              action.payload.elapsedTimeAllowance
+            );
+            actions = this.buildActionsForStatusCheck(servers);
+          });
         return actions;
       })
     );
+
+  @Effect()
+  checkStatusForAllServers$: Observable<any> = this.actions
+    .ofType(ServersActionTypes.CHECK_STATUS_FOR_ALL_SERVERS)
+    .pipe(
+      flatMap((action: CheckStatusForAllServers) => {
+        let actions: Action[];
+        let checkServers: Server[];
+        this.store
+          .select(selectServerArray)
+          .pipe(take(1))
+          .subscribe(servers => {
+            checkServers = this.buildServerListToCheck(
+              servers.toArray(),
+              action.payload.elapsedTimeAllowance
+            );
+            actions = this.buildActionsForStatusCheck(checkServers);
+          });
+        return actions;
+      })
+    );
+
+  @Effect()
+  checkStatusForServer$: Observable<any> = this.actions
+    .ofType(ServersActionTypes.CHECK_STATUS_FOR_SERVER)
+    .pipe(
+      flatMap((action: CheckStatusForServer) => {
+        let actions: Action[];
+        let checkServers: Server[];
+        this.store
+          .select(selectServerArray)
+          .pipe(take(1))
+          .subscribe(servers => {
+            const i: number = servers.findIndex(
+              (item: Server) => item.id === action.payload.id
+            );
+            const server: Server =
+              i === -1 ? undefined : Object.assign({}, servers.get(i));
+            checkServers = this.buildServerListToCheck(
+              [server],
+              action.payload.elapsedTimeAllowance
+            );
+            actions = this.buildActionsForStatusCheck(checkServers);
+          });
+        return actions;
+      })
+    );
+
+  buildServerListToCheck(
+    servers: Server[],
+    sinceLastCheckedAllowance: number
+  ): Server[] {
+    // only add servers to check that have never been checked
+    // or have not been checked in this.DELAY seconds
+    // or are currently being checked
+    const retVal: Server[] = [];
+
+    if (servers == null) {
+      return retVal;
+    }
+
+    from(servers)
+      .pipe(
+        filter(
+          (s: Server) =>
+            (s.status === undefined ||
+              s.status.lastChecked < Date.now() - sinceLastCheckedAllowance) &&
+            !s.statusLoading
+        )
+      )
+      .subscribe(s => {
+        // servers are from the store and therefore immutable
+        // side effect / reducer should probably do this
+        const newServer: Server = Object.assign({}, s);
+        retVal.push(newServer);
+      });
+    return retVal;
+  }
+
+  buildActionsForStatusCheck(servers: Server[]): Action[] {
+    const actions: Action[] = [];
+    const loadingPayload: SetServerStatusLoadingPayload = {
+      servers: servers,
+      isLoading: true
+    };
+    actions.push(new SetServerStatusLoading(loadingPayload));
+    // create server status check action for each server
+    servers.forEach(server => {
+      const checkStatusPayload: CheckServerStatusPayload = {
+        server: server
+      };
+      actions.push(new CheckServerStatus(checkStatusPayload));
+    });
+    return actions;
+  }
 }

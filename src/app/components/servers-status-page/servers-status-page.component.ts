@@ -23,10 +23,14 @@ import {
   SetCurrentServerPayload,
   ResetState,
   CheckStatusForServersPayload,
-  CheckStatusForServers
+  CheckStatusForServers,
+  CheckStatusForAllServersPayload,
+  CheckStatusForAllServers,
+  CheckStatusForServerPayload,
+  CheckStatusForServer
 } from '../../state/actions/servers-actions';
 import { Store } from '@ngrx/store';
-import { interval, from, Subject, merge, Observable } from 'rxjs';
+import { interval, Subject, merge, Observable } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
 import { Server } from 'src/app/model/server.model';
 import { ServerPage } from '../../state/servers.state';
@@ -54,11 +58,11 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   readonly DELAY = 10000;
 
   constructor(private store: Store<AppState>) {
-    // load the servers
     this.store.dispatch(new LoadServers({}));
   }
 
   ngOnInit() {
+    // check the first page server status
     this.initialiseServers();
 
     // run a status check every x seconds
@@ -66,7 +70,7 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
       tap(_ => this.checkServersStatus())
     );
 
-    // initialise the view's Observable
+    // initialise the view's Observable used for change detection
     this.currentPage$ = this.store.select(selectServerPage).pipe(share());
 
     // merge the two observables for easy management of unsubscribe
@@ -86,89 +90,26 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   initialiseServers() {
     // show the spinner until all servers are loaded
     const serversPopulated$: Subject<boolean> = new Subject<boolean>();
-
     this.store
       .select(selectServerArray)
       .pipe(
         takeUntil(serversPopulated$), // unsubscribe triggered
-        filter(servers => servers.size > 0),
-        tap(_ => {
-          this.showSpinner = false;
-          serversPopulated$.next(true); // trigger unsubscribe
-          serversPopulated$.unsubscribe();
-        })
-      )
-      .subscribe();
-
-    // get status for first servers in first page
-    const initDone$: Subject<boolean> = new Subject<boolean>();
-    this.store
-      .select(selectServerPage)
-      .pipe(
-        takeUntil(initDone$),
-        filter(pg => pg.pageData.size > 0) // do nothing until the page is populated
+        filter(servers => servers.size > 0)
       )
       .subscribe(_ => {
-        initDone$.next(true);
-        this.checkServersStatus(); // now check the status
-        initDone$.unsubscribe();
+        this.checkServersStatus();
+        this.showSpinner = false;
+        serversPopulated$.next(true); // trigger unsubscribe
+        serversPopulated$.unsubscribe();
       });
   }
 
-  // could argue that this logic belongs in a side effect
-  // along with the buildServerListToCheck logic
-  checkServersStatus(serversToCheck?: Server[], override?: boolean) {
-    if (serversToCheck === undefined) {
-      this.store
-        .select(selectServerPage)
-        .pipe(take(1))
-        .subscribe(
-          (page: ServerPage) => (serversToCheck = page.pageData.toArray())
-        );
-    }
-    override = override === undefined ? false : override;
-    const servers = this.buildServerListToCheck(serversToCheck, override);
+  checkServersStatus() {
+    const payload: CheckStatusForServersPayload = {
+      elapsedTimeAllowance: this.DELAY
+    };
 
-    if (servers.length > 0) {
-      const payload: CheckStatusForServersPayload = {
-        servers: servers
-      };
-
-      // notify store that these servers should be checked
-      // side effect will split the action into 1 setStatusLoading
-      // and multiple checkServerStatus actions
-      this.store.dispatch(new CheckStatusForServers(payload));
-    }
-  }
-
-  buildServerListToCheck(servers: Server[], override?: boolean): Server[] {
-    override = override === undefined ? false : override;
-    // only add servers to check that have never been checked
-    // or have not been checked in this.DELAY seconds
-    // or are currently being checked
-    const retVal: Server[] = [];
-
-    if (servers == null) {
-      return retVal;
-    }
-
-    from(servers)
-      .pipe(
-        filter(
-          (s: Server) =>
-            (s.status === undefined ||
-              s.status.lastChecked < Date.now() - this.DELAY ||
-              override) &&
-            !s.statusLoading
-        )
-      )
-      .subscribe(s => {
-        // servers are from the store and therefore immutable
-        // side effect / reducer should probably do this
-        const newServer: Server = Object.assign({}, s);
-        retVal.push(newServer);
-      });
-    return retVal;
+    this.store.dispatch(new CheckStatusForServers(payload));
   }
 
   handlePageEvent(event: PageEvent) {
@@ -216,19 +157,19 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
   }
 
   handleRefresh() {
-    this.store
-      .select(selectServerArray)
-      .pipe(take(1))
-      .subscribe(servers => {
-        const checkServers: Server[] = this.buildServerListToCheck(
-          servers.toArray(),
-          true
-        );
-        this.checkServersStatus(checkServers, true);
-      });
+    const payload: CheckStatusForAllServersPayload = {
+      elapsedTimeAllowance: this.DELAY
+    };
+
+    this.store.dispatch(new CheckStatusForAllServers(payload));
   }
 
   handleRefreshServer(server: Server) {
-    this.checkServersStatus([server], true);
+    const payload: CheckStatusForServerPayload = {
+      id: server.id,
+      elapsedTimeAllowance: this.DELAY
+    };
+
+    this.store.dispatch(new CheckStatusForServer(payload));
   }
 }

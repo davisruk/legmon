@@ -10,16 +10,18 @@ export enum ServersActionTypes {
   CHANGE_PAGE_SIZE = '[Servers] Change Page Size',
   SET_FILTER = '[Servers] Set Filter',
   SORT_DATA_SET = '[Servers] Sort Data Set',
-  CHECK_SERVER_STATUS = '[Servers] Check Server Status',
-  CHECK_SERVER_STATUS_SUCCESS = '[Servers] Check Server Status Success',
-  CHECK_SERVER_STATUS_FAILURE = '[Servers] Check Server Status Failure',
+  CHECK_SERVER_STATUS = '[Servers - Internal] Check Server Status',
+  CHECK_SERVER_STATUS_SUCCESS = '[Servers - Internal] Check Server Status Success',
+  CHECK_SERVER_STATUS_FAILURE = '[Servers - Internal] Check Server Status Failure',
   SET_CURRENT_SERVER = '[Servers] Set Current Server',
   SET_SERVER_STATUS_LOADING = '[Servers] Set Server Status Loading',
   RESET_STATE = '[Servers] Reset State',
   UPLOAD_SERVERS_FILE = '[Servers] Upload Servers File',
   UPLOAD_SERVERS_FILE_SUCCESS = '[Servers] Upload Servers File Success',
   UPLOAD_SERVERS_FILE_FAILURE = '[Servers] Upload Servers File Failure',
-  CHECK_STATUS_FOR_SERVERS = '[Servers] Check Status For Servers'
+  CHECK_STATUS_FOR_SERVERS = '[Servers] Check Status For Servers',
+  CHECK_STATUS_FOR_SERVER = '[Servers] Check Status For Server',
+  CHECK_STATUS_FOR_ALL_SERVERS = '[Servers] Check Status For All Servers'
 }
 
 export class LoadServers implements Action {
@@ -140,12 +142,28 @@ export class UploadServersFileFailure implements Action {
 }
 
 export class CheckStatusForServersPayload {
-  readonly servers: Server[];
+  //  readonly servers: Server[];
+  readonly elapsedTimeAllowance: number;
 }
 
 export class CheckStatusForServers implements Action {
   readonly type: string = ServersActionTypes.CHECK_STATUS_FOR_SERVERS;
   constructor(public payload: any) {}
+}
+
+export class CheckStatusForAllServersPayload extends CheckStatusForServersPayload {}
+
+export class CheckStatusForAllServers implements Action {
+  readonly type: string = ServersActionTypes.CHECK_STATUS_FOR_ALL_SERVERS;
+  constructor(public payload: CheckStatusForAllServersPayload) {}
+}
+
+export class CheckStatusForServerPayload extends CheckStatusForServersPayload {
+  readonly id: number;
+}
+export class CheckStatusForServer implements Action {
+  readonly type: string = ServersActionTypes.CHECK_STATUS_FOR_SERVER;
+  constructor(public payload: CheckStatusForServerPayload) {}
 }
 
 export type All =
@@ -165,4 +183,6 @@ export type All =
   | UploadServersFile
   | UploadServersFileSuccess
   | UploadServersFileFailure
-  | CheckStatusForServers;
+  | CheckStatusForServers
+  | CheckStatusForAllServers
+  | CheckStatusForServer;
