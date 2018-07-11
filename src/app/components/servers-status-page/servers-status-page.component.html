@@ -1,11 +1,10 @@
-<div *ngIf="showSpinner" style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="!(currentPage$ | async)?.pageData" style="min-height: 60vh" fxLayout="column" fxLayoutAlign="center center">
   <mat-spinner diameter="200"></mat-spinner>
 </div>
 
-<div *ngIf="!showSpinner">
-  <app-server-list [pageSize]="(currentPage$ | async)?.pageSize" [pageNumber]="(currentPage$ | async)?.currentPage" [displayedColumns]="displayedColumns"
-    [pageSizeOptions]="pageSizeOptions" [numberOfServers]="(currentPage$ | async)?.filter.filteredDataSet.size" [serverData]="(currentPage$ | async)?.pageData"
-    (filterEvent)="handleFilterEvent($event)" (pageEvent)="handlePageEvent($event)" (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)"
-    (refreshAll)="handleRefresh()" [singleChildRowDetail]=false (refreshServer)="handleRefreshServer($event)">
-  </app-server-list>
-</div>
+<app-server-list *ngIf="(currentPage$ | async)?.pageData" [pageSize]="(currentPage$ | async)?.pageSize" [pageNumber]="(currentPage$ | async)?.currentPage"
+  [displayedColumns]="displayedColumns" [pageSizeOptions]="pageSizeOptions" [numberOfServers]="(currentPage$ | async)?.filter.filteredDataSet.size"
+  [serverData]="(currentPage$ | async)?.pageData" (filterEvent)="handleFilterEvent($event)" (pageEvent)="handlePageEvent($event)"
+  (sortEvent)="handleSortEvent($event)" (rowClick)="handleRowClick($event)" (refreshAll)="handleRefresh()" [singleChildRowDetail]=false
+  (refreshServer)="handleRefreshServer($event)">
+</app-server-list>

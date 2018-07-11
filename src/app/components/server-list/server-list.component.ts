@@ -62,12 +62,6 @@ export class ServerListComponent implements OnInit {
     typeahead.subscribe(data => {
       this.applyFilter(data);
     });
-
-    if (this.servers != null) {
-      console.log(`servers size is ${this.servers.length}`);
-    } else {
-      console.log(`servers undefined`);
-    }
   }
 
   onPageEvent(event: PageEvent) {

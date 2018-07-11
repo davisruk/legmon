@@ -3,11 +3,11 @@
  * ServerListComponent and ServerDetailComponent
  * ***********************************************/
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import {
   AppState,
   selectServerPage,
-  selectServerArray
+  selectServerPageData
 } from '../../state/app.state';
 import {
   LoadServers,
@@ -51,32 +51,18 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     'refreshServer'
   ];
   pageSizeOptions = [5, 10, 20, 50];
-  runInitServerCheck = true;
-  showSpinner = true;
   destroy$: Subject<boolean> = new Subject<boolean>();
   currentPage$: Observable<ServerPage>;
   readonly DELAY = 10000;
 
-  constructor(private store: Store<AppState>) {
-    this.store.dispatch(new LoadServers({}));
-  }
+  constructor(
+    private store: Store<AppState>,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    // check the first page server status
+    this.initialiseViewObservables();
     this.initialiseServers();
-
-    // run a status check every x seconds
-    const timerOb$: Observable<number> = interval(this.DELAY).pipe(
-      tap(_ => this.checkServersStatus())
-    );
-
-    // initialise the view's Observable used for change detection
-    this.currentPage$ = this.store.select(selectServerPage).pipe(share());
-
-    // merge the two observables for easy management of unsubscribe
-    merge(this.currentPage$, timerOb$)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -87,20 +73,33 @@ export class ServersStatusPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ResetState({}));
   }
 
+  initialiseViewObservables() {
+    // run a status check every x seconds
+    const timerOb$: Observable<number> = interval(this.DELAY).pipe(
+      tap(_ => this.checkServersStatus())
+    );
+
+    // initialise the view's Observable used for change detection
+    // use share operator so only 1 subscription is created by view
+    this.currentPage$ = this.store.select(selectServerPage).pipe(share());
+
+    // merge the two observables for easy management of unsubscribe
+    merge(this.currentPage$, timerOb$)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+  }
+
   initialiseServers() {
-    // show the spinner until all servers are loaded
-    const serversPopulated$: Subject<boolean> = new Subject<boolean>();
+    this.store.dispatch(new LoadServers({}));
+    // once servers are loaded, check the current page for status
     this.store
-      .select(selectServerArray)
-      .pipe(
-        takeUntil(serversPopulated$), // unsubscribe triggered
-        filter(servers => servers.size > 0)
-      )
+      .select(selectServerPageData)
+      .pipe(filter(servers => servers.size > 0))
       .subscribe(_ => {
+        // force change detection so that there's no gap between
+        // spinner being shown and the data table being populated
+        this.changeDetector.detectChanges();
         this.checkServersStatus();
-        this.showSpinner = false;
-        serversPopulated$.next(true); // trigger unsubscribe
-        serversPopulated$.unsubscribe();
       });
   }
 
