@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { MenuItem } from '../../model/menu-item.model';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Md5 } from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5';
 import {
   ThemePickerOverlayService,
   ThemePickerOverlayRef

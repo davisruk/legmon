@@ -1,4 +1,6 @@
+import { v4 as uuid } from 'uuid';
 export class User {
+  id: string;
   email: string;
   firstName: string | null;
   lastName: string | null;
@@ -15,6 +17,7 @@ export class User {
 }
 
 export const MOCK_USER = {
+  id: uuid(),
   email: 'a',
   firstName: 'Richard',
   lastName: 'Davis',

@@ -34,8 +34,8 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AppNavComponent } from 'src/app/components/app-nav/app-nav.component';
-import { ThemePickerComponent } from 'src/app/components/theme-picker/theme-picker.component';
+import { AppNavComponent } from '../components/app-nav/app-nav.component';
+import { ThemePickerComponent } from '../components/theme-picker/theme-picker.component';
 import { LoginComponent } from '../components/login/login.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { LandingComponent } from '../components/landing/landing.component';
@@ -57,6 +57,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { ServersStatusPageComponent } from '../components/servers-status-page/servers-status-page.component';
 import { ServerDetailComponent } from '../components/server-detail/server-detail.component';
 import { CdkDetailRowDirective } from './directives/cdk-detail-row.directive';
+import { RegisterEffects } from '../state/effects/register-effects';
 
 @NgModule({
   imports: [
@@ -93,7 +94,12 @@ import { CdkDetailRowDirective } from './directives/cdk-detail-row.directive';
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([AuthEffects, RouterEffects, ServersEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      RouterEffects,
+      ServersEffects,
+      RegisterEffects
+    ]),
     RouterModule.forRoot([
       { path: 'log-in', component: LoginComponent },
       { path: 'sign-up', component: SignUpComponent },

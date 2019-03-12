@@ -27,7 +27,8 @@ export class AuthEffects {
   // use Effects to access services so that components only ever
   // interact with the store
   @Effect()
-  Login$: Observable<any> = this.actions.ofType(AuthActionTypes.LOGIN).pipe(
+  Login$: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.LOGIN),
     map((action: Login) => action.payload),
     switchMap(payload => {
       return this.authService
@@ -49,15 +50,14 @@ export class AuthEffects {
   );
 
   @Effect({ dispatch: false })
-  LoginSuccess$: Observable<any> = this.actions
-    .ofType(AuthActionTypes.LOGIN_SUCCESS)
-    .pipe(
-      map((action: LoginSuccess) => action.payload),
-      tap(payload => {
-        localStorage.setItem('token', payload.token);
-        this.router.navigateByUrl('/content');
-      })
-    );
+  LoginSuccess$: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.LOGIN_SUCCESS),
+    map((action: LoginSuccess) => action.payload),
+    tap(payload => {
+      localStorage.setItem('token', payload.token);
+      this.router.navigateByUrl('/content');
+    })
+  );
 
   @Effect({ dispatch: false })
   LoginFailure$: Observable<any> = this.actions.pipe(
@@ -65,7 +65,8 @@ export class AuthEffects {
   );
 
   @Effect()
-  Logout$: Observable<any> = this.actions.ofType(AuthActionTypes.LOGOUT).pipe(
+  Logout$: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.LOGOUT),
     map((action: Logout) => {
       localStorage.removeItem('token');
       return new LogoutSuccess({});

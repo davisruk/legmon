@@ -1,4 +1,4 @@
-import { Server } from './../../model/server.model';
+import { Server } from '../../model/server.model';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';

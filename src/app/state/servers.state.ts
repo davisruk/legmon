@@ -1,4 +1,4 @@
-import { ServerList, Server } from './../model/server.model';
+import { ServerList, Server } from '../model/server.model';
 import { Sort } from '@angular/material';
 import { List as ImmutableList } from 'immutable';
 

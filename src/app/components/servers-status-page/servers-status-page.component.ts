@@ -32,7 +32,7 @@ import {
 import { Store } from '@ngrx/store';
 import { interval, Subject, merge, Observable } from 'rxjs';
 import { PageEvent, Sort } from '@angular/material';
-import { Server } from 'src/app/model/server.model';
+import { Server } from '../../model/server.model';
 import { ServerPage } from '../../state/servers.state';
 import { filter, tap, takeUntil, take, share } from 'rxjs/operators';
 

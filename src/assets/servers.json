@@ -1,4 +1,22 @@
 {
+  "users": [
+    {
+      "email": "a",
+      "firstName": "a",
+      "lastName": "a",
+      "password": "a",
+      "token": "",
+      "id": "72fc5a88-8746-4956-aab5-110633cb7e8a"
+    },
+    {
+      "email": "rich@davisfamily.eu",
+      "firstName": "Richard",
+      "lastName": "Davis",
+      "password": "a",
+      "token": "",
+      "id": "fb00c431-7aeb-45b5-b460-766355252d8c"
+    }
+  ],
   "servers": [
     {
       "details": {
@@ -22,8 +40,7 @@
       "name": "gbrpmsrpxt01",
       "hostname": "10.141.129.251",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -48,8 +65,7 @@
       "name": "gbrpmsepsf01",
       "hostname": "10.141.129.141 ",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -74,8 +90,7 @@
       "name": "gbrpmsoptf01",
       "hostname": "10.141.129.152 ",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -100,8 +115,7 @@
       "name": "gbrpmssdsf01",
       "hostname": "10.141.129.131",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -126,8 +140,7 @@
       "name": "gbrpmsstpf01",
       "hostname": "10.141.129.132",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -152,8 +165,7 @@
       "name": "gbrpmsuisf01",
       "hostname": "10.141.129.5",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -178,8 +190,7 @@
       "name": "gbrpmsuisf02",
       "hostname": "10.141.129.48",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -204,8 +215,7 @@
       "name": "gbrpmsepsf11",
       "hostname": "10.141.129.178 ",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -230,8 +240,7 @@
       "name": "gbrpmsoptf11",
       "hostname": "10.141.129.179",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -256,8 +265,7 @@
       "name": "gbrpmssdsf11",
       "hostname": "10.141.129.176",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -282,8 +290,7 @@
       "name": "gbrpmsstpf11",
       "hostname": "10.141.129.177",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -308,8 +315,7 @@
       "name": "gbrpmsuisf11",
       "hostname": "10.141.129.6",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -334,8 +340,7 @@
       "name": "gbrpmsepsf21",
       "hostname": "10.141.129.184 ",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -360,8 +365,7 @@
       "name": "gbrpmsoptf21",
       "hostname": "10.141.129.185 ",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -386,8 +390,7 @@
       "name": "gbrpmssdsf21",
       "hostname": "10.141.129.182",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -412,8 +415,7 @@
       "name": "gbrpmsstpf21",
       "hostname": "10.141.129.183",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -438,8 +440,7 @@
       "name": "gbrpmsuisf21",
       "hostname": "10.141.129.110",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -464,8 +465,7 @@
       "name": "gbrpmsuisf31",
       "hostname": "10.141.129.24",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -490,8 +490,7 @@
       "name": "gbrpmsuisf41",
       "hostname": "10.141.129.125",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -516,8 +515,7 @@
       "name": "gbrpmsepsi01",
       "hostname": "10.141.129.34",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -542,8 +540,7 @@
       "name": "gbrpmsopti01",
       "hostname": "10.141.129.41",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -568,8 +565,7 @@
       "name": "gbrpmsuisi01",
       "hostname": "10.141.129.3",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -594,8 +590,7 @@
       "name": "gbrpmsuisi41",
       "hostname": "10.141.129.104",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -620,8 +615,7 @@
       "name": "gbrpmsuisi42",
       "hostname": "10.141.129.106",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -646,8 +640,7 @@
       "name": "gbrpmsuiss01",
       "hostname": "10.141.16.1",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -672,8 +665,7 @@
       "name": "gbrpmsuiss21",
       "hostname": "10.141.16.128",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -698,8 +690,7 @@
       "name": "gbrpmsuiss22",
       "hostname": "10.141.16.129",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -724,8 +715,7 @@
       "name": "gbrpmsuiss23",
       "hostname": "10.141.16.130",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -750,8 +740,7 @@
       "name": "gbrpmsuiss03",
       "hostname": "10.141.16.3",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -776,8 +765,7 @@
       "name": "gbrpmsuiss04",
       "hostname": "10.141.16.4",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -802,8 +790,7 @@
       "name": "gbrpmsuiss11",
       "hostname": "10.141.16.64",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -828,8 +815,7 @@
       "name": "gbrpmsuiss13",
       "hostname": "10.141.16.66",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -854,8 +840,7 @@
       "name": "gbrpmsuiss12",
       "hostname": "10.141.16.65",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -880,8 +865,7 @@
       "name": "gbrpmsuiss14",
       "hostname": "10.141.16.67",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -906,8 +890,7 @@
       "name": "gbrpmsopts02",
       "hostname": "10.141.17.11",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -932,8 +915,7 @@
       "name": "gbrpmsopts01",
       "hostname": "10.141.17.112",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -958,8 +940,7 @@
       "name": "gbrpmsepss01",
       "hostname": "10.141.17.80",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -984,8 +965,7 @@
       "name": "gbrpmssdss01",
       "hostname": "10.141.17.32",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1010,8 +990,7 @@
       "name": "gbrpmsuist03",
       "hostname": "10.141.129.171",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1036,8 +1015,7 @@
       "name": "gbrpmsuist04",
       "hostname": "10.141.129.172",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1062,8 +1040,7 @@
       "name": "gbrpmsuisu01",
       "hostname": "10.141.129.114",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1088,8 +1065,7 @@
       "name": "gbrpmsuisu11",
       "hostname": "10.141.129.31",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1114,8 +1090,7 @@
       "name": "gbrpmsstpi01",
       "hostname": "10.141.129.32",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1140,8 +1115,7 @@
       "name": "gbrpmsepsi11",
       "hostname": "10.141.129.58",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1166,8 +1140,7 @@
       "name": "gbrpmsopti11",
       "hostname": "10.141.129.69 ",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1192,8 +1165,7 @@
       "name": "gbrpmssdsi11",
       "hostname": "10.141.129.56",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1218,8 +1190,7 @@
       "name": "gbrpmsstpi11",
       "hostname": "10.141.129.57",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1244,8 +1215,7 @@
       "name": "gbrpmsuisi11",
       "hostname": "10.141.129.4",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1270,8 +1240,7 @@
       "name": "gbrpmsepsi31",
       "hostname": "10.141.129.170",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1296,8 +1265,7 @@
       "name": "gbrpmsopti31",
       "hostname": "10.141.129.175",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1322,8 +1290,7 @@
       "name": "gbrpmssdsi31",
       "hostname": "10.141.129.151",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1348,8 +1315,7 @@
       "name": "gbrpmsstpi31",
       "hostname": "10.141.129.169",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1374,8 +1340,7 @@
       "name": "gbrpmsepsi41",
       "hostname": "10.141.129.155",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1400,8 +1365,7 @@
       "name": "gbrpmsuiss24",
       "hostname": "10.141.16.131",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1426,8 +1390,7 @@
       "name": "gbrpmsepss02",
       "hostname": "10.141.17.81",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1452,8 +1415,7 @@
       "name": "gbrpmssdss02",
       "hostname": "10.141.17.33",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1478,8 +1440,7 @@
       "name": "gbrpmsstps01",
       "hostname": "10.141.17.48",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1504,8 +1465,7 @@
       "name": "gbrpmsstps02",
       "hostname": "10.141.17.49",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1530,8 +1490,7 @@
       "name": "gbrpmsepst01",
       "hostname": "10.141.129.165",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1556,8 +1515,7 @@
       "name": "gbrpmsepst02",
       "hostname": "10.141.129.166",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1582,8 +1540,7 @@
       "name": "gbrpmsoptt01",
       "hostname": "10.141.129.167",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1608,8 +1565,7 @@
       "name": "gbrpmssdst02",
       "hostname": "10.141.129.158",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1634,8 +1590,7 @@
       "name": "gbrpmsoptt02",
       "hostname": "10.141.129.168",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1660,8 +1615,7 @@
       "name": "gbrpmssdst01",
       "hostname": "10.141.129.157",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1686,8 +1640,7 @@
       "name": "gbrpmsstpt01",
       "hostname": "10.141.129.159",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1712,8 +1665,7 @@
       "name": "gbrpmsstpt02",
       "hostname": "10.141.129.160",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1738,8 +1690,7 @@
       "name": "gbrpmsuist01",
       "hostname": "10.141.129.52",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1764,8 +1715,7 @@
       "name": "gbrpmsuist02",
       "hostname": "10.141.129.53",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1790,8 +1740,7 @@
       "name": "gbrpmsuisi31",
       "hostname": "10.141.129.63",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1816,8 +1765,7 @@
       "name": "gbrpmsuisi32",
       "hostname": "10.141.129.64",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1842,8 +1790,7 @@
       "name": "gbrpmsopti41",
       "hostname": "10.141.129.156",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1868,8 +1815,7 @@
       "name": "gbrpmssdsi41",
       "hostname": "10.141.129.153",
       "port": "31415",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1894,8 +1840,7 @@
       "name": "gbrpmsstpi41",
       "hostname": "10.141.129.154",
       "port": "3080",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     },
     {
@@ -1920,8 +1865,7 @@
       "name": "gbrpmsuiss02",
       "hostname": "10.141.16.2",
       "port": "80",
-      "url":
-        "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
+      "url": "/application-status-monitor/rest/applicationstatusmonitor/status.json?include_version=true",
       "statusLoading": false
     }
   ]

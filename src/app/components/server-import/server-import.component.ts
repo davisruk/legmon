@@ -1,5 +1,5 @@
-import { selectServerArray } from './../../state/app.state';
-import { Server } from 'src/app/model/server.model';
+import { selectServerArray } from '../../state/app.state';
+import { Server } from '../../model/server.model';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state/app.state';

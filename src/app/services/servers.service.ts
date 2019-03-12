@@ -5,7 +5,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
-import { Server, ServerStatus, serverPorts } from 'src/app/model/server.model';
+import { Server, ServerStatus, serverPorts } from '../model/server.model';
 import { map, catchError, delay, timeout } from 'rxjs/operators';
 
 @Injectable({
@@ -174,7 +174,7 @@ export class ServersService {
     return this.randomIntBetween(1, 2) === 1
       ? of(validStatus).pipe(delay(this.randomIntBetween(2000, 5000)))
       : of(errorStatus).pipe(delay(this.randomIntBetween(2000, 5000)));
-/*
+    /*
     return this.http
       .get<ServerStatus>('http://' + server + ':' + port + url, {
         headers: { 'Content-Type': 'appication/json' }

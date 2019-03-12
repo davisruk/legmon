@@ -1,9 +1,10 @@
 import { ServersState } from './servers.state';
-import { UIState } from '../state/ui.state';
+import { UIState } from './ui.state';
 import { AuthenticationState } from './authentication-state';
 import * as auth from './reducers/auth-reducer';
 import * as ui from './reducers/ui.reducer';
 import * as servers from './reducers/server.reducer';
+import * as register from './reducers/register-reducer';
 import {
   createFeatureSelector,
   createSelector,
@@ -11,23 +12,27 @@ import {
 } from '@ngrx/store';
 
 import * as fromAuthState from './authentication-state';
-import * as fromUIState from '../state/ui.state';
-import * as fromServersState from '../state/servers.state';
+import * as fromUIState from './ui.state';
+import * as fromServersState from './servers.state';
+import * as fromRegistrationState from './registration-state';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { RouterStateUrl } from './router.state';
+import { RegistrationState } from './registration-state';
 
 export interface AppState {
   ui: UIState;
   auth: AuthenticationState;
   router: RouterReducerState<RouterStateUrl>;
   servers: ServersState;
+  register: RegistrationState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   ui: ui.uiStateReducer,
   auth: auth.reducer,
   router: routerReducer,
-  servers: servers.serverStateReducer
+  servers: servers.serverStateReducer,
+  register: register.reducer
 };
 
 // -- top level state selectors --
@@ -41,6 +46,10 @@ export const selectServersState = createFeatureSelector<ServersState>(
 export const selectRouterState = createFeatureSelector<
   RouterReducerState<RouterStateUrl>
 >('router');
+
+export const selectRegistrationState = createFeatureSelector<RegistrationState>(
+  'register'
+);
 
 // -- auth selectors --
 export const selectAuthenticated = createSelector(
@@ -123,4 +132,15 @@ export const selectServerCurrentPage = createSelector(
 export const selectCurrentServer = createSelector(
   selectServerPage,
   fromServersState.getCurrentServer
+);
+
+// -- registration selectors --
+export const selectRegistrationError = createSelector(
+  selectRegistrationState,
+  fromRegistrationState.getErrorMessage
+);
+
+export const selectRegistrationUser = createSelector(
+  selectRegistrationState,
+  fromRegistrationState.getUser
 );

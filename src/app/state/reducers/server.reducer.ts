@@ -3,8 +3,8 @@ import {
   ChangePageSizePayload,
   SetFilterPayload,
   SortDataSetPayload
-} from './../actions/servers-actions';
-import { Server, ServerStatus } from './../../model/server.model';
+} from '../actions/servers-actions';
+import { Server } from '../../model/server.model';
 import { ServersState } from '../servers.state';
 import { ServersActionTypes, All } from '../actions/servers-actions';
 import { Sort } from '@angular/material';
