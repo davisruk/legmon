@@ -13,7 +13,7 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   };
 }
 
-function logout(reducer: ActionReducer<any>): ActionReducer<any> {
+export function logout(reducer: ActionReducer<any>): ActionReducer<any> {
   return function(state, action) {
     return reducer(
       action.type === AuthActionTypes.LOGOUT ? undefined : state,

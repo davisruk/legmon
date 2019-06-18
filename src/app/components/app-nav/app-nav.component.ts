@@ -25,8 +25,8 @@ import * as NavActions from '../../state/actions/nav-actions';
   styleUrls: ['./app-nav.component.css']
 })
 export class AppNavComponent implements OnInit {
-  @ViewChild('drawer') drawer: MatSidenav;
-  @ViewChild('themeButton') themeButton: MatButton;
+  @ViewChild('drawer', {static: false}) drawer: MatSidenav;
+  @ViewChild('themeButton', {static: false}) themeButton: MatButton;
   isHandSet: Observable<BreakpointState>;
   showToolbarButton = false;
   sidebarMenu: MenuItem[];
